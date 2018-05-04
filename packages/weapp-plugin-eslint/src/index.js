@@ -6,9 +6,11 @@ export default function({ config, file, status, extra }, plgConfig) {
     match: /\.js$/,
     ...plgConfig,
   };
+
   if (defaultConfig.match) {
     if (!file.path.match(defaultConfig.match)) return;
   }
+
   if (!defaultConfig.formatter) {
     defaultConfig.formatter = formatter;
   }
