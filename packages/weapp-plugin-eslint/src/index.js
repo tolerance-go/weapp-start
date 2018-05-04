@@ -2,11 +2,17 @@ import eslint from 'eslint';
 import formatter from 'eslint-friendly-formatter';
 
 export default function({ config, file, status, extra }, plgConfig) {
-  debugger;
-  if (!plgConfig.formatter) {
-    plgConfig.formatter = formatter;
+  const defaultConfig = {
+    match: /\.js$/,
+    ...plgConfig,
+  };
+  if (defaultConfig.match) {
+    if (!file.path.match(defaultConfig.match)) return;
   }
-  const engine = new eslint.CLIEngine(plgConfig);
+  if (!defaultConfig.formatter) {
+    defaultConfig.formatter = formatter;
+  }
+  const engine = new eslint.CLIEngine(defaultConfig);
   const report = engine.executeOnFiles([file.path]);
   const _formatter = engine.getFormatter();
   let rst = _formatter(report.results);
