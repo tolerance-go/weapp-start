@@ -1,4 +1,5 @@
 # weapp-start
+
 [![NPM version](https://img.shields.io/npm/v/weapp-start.svg?style=flat)](https://npmjs.org/package/weapp-start)
 [![Build Status](https://travis-ci.org/tolerance-go/weapp-start.svg?branch=master)](https://travis-ci.org/tolerance-go/weapp-start)
 [![Coverage Status](https://coveralls.io/repos/github/tolerance-go/weapp-start/badge.svg?branch=master)](https://coveralls.io/github/tolerance-go/weapp-start?branch=master)
@@ -6,15 +7,15 @@
 [![Dependencies Status](https://david-dm.org/tolerance-go/weapp-start/status.svg)](https://david-dm.org/tolerance-go/weapp-start)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-给小程序开发赋能，稳定的原生语法，更多的开发能力
+为小程序开发赋能，高效的原生语法，避免踩坑，同时提供更多的开发能力
 
 # Features
 
-- 支持npm包引入
-- 支持promise
-- 支持async/await
-- 支持多种编译器，如pug/less/stylus
-- 支持ESlint
+* 支持 npm 包引入
+* 支持 promise
+* 支持 async/await
+* 支持多种编译器，如 pug/less/stylus
+* 支持 ESlint
 
 # Install
 
@@ -25,7 +26,7 @@ npm i weapp-start -g
 查看帮助
 
 ```bash
-weapp-start [command] -h
+weapp-start -h
 ```
 
 生成开发模版
@@ -50,24 +51,24 @@ wepy-cli dev
 
 # Plugins
 
-- weapp-plugin-babel
-- weapp-plugin-eslint
-- weapp-plugin-less
-- weapp-plugin-pug
-- weapp-plugin-require
-- weapp-plugin-stylus
-- ...
+* weapp-plugin-babel
+* weapp-plugin-eslint
+* weapp-plugin-less
+* weapp-plugin-pug
+* weapp-plugin-require
+* weapp-plugin-stylus
+* ...
 
 # Utils
 
-- weapp-utils-requestfix-promisify
-- ...
+* weapp-utils-requestfix-promisify
+* ...
 
 # Links
 
-- [Documentation](https://github.com/tolerance-go/weapp-start/tree/master/docs/README.md)
-- [Update Log](https://github.com/tolerance-go/weapp-start/tree/master/docs/UPDATELOG.md)
-- [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
+* [Documentation](https://github.com/tolerance-go/weapp-start/tree/master/docs/README.md)
+* [Update Log](https://github.com/tolerance-go/weapp-start/tree/master/docs/UPDATELOG.md)
+* [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
 
 # License
 
