@@ -4,7 +4,7 @@ module.exports = {
       'weapp-plugin-babel',
       {
         presets: [require('babel-preset-env')],
-        plugins: ['add-module-exports', 'transform-object-rest-spread'],
+        plugins: ['add-module-exports', 'transform-object-rest-spread', 'transform-runtime'],
       },
     ],
     'weapp-plugin-require',
