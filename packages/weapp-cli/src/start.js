@@ -1,8 +1,8 @@
 const vfs = require('vinyl-fs');
 const through = require('through2');
 const rimraf = require('rimraf');
-const { readFileSync, writeFileSync, existsSync, lstatSync, mkdirSync } = require('fs');
-const { join, relative, parse, sep } = require('path');
+const { readFileSync, existsSync } = require('fs');
+const { join, relative, parse } = require('path');
 const chokidar = require('chokidar');
 const assert = require('./utils/assert');
 const log = require('./utils/log');
@@ -24,7 +24,7 @@ const getConfig = () => {
 
 function transform(opts = {}) {
   const { status, config, file } = opts;
-  const { path, cwd } = file;
+  const { cwd } = file;
 
   const extra = {
     _extra: [],
