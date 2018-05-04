@@ -60,7 +60,7 @@ wepy-cli dev
 
 # Utils
 
-* weapp-utils-requestfix-promisify
+* weapp-util-requestfix-promisify
 * ...
 
 # Links
