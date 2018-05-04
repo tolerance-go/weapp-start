@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.4"></a>
+## <small>0.1.4 (2018-05-04)</small>
+
+* build: weapp-start add depend ([3941397](https://github.com/tolerance-go/weapp-cli/commit/3941397))
+
+
+
+
 <a name="0.1.3"></a>
 ## <small>0.1.3 (2018-05-04)</small>
 
