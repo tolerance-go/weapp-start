@@ -139,7 +139,7 @@ const start = mode => {
     });
     watcher.on('all', async (event, fullPath) => {
       if (event === 'unlink' || event === 'unlinkDir') {
-        log.print(fullPath.replace(`${cwd}/`, ''), 'REMOVE', 'magenta');
+        log.print(fullPath.replace(`${cwd}/`, ''), 'REMOVED', 'magenta');
         return rimraf.sync(join(join(cwd, dist), relative(join(cwd, src), fullPath)));
       }
 
@@ -148,7 +148,7 @@ const start = mode => {
       }
 
       if (event === 'change') {
-        log.print(`${fullPath.replace(`${cwd}/`, '')}`, 'CHANGE', 'greenBright');
+        log.print(`${fullPath.replace(`${cwd}/`, '')}`, 'CHANGED', 'greenBright');
       }
 
       if (event !== 'addDir') {
