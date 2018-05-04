@@ -1,4 +1,6 @@
 /* global wx */
+wx.$ = {};
+
 const native = {};
 
 const MAX_REQUEST = 10;
@@ -47,7 +49,7 @@ const center = {
 
   _interceptors: {},
 
-  _initAPI(wepy, noPromiseAPI) {
+  _initAPI(noPromiseAPI) {
     const self = this;
     const noPromiseMethods = {
       // 媒体
@@ -96,13 +98,7 @@ const center = {
     };
 
     if (noPromiseAPI) {
-      if (Array.isArray(noPromiseAPI)) {
-        noPromiseAPI.forEach(v => (noPromiseMethods[v] = true));
-      } else {
-        for (let k in noPromiseAPI) {
-          noPromiseMethods[k] = noPromiseAPI[k];
-        }
-      }
+      noPromiseAPI.forEach(v => (noPromiseMethods[v] = true));
     }
 
     Object.keys(wx).forEach(key => {
@@ -181,30 +177,40 @@ const center = {
             };
           },
         });
-        wx[key] = native[key];
+        wx.$[key] = native[key];
       } else {
         Object.defineProperty(native, key, {
           get() {
             return (...args) => wx[key].apply(wx, args);
           },
         });
-        wx[key] = native[key];
+        wx.$[key] = native[key];
       }
     });
   },
 
-  init(wepy, config = {}) {
-    this._initAPI(wepy, config.noPromiseAPI);
-  },
-
-  use(addon, ...args) {
+  _use(addon) {
     if (typeof addon === 'string') {
-      this._addons[addon] = 1;
+      this._addons[addon] = true;
     }
   },
 
-  intercept(api, provider) {
+  _intercept(api, provider) {
     this._interceptors[api] = provider;
+  },
+
+  init(config = {}) {
+    const { noPromiseAPI, requestfix, promisify, intercepts } = config;
+    if (requestfix) {
+      this._use('requestfix');
+    }
+    if (promisify) {
+      this._use('promisify');
+    }
+    this._initAPI(noPromiseAPI);
+    for (let k in intercepts) {
+      this._intercept(k, intercepts[k]);
+    }
   },
 };
 
