@@ -1,26 +1,25 @@
 {
-  "name": "test-project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "weapp-config.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "private": true,
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "weapp-plugin-babel": "^0.1.0",
+    "weapp-plugin-eslint": "^0.1.0",
+    "weapp-plugin-less": "^0.1.0",
+    "weapp-plugin-pug": "^0.1.0",
+    "weapp-plugin-require": "^0.1.0",
+    "weapp-plugin-stylus": "^0.1.0"
   },
   "dependencies": {
-    "lodash": "^4.17.10",
-    "weapp-plugin-babel": "file:/usr/local/lib/node_modules/weapp-plugin-babel",
-    "weapp-plugin-eslint": "file:/usr/local/lib/node_modules/weapp-plugin-eslint",
-    "weapp-plugin-less": "file:/usr/local/lib/node_modules/weapp-plugin-less",
-    "weapp-plugin-pug": "file:/usr/local/lib/node_modules/weapp-plugin-pug",
-    "weapp-plugin-require": "file:/usr/local/lib/node_modules/weapp-plugin-require",
-    "weapp-plugin-stylus": "file:/usr/local/lib/node_modules/weapp-plugin-stylus"
+    "babel-runtime": "^6.26.0",
+    "lodash": "^4.17.10"
   }
 }

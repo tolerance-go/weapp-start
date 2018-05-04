@@ -1,11 +1,46 @@
-button{
-  margin-top: 30rpx;
-  margin-bottom: 30rpx;
+.container {
+  text-align: center;
+  padding: 80rpx 0;
 }
-.button-sp-area{
-  margin: 0 auto;
-  width: 60%;
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background: #ddd;
+  &-item {
+    padding: 40rpx;
+    flex-grow: 1;
+  }
+  &-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 202rpx;
+    color: #fff;
+    background: #aaa;
+  }
 }
-.mini-btn{
-  margin-right: 10rpx;
+
+.all {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 60rpx;
+  font-size: 26rpx;
+  color: #fff;
+  &-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: red;
+    flex-grow: 1;
+  }
+  &-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ccc;
+    flex-grow: 1;
+  }
 }
