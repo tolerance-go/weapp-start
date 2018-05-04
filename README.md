@@ -66,8 +66,8 @@ wepy-cli dev
 # Links
 
 * [Documentation](https://github.com/tolerance-go/weapp-start/tree/master/docs/README.md)
-* [Update Log](https://github.com/tolerance-go/weapp-start/tree/master/docs/UPDATELOG.md)
 * [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
+* Updatelog - 参考 `packages` 下各个包的 `CHANGELOG`
 
 # License
 
