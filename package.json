@@ -6,7 +6,6 @@
     "publish": "./scripts/publish.js",
     "bootstrap": "lerna bootstrap",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "test": "jest --coverage ",
     "format": "prettier --write '{{packages,__test__}/**/*.{js,less},*.js}'",
     "precommit": "npm run format && npm run lint",
     "lint": "eslint --ext .js packages/**/src"
