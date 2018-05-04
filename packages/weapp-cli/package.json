@@ -1,0 +1,16 @@
+{
+  "name": "weapp-cli",
+  "version": "0.1.1",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": "./bin/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "inquirer": "^5.2.0",
+    "resolve-cwd": "^2.0.0",
+    "yargs": "^11.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "test-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "weapp-config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "weapp-plugin-babel": "file:/usr/local/lib/node_modules/weapp-plugin-babel",
+    "weapp-plugin-eslint": "file:/usr/local/lib/node_modules/weapp-plugin-eslint",
+    "weapp-plugin-less": "file:/usr/local/lib/node_modules/weapp-plugin-less",
+    "weapp-plugin-pug": "file:/usr/local/lib/node_modules/weapp-plugin-pug",
+    "weapp-plugin-require": "file:/usr/local/lib/node_modules/weapp-plugin-require",
+    "weapp-plugin-stylus": "file:/usr/local/lib/node_modules/weapp-plugin-stylus"
+  }
+}
