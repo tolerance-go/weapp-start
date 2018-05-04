@@ -10,8 +10,13 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "chalk": "^2.4.1",
+    "chokidar": "^2.0.3",
     "inquirer": "^5.2.0",
     "resolve-cwd": "^2.0.0",
+    "rimraf": "^2.6.2",
+    "through2": "^2.0.3",
+    "vinyl-fs": "^3.0.2",
     "yargs": "^11.0.0"
   }
 }
