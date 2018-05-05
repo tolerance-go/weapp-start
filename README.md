@@ -6,7 +6,7 @@
 [![Dependencies Status](https://david-dm.org/tolerance-go/weapp-start/status.svg)](https://david-dm.org/tolerance-go/weapp-start)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-为小程序开发赋能，高效的原生语法，避免踩坑，同时提供更多的开发能力
+改善小程序开发体验，高效，稳定的原生语法和组件，避免踩坑，同时提供更多的开发能力
 
 # Features
 
