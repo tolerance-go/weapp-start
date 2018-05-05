@@ -1,8 +1,6 @@
 /* global wx */
 wx.$ = {};
 
-const native = {};
-
 const MAX_REQUEST = 10;
 
 const RequestMQ = {
@@ -103,7 +101,7 @@ const center = {
 
     Object.keys(wx).forEach(key => {
       if (!noPromiseMethods[key] && key.substr(0, 2) !== 'on' && !/\w+Sync$/.test(key)) {
-        Object.defineProperty(native, key, {
+        Object.defineProperty(wx.$, key, {
           get() {
             return obj => {
               obj = obj || {};
@@ -177,14 +175,12 @@ const center = {
             };
           },
         });
-        wx.$[key] = native[key];
       } else {
-        Object.defineProperty(native, key, {
+        Object.defineProperty(wx.$, key, {
           get() {
             return (...args) => wx[key].apply(wx, args);
           },
         });
-        wx.$[key] = native[key];
       }
     });
   },
