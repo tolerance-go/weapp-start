@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.5"></a>
+## <small>0.1.5 (2018-05-05)</small>
+
+* fix: init 命令生成的 tpl 缺少隐藏文件 ([9bdc360](https://github.com/tolerance-go/weapp-cli/commit/9bdc360))
+
+
+
+
 <a name="0.1.4"></a>
 ## <small>0.1.4 (2018-05-04)</small>
 
