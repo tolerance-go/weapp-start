@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 import inquirer from 'inquirer';
 import yargs from 'yargs';
-import { existsSync } from 'fs';
+import { existsSync, readdirSync, lstatSync } from 'fs';
 import { join } from 'path';
-import start from './start';
 import chalk from 'chalk';
-const vfs = require('vinyl-fs');
+import rimraf from 'rimraf';
+import download from 'download-git-repo';
+import copySync from './utils/copySync';
+import start from './start';
 
 const prompt = inquirer.createPromptModule();
 
@@ -18,47 +20,50 @@ const argv = yargs // eslint-disable-line
     start('build');
   })
   .command('init', '生成模版项目', () => {
-    prompt([
-      {
-        name: 'name',
-        type: 'input',
-        message: '请输入项目名称',
-        default: 'weappDemo',
-        validate(name) {
-          const cwd = process.cwd();
-          if (existsSync(join(cwd, name))) {
-            console.log(chalk.red(' 已存在同名文件'));
-            return false;
-          }
+    console.log(chalk.green('下载模板组中，请稍后...'));
+    const temp = '__temp';
+    download('tolerance-go/weapp-start-templates', temp, function(err) {
+      if (err) {
+        rimraf.sync(temp);
+        return console.log(chalk.red('下载模板组失败，请重试几次看看', err));
+      }
+      console.log(chalk.green('下载模板组成功，生成临时目录', temp));
+      const tpls = readdirSync(temp).filter(file => {
+        if (lstatSync(join(temp, file)).isDirectory()) {
           return true;
+        }
+      });
+      prompt([
+        {
+          name: 'name',
+          type: 'input',
+          message: '请输入项目名称',
+          default: 'weappDemo',
+          validate(name) {
+            const cwd = process.cwd();
+            if (existsSync(join(cwd, name))) {
+              console.log(chalk.red('已存在同名文件'));
+              return false;
+            }
+            return true;
+          },
         },
-      },
-      {
-        name: 'tpl',
-        type: 'list',
-        choices: ['standard-project'],
-        message: '请选择模版类型',
-      },
-      // {
-      //   name: 'eslint',
-      //   message: '是否使用eslint',
-      //   type: 'confirm',
-      // },
-      // {
-      //   name: 'style',
-      //   message: '请选择wxss的编译语言',
-      //   type: 'list',
-      //   choices: ['less', 'stylus'],
-      // },
-      // {
-      //   name: 'xml',
-      //   message: '请选择wxml的编译语言',
-      //   type: 'list',
-      //   choices: ['pug'],
-      // },
-    ]).then(input => {
-      vfs.src(join(__dirname, '../templates', input.tpl, '/**/*.*')).pipe(vfs.dest(input.name));
-      console.log(chalk.green('Thanks for your use! @bzone'));
+        {
+          name: 'tpl',
+          type: 'list',
+          choices: tpls,
+          message: '请选择模版类型',
+        },
+      ])
+        .then(input => {
+          copySync(join(temp, input.tpl), input.name);
+          rimraf.sync(temp);
+          console.log(chalk.green('Thanks for your use! @bzone'));
+        })
+        .catch(err => {
+          rimraf.sync(temp);
+          console.log(chalk.red(err));
+        });
     });
   })
   .help()

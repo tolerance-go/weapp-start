@@ -1,8 +1,0 @@
-view.cell(class="{{last ? 'last' : ''}} {{item.done ? 'done' : ''}}")
-  view.cell-content
-    text {{item.todo}}
-  view.cell-action
-    view.cell-action-top.action
-      text(bind:tap='onRemove') 删除
-    view.cell-action-btm.action
-      text(bind:tap='onDone') {{item.done ? '撤回' : '完成'}}
