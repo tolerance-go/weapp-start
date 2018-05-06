@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "🌱",
+  "usingComponents": {
+    "cell": "/components/cell/index"
+  }
+}

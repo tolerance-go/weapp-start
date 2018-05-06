@@ -1,0 +1,46 @@
+.cell {
+  &.last {
+    border-bottom: none;
+  }
+  &.done {
+    .cell-content {
+      text-decoration: line-through;
+    }
+  }
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 140rpx;
+  background: #eee;
+  &-content {
+    padding: 40rpx;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+  }
+  &-action {
+    font-size: 22rpx;
+    border-left: 1px solid #ddd;
+    width: 200rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    text-align: center;
+    &-top {
+      border-bottom: 1px solid #ddd;
+    }
+  }
+}
+.action {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.disable {
+    color: #ccc;
+  }
+}

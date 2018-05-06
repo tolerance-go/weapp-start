@@ -1,0 +1,52 @@
+// test less @import feat
+// @import (reference) url('/theme/var.less');
+// @import (reference) url('../theme/var.less');
+// @import url('/theme/var.less');
+@import url('../theme/var.less');
+
+.container {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.input {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  background: #ddd;
+  &-item {
+    padding: 40rpx;
+    flex-grow: 1;
+  }
+  &-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 202rpx;
+    color: #fff;
+    background: #aaa;
+  }
+}
+
+.all {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 60rpx;
+  font-size: 26rpx;
+  color: #fff;
+  &-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: red;
+    flex-grow: 1;
+  }
+  &-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ccc;
+    flex-grow: 1;
+  }
+}

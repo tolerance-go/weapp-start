@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "weapp-start dev",
+    "init": "weapp-start init"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^3.19.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "prettier": "^1.12.1",
+    "weapp-plugin-babel": "file:../packages/weapp-plugin-babel",
+    "weapp-plugin-eslint": "file:../packages/weapp-plugin-eslint",
+    "weapp-plugin-less": "file:../packages/weapp-plugin-less",
+    "weapp-plugin-pug": "file:../packages/weapp-plugin-pug",
+    "weapp-plugin-require": "file:../packages/weapp-plugin-require",
+    "weapp-plugin-stylus": "file:../packages/weapp-plugin-stylus",
+    "weapp-start": "file:../packages/weapp-start"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "lodash": "^4.17.10"
+  }
+}
