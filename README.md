@@ -31,7 +31,7 @@ weapp-start -h
 生成开发模版
 
 ```bash
-wepy init
+weapp-start init
 ```
 
 进入生成目录，安装依赖
@@ -43,7 +43,7 @@ npm i
 启动实时编译
 
 ```bash
-wepy-cli dev
+weapp-start dev
 ```
 
 使用微信开发者工具新建项目，项目目录选择刚刚生成的文件夹，会自动导入项目配置
