@@ -50,6 +50,14 @@ weapp-start dev
 
 使用微信开发者工具新建项目，项目目录选择刚刚生成的文件夹，会自动导入项目配置
 
+# Tips
+
+- `weapp-plugin-require` 是基于 `commonJS` 模块规范的静态处理，也就是说 `es6` 的话，需要配合 `weapp-plugin-babel` 插件使用，
+`weapp-plugin-babel` 的顺序要在它之前。
+
+- 小程序里面对于 `require('common.js')` 是当做相对路径的，而在 node 中是作为模块查找的，因此应该避免这种隐式的相对路径写法，应该用 `require('./common.js')` 代替；`weapp-plugin-require` 对二者做了兼容，不过会发出提示信息要求修改路径
+
+
 # Plugins
 
 * weapp-plugin-babel
@@ -67,7 +75,6 @@ weapp-start dev
 
 # Links
 
-* [Documentation](https://github.com/tolerance-go/weapp-start/tree/master/docs/README.md)
 * [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
 * Updatelog - 参考 `packages` 下各个包的 `CHANGELOG`
 
