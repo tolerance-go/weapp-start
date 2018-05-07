@@ -15,6 +15,9 @@ const npmHack = (lib, contents) => {
     case '_html.js':
       contents = 'module.exports = false;';
       break;
+    case '_cof.js':
+      contents = contents.replace('return toString.call(it).slice(8, -1);', "return 'process'");
+      break;
     case '_microtask.js':
       contents = contents.replace('if(Observer)', 'if(false && Observer)');
       // IOS 1.10.2 Promise BUG
