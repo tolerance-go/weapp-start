@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.7"></a>
+## [0.1.7](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-less@0.1.6...weapp-plugin-less@0.1.7) (2018-05-07)
+
+
+### Bug Fixes
+
+*  修复[@import](https://github.com/import) 文件中继续 [@import](https://github.com/import) 的路径解析错误 ([efe951e](https://github.com/tolerance-go/weapp-cli/commit/efe951e))
+
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-less@0.1.5...weapp-plugin-less@0.1.6) (2018-05-07)
 
