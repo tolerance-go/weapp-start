@@ -1,7 +1,8 @@
 const { join, relative, isAbsolute, basename, parse } = require('path');
 const { readFileSync, existsSync } = require('fs');
 const resolveCwd = require('resolve-cwd');
-const { addExt } = require('./utils');
+const utils = require('./utils');
+const Module = require('module');
 
 const npmHack = (lib, contents) => {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
@@ -169,8 +170,18 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
       lib.startsWith('.') // require('./ohter');
     ) {
       if (isNpm) {
-        libResolvedPath = join(parse(dependResolvedPath).dir, addExt(lib, '.js'));
-        libResolvedDistPath = join(parse(dependDistPath).dir, addExt(lib, '.js'));
+        const dependResolvedPathOpts = parse(dependResolvedPath);
+        const dependDistPathOpts = parse(dependDistPath);
+        const isDirectory = utils.isDir(join(dependResolvedPathOpts.dir, lib));
+
+        if (isDirectory) {
+          libResolvedPath = join(dependResolvedPathOpts.dir, lib, 'index.js');
+          libResolvedDistPath = join(dependDistPathOpts.dir, lib, 'index.js');
+        } else {
+          libResolvedPath = join(dependResolvedPathOpts.dir, utils.addExt(lib, '.js'));
+          libResolvedDistPath = join(dependDistPathOpts.dir, utils.addExt(lib, '.js'));
+        }
+
         let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
         contents = npmHack(basename(libResolvedPath), contents);
