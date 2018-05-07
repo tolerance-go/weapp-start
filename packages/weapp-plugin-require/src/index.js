@@ -49,7 +49,7 @@ const pushExtra = (distResolvedPath, contents, extra) => {
 };
 
 const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta, extra) => {
-  return dependCode.replace(/[^.]require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
+  return dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
 
@@ -127,7 +127,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
     ) {
       relativeDistPath = lib;
     }
-    return `require('${relativeDistPath}')`;
+    return `${match[0] === 'r' ? '' : match[0]}require('${relativeDistPath}')`;
   });
 };
 
