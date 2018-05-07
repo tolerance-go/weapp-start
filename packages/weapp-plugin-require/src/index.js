@@ -65,8 +65,8 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
       lib.indexOf('/') === -1 // require('asset');
     ) {
       try {
-      libResolvedPath = resolveCwd(lib);
-      libResolvedDistPath = join(meta.dist, npmFolder, basename(libResolvedPath));
+        libResolvedPath = resolveCwd(lib);
+        libResolvedDistPath = join(meta.dist, npmFolder, basename(libResolvedPath));
       } catch (error) {
         // var common = require('common.js')
         // 小程序里面 相对路径可以省略 ./ 直接引用和第三方模块引入方式冲突
@@ -84,11 +84,13 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
                 match
             );
             if (utils.isDir(join(drpOpts.dir, lib))) {
-              libResolvedPath = join(drpOpts.dir, lib, 'index.js');
-              libResolvedDistPath = join(meta.dist, npmFolder, lib, 'index.js');
+              // libResolvedPath = join(drpOpts.dir, lib, 'index.js');
+              // libResolvedDistPath = join(meta.dist, npmFolder, lib, 'index.js');
+              relativeDistPath = './' + join(lib, 'index.js');
             } else {
-              libResolvedPath = join(drpOpts.dir, utils.addExt(lib, '.js'));
-              libResolvedDistPath = join(meta.dist, npmFolder, utils.addExt(lib, '.js'));
+              // libResolvedPath = join(drpOpts.dir, utils.addExt(lib, '.js'));
+              // libResolvedDistPath = join(meta.dist, npmFolder, utils.addExt(lib, '.js'));
+              relativeDistPath = './' + join(utils.addExt(lib));
             }
           } else {
             throw error;
@@ -96,18 +98,20 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
         }
       }
 
-      relativeDistPath = relative(dependDistPath, libResolvedDistPath);
+      if (!relativeDistPath) {
+        relativeDistPath = relative(dependDistPath, libResolvedDistPath);
 
-      // ../lodash.js -> ./lodash
-      relativeDistPath = relativeDistPath.slice(1);
+        // ../lodash.js -> ./lodash
+        relativeDistPath = relativeDistPath.slice(1);
 
-      let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
+        let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-      contents = npmHack(basename(libResolvedPath), contents);
+        contents = npmHack(basename(libResolvedPath), contents);
 
-      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
+        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
-      pushExtra(libResolvedDistPath, contents, extra);
+        pushExtra(libResolvedDistPath, contents, extra);
+      }
     }
 
     if (
@@ -120,7 +124,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
       const inner = lib.slice(firstStep + 1);
 
       try {
-      libResolvedPath = resolveCwd(mainNpm);
+        libResolvedPath = resolveCwd(mainNpm);
       } catch (error) {
         // 类似 babel-runtime 这种没有 main 和 index 的包
         if (error.code === 'MODULE_NOT_FOUND') {
