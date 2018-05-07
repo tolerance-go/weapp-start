@@ -41,7 +41,6 @@ export default function({ config, file, status, extra }, plgConfig) {
     less
       .render(contents, plgConfig)
       .then((res, imports) => {
-        debugger;
         file.contents = res.css;
         resolve({ config, file, status, extra });
       })
