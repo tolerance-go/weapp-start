@@ -45,5 +45,8 @@
     "uglify-js": "^3.3.18",
     "umi-test": "^0.5.3",
     "vinyl-fs": "^3.0.2"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
   }
 }

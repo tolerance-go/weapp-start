@@ -7,8 +7,5 @@
   },
   "main": "./lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "babel-runtime": "^6.26.0"
-  }
+  "license": "MIT"
 }
