@@ -1,5 +1,5 @@
 const { join, relative, isAbsolute, basename, parse } = require('path');
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 const resolveCwd = require('resolve-cwd');
 const { addExt } = require('./utils');
 
@@ -39,6 +39,15 @@ const npmHack = (lib, contents) => {
 
 const npmFolder = 'npm';
 
+const pushExtra = (distResolvedPath, contents, extra) => {
+  if (existsSync(distResolvedPath)) return;
+  extra.push({
+    path: distResolvedPath,
+    mode: 'add',
+    contents,
+  });
+};
+
 const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta, extra) => {
   return dependCode.replace(/[^.]require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
@@ -67,11 +76,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
       contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
-      extra.push({
-        path: libResolvedDistPath,
-        mode: 'add',
-        contents,
-      });
+      pushExtra(libResolvedDistPath, contents, extra);
     }
 
     if (
@@ -97,11 +102,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
       contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
-      extra.push({
-        path: libResolvedDistPath,
-        mode: 'add',
-        contents,
-      });
+      pushExtra(libResolvedDistPath, contents, extra);
     }
 
     if (
@@ -116,11 +117,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
         contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
-        extra.push({
-          path: libResolvedDistPath,
-          mode: 'add',
-          contents,
-        });
+        pushExtra(libResolvedDistPath, contents, extra);
       }
       relativeDistPath = lib;
     }
