@@ -63,8 +63,38 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
     if (
       lib.indexOf('/') === -1 // require('asset');
     ) {
+      try {
       libResolvedPath = resolveCwd(lib);
       libResolvedDistPath = join(meta.dist, npmFolder, basename(libResolvedPath));
+      } catch (error) {
+        // var common = require('common.js')
+        // 小程序里面 相对路径可以省略 ./ 直接引用和第三方模块引入方式冲突
+        if (error.code === 'MODULE_NOT_FOUND') {
+          if (!isNpm) {
+            const drpOpts = parse(dependResolvedPath);
+            let exist = utils.isExist(join(drpOpts.dir, lib));
+
+            if (!exist) {
+              throw error;
+            }
+
+            console.log(
+              '建议小程序中 require module 的路径，使用显示的相对路径 "./module" 来代替 "module" :' +
+                match
+            );
+            if (utils.isDir(join(drpOpts.dir, lib))) {
+              libResolvedPath = join(drpOpts.dir, lib, 'index.js');
+              libResolvedDistPath = join(meta.dist, npmFolder, lib, 'index.js');
+            } else {
+              libResolvedPath = join(drpOpts.dir, utils.addExt(lib, '.js'));
+              libResolvedDistPath = join(meta.dist, npmFolder, utils.addExt(lib, '.js'));
+            }
+          } else {
+            throw error;
+          }
+        }
+      }
+
       relativeDistPath = relative(dependDistPath, libResolvedDistPath);
 
       // ../lodash.js -> ./lodash
