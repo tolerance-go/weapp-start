@@ -12,7 +12,7 @@ const resolver = {
         if (path.isAbsolute(filename)) {
           filename = path.join(process.cwd(), cache.src, filename);
         } else {
-          filename = path.join(cache.dirname, filename);
+          filename = path.join(dir || cache.dirname, filename);
         }
         const contents = fs.readFileSync(filename, 'utf8');
         // FIXME adding prefix while I shouldn't have to
