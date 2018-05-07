@@ -114,13 +114,43 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
       !lib.startsWith('/') &&
       !lib.startsWith('.')
     ) {
-      const [mainNpm, inner] = lib.split('/');
+      const firstStep = [].findIndex.call(lib, it => it === '/');
+      const mainNpm = lib.slice(0, firstStep);
+      const inner = lib.slice(firstStep + 1);
+
+      try {
       libResolvedPath = resolveCwd(mainNpm);
-      libResolvedPath = join(
-        libResolvedPath.replace(basename(libResolvedPath), ''),
-        addExt(inner, '.js')
-      );
-      libResolvedDistPath = join(meta.dist, npmFolder, mainNpm, addExt(inner, '.js'));
+      } catch (error) {
+        // 类似 babel-runtime 这种没有 main 和 index 的包
+        if (error.code === 'MODULE_NOT_FOUND') {
+          let exist = false;
+          const resolveModules = Module._nodeModulePaths(process.cwd(), 'noop.js');
+          for (let modulePath of resolveModules) {
+            libResolvedPath = join(modulePath, mainNpm);
+            if (existsSync(libResolvedPath)) {
+              const pkgPath = join(libResolvedPath, 'package.json');
+              const mainField = require(pkgPath).main;
+              libResolvedPath = join(libResolvedPath, mainField || '', 'noop.js');
+              exist = true;
+              break;
+            }
+          }
+          if (!exist) {
+            throw error;
+          }
+        }
+      }
+
+      // libResolvedPath 一定是带 base 的路径
+      const libResolvedPathOpts = parse(libResolvedPath);
+
+      if (utils.isDir(join(libResolvedPathOpts.dir, inner))) {
+        libResolvedPath = join(libResolvedPathOpts.dir, inner, 'index.js');
+        libResolvedDistPath = join(meta.dist, npmFolder, mainNpm, inner, 'index.js');
+      } else {
+        libResolvedPath = join(libResolvedPathOpts.dir, utils.addExt(inner, '.js'));
+        libResolvedDistPath = join(meta.dist, npmFolder, mainNpm, utils.addExt(inner, '.js'));
+      }
 
       relativeDistPath = relative(dependDistPath, libResolvedDistPath);
       // ../lodash.js -> ./lodash
