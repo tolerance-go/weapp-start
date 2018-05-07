@@ -66,7 +66,12 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
     ) {
       try {
         libResolvedPath = resolveCwd(lib);
-        libResolvedDistPath = join(meta.dist, npmFolder, basename(libResolvedPath));
+        const libBaseName = basename(libResolvedPath);
+        libResolvedDistPath = join(
+          meta.dist,
+          npmFolder,
+          libBaseName === 'index.js' ? utils.addExt(lib) : libBaseName
+        );
       } catch (error) {
         // var common = require('common.js')
         // 小程序里面 相对路径可以省略 ./ 直接引用和第三方模块引入方式冲突
