@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.2.0...weapp-plugin-require@0.2.1) (2018-05-08)
+
+
+### Bug Fixes
+
+* 修复babel-runtime环境监测错误 ([bc0fe6e](https://github.com/tolerance-go/weapp-cli/commit/bc0fe6e))
+* 修复某些第三方包在npm下文件名都为index.js ([3cbfc95](https://github.com/tolerance-go/weapp-cli/commit/3cbfc95))
+
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.1.4...weapp-plugin-require@0.2.0) (2018-05-07)
 
