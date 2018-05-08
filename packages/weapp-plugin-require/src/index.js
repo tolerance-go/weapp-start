@@ -4,35 +4,42 @@ const resolveCwd = require('resolve-cwd');
 const utils = require('./utils');
 const Module = require('module');
 
-const npmHack = (lib, contents) => {
+const npmHack = (libResolvedPath, contents) => {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
   // 这里在编译这一步直接做替换 否则报错
   contents = contents.replace(/process\.env\.NODE_ENV/g, JSON.stringify(process.env.NODE_ENV));
-  switch (lib) {
-    case 'lodash.js':
-    case '_global.js':
-      contents = contents.replace("Function('return this')()", 'this');
-      break;
-    case '_html.js':
-      contents = 'module.exports = false;';
-      break;
-    case '_cof.js':
-      contents = contents.replace('return toString.call(it).slice(8, -1);', "return 'process'");
-      break;
-    case '_microtask.js':
-      contents = contents.replace('if(Observer)', 'if(false && Observer)');
-      // IOS 1.10.2 Promise BUG
-      contents = contents.replace(
-        'Promise && Promise.resolve',
-        'false && Promise && Promise.resolve'
-      );
-      break;
-    case '_freeGlobal.js':
-      contents = contents.replace(
-        'module.exports = freeGlobal;',
-        'module.exports = freeGlobal || this;'
-      );
+
+  if (
+    libResolvedPath.match('core-js/library/modules/_global.js') ||
+    libResolvedPath.match('lodash.js')
+  ) {
+    contents = contents.replace("Function('return this')()", 'this');
   }
+
+  if (libResolvedPath.match('core-js/library/modules/_html.js')) {
+    contents = 'module.exports = false;';
+  }
+
+  if (libResolvedPath.match('core-js/library/modules/_cof.js')) {
+    contents = contents.replace('return toString.call(it).slice(8, -1);', "return ''");
+  }
+
+  if (libResolvedPath.match('core-js/library/modules/_microtask.js')) {
+    contents = contents.replace('if (Observer', 'if (false && Observer');
+    // IOS 1.10.2 Promise BUG
+    contents = contents.replace(
+      'Promise && Promise.resolve',
+      'false && Promise && Promise.resolve'
+    );
+  }
+
+  if (libResolvedPath.match('core-js/library/modules/_freeGlobal.js')) {
+    contents = contents.replace(
+      'module.exports = freeGlobal;',
+      'module.exports = freeGlobal || this;'
+    );
+  }
+
   return contents;
 };
 
@@ -111,7 +118,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
         let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-        contents = npmHack(basename(libResolvedPath), contents);
+        contents = npmHack(libResolvedPath, contents);
 
         contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
@@ -168,7 +175,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
       let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-      contents = npmHack(basename(libResolvedPath), contents);
+      contents = npmHack(libResolvedPath, contents);
 
       contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
@@ -193,7 +200,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
         let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-        contents = npmHack(basename(libResolvedPath), contents);
+        contents = npmHack(libResolvedPath, contents);
 
         contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
 
