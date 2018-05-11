@@ -66,8 +66,10 @@ function transform(opts = {}) {
         }
         return result;
       })
-      .catch(e => log.error(e));
-  }, params);
+      .catch(err => {
+        log.error(`[${next.name} error]: ${err}`);
+      });
+  }, options);
 
   return waitPlg
     .then(options => {
