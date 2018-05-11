@@ -12,11 +12,20 @@ const resolveCwd = require('resolve-cwd');
 const cwd = process.cwd();
 
 const getConfig = () => {
-  const pt = join(cwd, 'weapp-config.js');
-  if (!existsSync(pt)) {
-    return log.error('weapp-config.js cannot find');
+  const pts = [join(cwd, 'weapp.config.js'), join(cwd, 'weapp-config.js')];
+  let existPt;
+
+  for (let pt of pts) {
+    if (existsSync(pt)) {
+      existPt = pt;
+      break;
+    }
   }
-  const config = require(pt);
+  if (!existPt) {
+    throw new Error('weapp-config.js cannot find');
+  }
+
+  const config = require(existPt);
   return config.default || config;
 };
 
