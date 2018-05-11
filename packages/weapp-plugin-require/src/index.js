@@ -56,7 +56,7 @@ const pushExtra = (distResolvedPath, contents, extra) => {
   });
 };
 
-const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta, extra) => {
+const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, extra) => {
   return dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
@@ -75,7 +75,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
         libResolvedPath = resolveCwd(lib);
         const libBaseName = basename(libResolvedPath);
         libResolvedDistPath = join(
-          meta.dist,
+          config.resolvedDist,
           npmFolder,
           libBaseName === 'index.js' ? utils.addExt(lib) : libBaseName
         );
@@ -92,16 +92,16 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
             }
 
             console.log(
-              '建议小程序中 require module 的路径，使用显示的相对路径 "./module" 来代替 "module" :' +
+              '[weapp-plugin-require]: 建议小程序中 require module 的路径，使用显示的相对路径 "./module" 来代替 "module" :' +
                 match
             );
             if (utils.isDir(join(drpOpts.dir, lib))) {
               // libResolvedPath = join(drpOpts.dir, lib, 'index.js');
-              // libResolvedDistPath = join(meta.dist, npmFolder, lib, 'index.js');
+              // libResolvedDistPath = join(config.dist, npmFolder, lib, 'index.js');
               relativeDistPath = './' + join(lib, 'index.js');
             } else {
               // libResolvedPath = join(drpOpts.dir, utils.addExt(lib, '.js'));
-              // libResolvedDistPath = join(meta.dist, npmFolder, utils.addExt(lib, '.js'));
+              // libResolvedDistPath = join(config.dist, npmFolder, utils.addExt(lib, '.js'));
               relativeDistPath = './' + join(utils.addExt(lib));
             }
           } else {
@@ -120,7 +120,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
         contents = npmHack(libResolvedPath, contents);
 
-        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
+        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
 
         pushExtra(libResolvedDistPath, contents, extra);
       }
@@ -163,10 +163,15 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
       if (utils.isDir(join(libResolvedPathOpts.dir, inner))) {
         libResolvedPath = join(libResolvedPathOpts.dir, inner, 'index.js');
-        libResolvedDistPath = join(meta.dist, npmFolder, mainNpm, inner, 'index.js');
+        libResolvedDistPath = join(config.resolvedDist, npmFolder, mainNpm, inner, 'index.js');
       } else {
         libResolvedPath = join(libResolvedPathOpts.dir, utils.addExt(inner, '.js'));
-        libResolvedDistPath = join(meta.dist, npmFolder, mainNpm, utils.addExt(inner, '.js'));
+        libResolvedDistPath = join(
+          config.resolvedDist,
+          npmFolder,
+          mainNpm,
+          utils.addExt(inner, '.js')
+        );
       }
 
       relativeDistPath = relative(dependDistPath, libResolvedDistPath);
@@ -177,7 +182,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
       contents = npmHack(libResolvedPath, contents);
 
-      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
+      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
 
       pushExtra(libResolvedDistPath, contents, extra);
     }
@@ -202,7 +207,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 
         contents = npmHack(libResolvedPath, contents);
 
-        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, meta, extra);
+        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
 
         pushExtra(libResolvedDistPath, contents, extra);
       }
@@ -219,16 +224,18 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, meta
 };
 
 const requiretrans = ({ config, file, status, extra }) => {
-  if (file.extname !== '.js') return;
-  const { cwd } = file;
-  const { src, dist } = config;
-  const dependDistPath = join(cwd, dist, relative(join(cwd, src), file.path));
+  if (file.ext !== '.js') return;
+  const { resolvedDist, resolvedSrc } = config;
+  const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
-
-  const meta = {
-    dist: join(cwd, dist),
-  };
-  file.contents = checkDeps(file.contents, dependResolvedPath, dependDistPath, false, meta, extra);
+  file.contents = checkDeps(
+    file.contents,
+    dependResolvedPath,
+    dependDistPath,
+    false,
+    config,
+    extra
+  );
 };
 
 export default requiretrans;
