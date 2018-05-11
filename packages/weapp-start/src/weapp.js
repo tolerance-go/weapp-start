@@ -6,7 +6,7 @@ import { join } from 'path';
 import chalk from 'chalk';
 import rimraf from 'rimraf';
 import download from 'download-git-repo';
-import { copySync } from './utils/save';
+import { saveCopy } from './utils/save';
 import start from './start';
 
 const prompt = inquirer.createPromptModule();
@@ -56,7 +56,7 @@ const argv = yargs // eslint-disable-line
         },
       ])
         .then(input => {
-          copySync(join(temp, input.tpl), input.name);
+          saveCopy(join(temp, input.tpl), input.name);
           rimraf.sync(temp);
           console.log(chalk.green('Thanks for your use! @bzone'));
         })
