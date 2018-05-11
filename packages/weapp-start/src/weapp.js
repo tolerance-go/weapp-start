@@ -6,7 +6,7 @@ import { join } from 'path';
 import chalk from 'chalk';
 import rimraf from 'rimraf';
 import download from 'download-git-repo';
-import copySync from './utils/copySync';
+import { copySync } from './utils/save';
 import start from './start';
 
 const prompt = inquirer.createPromptModule();
