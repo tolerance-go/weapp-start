@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-less@0.1.7...weapp-plugin-less@0.2.0) (2018-05-11)
+
+
+### Features
+
+* 增加配置参数 ([16a994a](https://github.com/tolerance-go/weapp-cli/commit/16a994a))
+
+
+
+
 <a name="0.1.7"></a>
 ## [0.1.7](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-less@0.1.6...weapp-plugin-less@0.1.7) (2018-05-07)
 

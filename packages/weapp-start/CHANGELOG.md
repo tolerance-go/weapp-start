@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@0.1.6...weapp-start@1.0.0) (2018-05-11)
+
+
+### Features
+
+* 支持插件修改文件名称 ([98a8081](https://github.com/tolerance-go/weapp-cli/commit/98a8081))
+* 配置文件名称新增 weapp.config.js ([d2580df](https://github.com/tolerance-go/weapp-cli/commit/d2580df))
+
+
+### Performance Improvements
+
+* 优化插件报错定位 ([9856e80](https://github.com/tolerance-go/weapp-cli/commit/9856e80))
+
+
+### BREAKING CHANGES
+
+* 插件接受的 file 参数字段变化
+
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@0.1.5...weapp-start@0.1.6) (2018-05-07)
 

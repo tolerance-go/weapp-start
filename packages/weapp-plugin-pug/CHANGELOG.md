@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.6"></a>
+## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.1.5...weapp-plugin-pug@0.1.6) (2018-05-11)
+
+
+### Bug Fixes
+
+* 兼容 weapp-start 1.0.0 ([1ff672d](https://github.com/tolerance-go/weapp-cli/commit/1ff672d))
+
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.1.4...weapp-plugin-pug@0.1.5) (2018-05-07)
 

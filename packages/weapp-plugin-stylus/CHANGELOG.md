@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-stylus@0.1.5...weapp-plugin-stylus@0.2.0) (2018-05-11)
+
+
+### Features
+
+* 增加配置参数 ([5c713f7](https://github.com/tolerance-go/weapp-cli/commit/5c713f7))
+
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-stylus@0.1.4...weapp-plugin-stylus@0.1.5) (2018-05-07)
 

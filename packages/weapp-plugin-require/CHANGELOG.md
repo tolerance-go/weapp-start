@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.2.1...weapp-plugin-require@0.2.2) (2018-05-11)
+
+
+### Bug Fixes
+
+* 兼容 weapp-start 1.0.0 ([c7424e6](https://github.com/tolerance-go/weapp-cli/commit/c7424e6))
+
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.2.0...weapp-plugin-require@0.2.1) (2018-05-08)
 
