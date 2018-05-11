@@ -1,10 +1,22 @@
 {
-  "pages": ["page/index"],
+  "pages": ["page/index", "page/styl/index"],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "演示",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "page/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "page/styl/index",
+        "text": "styl"
+      }
+    ]
   },
   "networkTimeout": {
     "request": 10000,
