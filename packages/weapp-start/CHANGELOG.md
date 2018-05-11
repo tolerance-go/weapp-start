@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.0.0...weapp-start@1.0.1) (2018-05-11)
+
+
+### Bug Fixes
+
+* saveCopy spelling mistakes ([57251a2](https://github.com/tolerance-go/weapp-cli/commit/57251a2))
+
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@0.1.6...weapp-start@1.0.0) (2018-05-11)
 
