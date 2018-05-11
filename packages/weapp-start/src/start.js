@@ -1,13 +1,11 @@
-const vfs = require('vinyl-fs');
-const through = require('through2');
-const rimraf = require('rimraf');
-const { readFileSync, existsSync } = require('fs');
-const { join, relative, parse } = require('path');
-const chokidar = require('chokidar');
-const assert = require('./utils/assert');
-const log = require('./utils/log');
-const write = require('./utils/write');
-const resolveCwd = require('resolve-cwd');
+import rimraf from 'rimraf';
+import { statSync, readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join, relative, parse } from 'path';
+import chokidar from 'chokidar';
+import assert from './utils/assert';
+import log from './utils/log';
+import { saveWrite } from './utils/save';
+import resolveCwd from 'resolve-cwd';
 
 const cwd = process.cwd();
 
@@ -33,7 +31,6 @@ const getConfig = () => {
 
 function transform(opts = {}) {
   const { status, config, file } = opts;
-  const { cwd } = file;
 
   const extra = {
     _extra: [],
@@ -49,10 +46,10 @@ function transform(opts = {}) {
     },
   };
 
-  const params = Promise.resolve({ config, file, status, extra });
+  const options = Promise.resolve({ config, file, status, extra });
 
-  const waitPlg = config.resolvedPlugins.reduce(async (params, next) => {
-    return params
+  const waitPlg = config.resolvedPlugins.reduce(async (options, next) => {
+    return options
       .then(options => {
         let result = next.plugin(options, next.config);
         if (result) {
@@ -77,7 +74,7 @@ function transform(opts = {}) {
         setTimeout(() => {
           if (mode === 'add') {
             log.success(`${resolvedPath.replace(`${cwd}/`, '')}`, 'NPM ADD');
-            write(resolvedPath, contents);
+            saveWrite(resolvedPath, contents);
           }
           if (mode === 'remove') {
             rimraf.sync(resolvedPath);
@@ -89,35 +86,53 @@ function transform(opts = {}) {
     .catch(e => log.error(e));
 }
 
+async function copy(resolvedSrcPath, resolvedDistPath, transform, config) {
+  if (!existsSync(resolvedSrcPath)) return;
+  const status = statSync(resolvedSrcPath);
+  if (status.isDirectory()) {
+    mkdirSync(resolvedDistPath);
+    const files = readdirSync(resolvedSrcPath);
+    files.forEach(file => {
+      copy(join(resolvedSrcPath, file), join(resolvedDistPath, file), transform, config);
+    });
+  } else {
+    try {
+      const contents = readFileSync(resolvedSrcPath);
+      const pathObj = parse(resolvedSrcPath);
+      const passFile = {
+        ...pathObj,
+        contents,
+        path: resolvedSrcPath,
+      };
+      log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
+      const { file } = await transform({ config, file: passFile });
+      writeFileSync(
+        join(parse(resolvedDistPath).dir, `${file.name}${file.ext}`), // no-prettier
+        file.contents
+      );
+    } catch (err) {
+      log.error(err);
+    }
+  }
+}
+
 function build(config) {
-  const { src, dist } = config;
-  rimraf.sync(join(cwd, dist));
-  vfs
-    .src(join(src, '/**/*.*'))
-    .pipe(
-      through.obj(async (file, enc, cb) => {
-        const { basename, extname, dirname, cwd, path, contents } = file;
-        // File.contents can only be a Buffer, a Stream, or null.
-        const passFile = { basename, extname, dirname, cwd, path, contents };
-        log.info(`${path.replace(`${cwd}/`, '')}`, 'TRANSFORM');
-        const options = await transform({
-          config,
-          file: passFile,
-        });
-        file.contents = new Buffer(options.file.contents);
-        cb(null, file);
-      })
-    )
-    .pipe(vfs.dest(dist));
+  const { resolvedDist, resolvedSrc } = config;
+  rimraf.sync(resolvedDist);
+  copy(resolvedSrc, resolvedDist, transform, config);
 }
 
 const start = mode => {
   const config = {
+    cwd,
     src: 'src',
     dist: 'dist',
     plugins: [],
     ...getConfig(),
   };
+
+  config.resolvedSrc = join(cwd, config.src);
+  config.resolvedDist = join(cwd, config.dist);
 
   const { src, dist, plugins } = config;
   const dev = mode === 'dev';
@@ -135,6 +150,7 @@ const start = mode => {
     if (!existsSync(resolvedPath)) log.error(`npm ${plg} not find, please install first`);
     const npm = require(resolvedPath);
     return {
+      name: plg,
       config: plgConfig,
       plugin: npm.default || npm,
     };
@@ -163,14 +179,10 @@ const start = mode => {
       }
 
       if (event !== 'addDir') {
-        const relPath = relative(join(cwd, src), fullPath);
         const contents = readFileSync(fullPath, 'utf-8');
         const pathData = parse(fullPath);
         const file = {
-          basename: pathData.base,
-          extname: pathData.ext,
-          dirname: pathData.dir,
-          cwd,
+          ...pathData,
           path: fullPath,
           contents,
         };
@@ -180,10 +192,15 @@ const start = mode => {
             config,
             status: event,
           });
-          write(join(cwd, dist, relPath), options.file.contents);
+
+          const distFullPath = join(
+            config.resolvedDist,
+            parse(relative(config.resolvedSrc, fullPath)).dir,
+            `${options.file.name}${options.file.ext}`
+          );
+          saveWrite(distFullPath, options.file.contents);
         } catch (e) {
-          log.error('Compiled failed.');
-          log.error(e.message);
+          log.error(`Compiled failed: ${e.message}`);
         }
       }
     });
