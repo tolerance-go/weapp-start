@@ -27,23 +27,30 @@ const resolver = {
 };
 
 export default function({ config, file, status, extra }, plgConfig) {
-  if (file.extname !== '.wxss') return;
+  const defaultConfig = {
+    ext: '.wxss',
+    afterExt: '.wxss',
+    plugins: [resolver],
+    ...plgConfig,
+  };
+
+  // eslint-disable-next-line
+  const { ext, afterExt, ...passConfig } = defaultConfig;
+
+  if (!file.ext.match(defaultConfig.ext)) return;
   let contents = file.contents;
   if (Buffer.isBuffer(file.contents)) {
     contents = file.contents.toString();
   }
-  plgConfig.plugins = [resolver];
 
-  cache.dirname = file.dirname;
+  cache.dirname = file.dir;
   cache.src = config.src;
 
   return new Promise((resolve, reject) => {
-    less
-      .render(contents, plgConfig)
-      .then((res, imports) => {
-        file.contents = res.css;
-        resolve({ config, file, status, extra });
-      })
-      .catch(reject);
+    less.render(contents, passConfig).then((res, imports) => {
+      file.contents = res.css;
+      file.ext = defaultConfig.afterExt;
+      resolve({ config, file, status, extra });
+    });
   });
 }
