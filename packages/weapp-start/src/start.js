@@ -1,10 +1,10 @@
 import rimraf from 'rimraf';
-import { statSync, readdirSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { statSync, readdirSync, readFileSync, existsSync, mkdirSync } from 'fs';
 import { join, relative, parse } from 'path';
 import chokidar from 'chokidar';
 import assert from './utils/assert';
 import log from './utils/log';
-import { saveWrite } from './utils/save';
+import { saveWrite, saveCopy } from './utils/save';
 import resolveCwd from 'resolve-cwd';
 
 const cwd = process.cwd();
@@ -93,7 +93,7 @@ function transform(opts = {}) {
       options.extra._extra.forEach(({ path: resolvedPath, mode, contents }) => {
         setTimeout(() => {
           if (mode === 'add') {
-            log.success(`${resolvedPath.replace(`${cwd}/`, '')}`, 'NPM ADD');
+            log.success(`${resolvedPath.replace(`${cwd}/`, '')}`, 'EXTRA');
             saveWrite(resolvedPath, contents);
           }
           if (mode === 'remove') {
@@ -106,32 +106,63 @@ function transform(opts = {}) {
     .catch(e => log.error(e));
 }
 
-async function copy(resolvedSrcPath, resolvedDistPath, transform, config) {
+async function handleFile(resolvedSrcPath, resolvedDistPath, config, status) {
+  log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
+
+  if (resolvedSrcPath.match(/\.(png|jpg|jpeg|jpe|gif)$/gi)) {
+    return saveCopy(resolvedSrcPath, resolvedDistPath);
+  }
+
+  const contents = readFileSync(resolvedSrcPath, 'utf-8');
+  const pathObj = parse(resolvedSrcPath);
+  const passFile = {
+    ...pathObj,
+    contents,
+    path: resolvedSrcPath,
+  };
+
+  const { file } = await transform({
+    file: passFile,
+    config,
+    status,
+  });
+
+  if (!file.throw) {
+    const customResolvedDistPath = join(
+      config.resolvedDist,
+      parse(relative(config.resolvedSrc, resolvedSrcPath)).dir,
+      `${file.name}${file.ext}`
+    );
+
+    saveWrite(customResolvedDistPath, file.contents);
+  }
+
+  const depends = byDependPaths.getDepends(resolvedSrcPath);
+  if (depends.length) {
+    depends.forEach(dependResolvedSrcPath => {
+      const dependResolvedDistPath = join(
+        config.resolvedDist,
+        relative(config.resolvedSrc, dependResolvedSrcPath)
+      );
+      handleFile(dependResolvedSrcPath, dependResolvedDistPath, config, status);
+    });
+  }
+}
+
+async function copy(resolvedSrcPath, resolvedDistPath, handleFile, config) {
   if (!existsSync(resolvedSrcPath)) return;
   const status = statSync(resolvedSrcPath);
   if (status.isDirectory()) {
     mkdirSync(resolvedDistPath);
     const files = readdirSync(resolvedSrcPath);
     files.forEach(file => {
-      copy(join(resolvedSrcPath, file), join(resolvedDistPath, file), transform, config);
+      copy(join(resolvedSrcPath, file), join(resolvedDistPath, file), handleFile, config);
     });
   } else {
     try {
-      const contents = readFileSync(resolvedSrcPath);
-      const pathObj = parse(resolvedSrcPath);
-      const passFile = {
-        ...pathObj,
-        contents,
-        path: resolvedSrcPath,
-      };
-      log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
-      const { file } = await transform({ config, file: passFile });
-      writeFileSync(
-        join(parse(resolvedDistPath).dir, `${file.name}${file.ext}`), // no-prettier
-        file.contents
-      );
+      handleFile(resolvedSrcPath, resolvedDistPath, config);
     } catch (err) {
-      log.error(err);
+      log.error(`copy compiled failed: ${err}`);
     }
   }
 }
@@ -139,7 +170,7 @@ async function copy(resolvedSrcPath, resolvedDistPath, transform, config) {
 function build(config) {
   const { resolvedDist, resolvedSrc } = config;
   rimraf.sync(resolvedDist);
-  copy(resolvedSrc, resolvedDist, transform, config);
+  copy(resolvedSrc, resolvedDist, handleFile, config);
 }
 
 const start = mode => {
@@ -184,43 +215,30 @@ const start = mode => {
     const watcher = chokidar.watch(join(cwd, src), {
       ignoreInitial: true,
     });
-    watcher.on('all', async (event, fullPath) => {
+    watcher.on('all', async (event, resolvedSrcPath) => {
       if (event === 'unlink' || event === 'unlinkDir') {
-        log.print(fullPath.replace(`${cwd}/`, ''), 'REMOVED', 'magenta');
-        return rimraf.sync(join(join(cwd, dist), relative(join(cwd, src), fullPath)));
+        log.print(resolvedSrcPath.replace(`${cwd}/`, ''), 'REMOVED', 'magenta');
+        return rimraf.sync(join(join(cwd, dist), relative(join(cwd, src), resolvedSrcPath)));
       }
 
       if (event === 'add' || event === 'addDir') {
-        log.print(`${fullPath.replace(`${cwd}/`, '')}`, 'ADD', 'yellow');
+        log.print(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'ADD', 'yellow');
       }
 
       if (event === 'change') {
-        log.print(`${fullPath.replace(`${cwd}/`, '')}`, 'CHANGED', 'greenBright');
+        log.print(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'CHANGED', 'greenBright');
       }
 
       if (event !== 'addDir') {
-        const contents = readFileSync(fullPath, 'utf-8');
-        const pathData = parse(fullPath);
-        const file = {
-          ...pathData,
-          path: fullPath,
-          contents,
-        };
         try {
-          const options = await transform({
-            file,
-            config,
-            status: event,
-          });
-
-          const distFullPath = join(
+          const resolvedDistPath = join(
             config.resolvedDist,
-            parse(relative(config.resolvedSrc, fullPath)).dir,
-            `${options.file.name}${options.file.ext}`
+            relative(config.resolvedSrc, resolvedSrcPath)
           );
-          saveWrite(distFullPath, options.file.contents);
+
+          handleFile(resolvedSrcPath, resolvedDistPath, config, event);
         } catch (e) {
-          log.error(`Compiled failed: ${e.message}`);
+          log.error(`changed file compiled failed: ${e.message}`);
         }
       }
     });
