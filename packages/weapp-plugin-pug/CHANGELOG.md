@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.1.6...weapp-plugin-pug@0.2.0) (2018-05-17)
+
+
+### Features
+
+* add afterExt option ([87513af](https://github.com/tolerance-go/weapp-cli/commit/87513af))
+* add match option ([60046da](https://github.com/tolerance-go/weapp-cli/commit/60046da))
+
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.1.5...weapp-plugin-pug@0.1.6) (2018-05-11)
 

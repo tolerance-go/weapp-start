@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-eslint@0.1.6...weapp-plugin-eslint@0.2.0) (2018-05-17)
+
+
+### Features
+
+* add ignore ([44e654b](https://github.com/tolerance-go/weapp-cli/commit/44e654b))
+
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-eslint@0.1.5...weapp-plugin-eslint@0.1.6) (2018-05-07)
 

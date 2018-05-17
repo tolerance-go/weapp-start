@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.2.2...weapp-plugin-require@0.3.0) (2018-05-17)
+
+
+### Bug Fixes
+
+* babel-runtime _root replace hack ([65ddfc9](https://github.com/tolerance-go/weapp-cli/commit/65ddfc9))
+
+
+### Features
+
+* add match, ignore option ([8b3ed44](https://github.com/tolerance-go/weapp-cli/commit/8b3ed44))
+
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.2.1...weapp-plugin-require@0.2.2) (2018-05-11)
 

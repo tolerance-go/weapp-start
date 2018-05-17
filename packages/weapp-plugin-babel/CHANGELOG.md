@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-babel@0.1.6...weapp-plugin-babel@0.2.0) (2018-05-17)
+
+
+### Features
+
+* babel add options.match ignore ([b2598d2](https://github.com/tolerance-go/weapp-cli/commit/b2598d2))
+* 依赖编译 ([d160127](https://github.com/tolerance-go/weapp-cli/commit/d160127))
+
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-babel@0.1.5...weapp-plugin-babel@0.1.6) (2018-05-11)
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.0.1...weapp-start@1.1.0) (2018-05-17)
+
+
+### Features
+
+* 增加插件依赖编译的能力 ([1a9b1af](https://github.com/tolerance-go/weapp-cli/commit/1a9b1af))
+
+
+### Performance Improvements
+
+* log add time ([af4bbd2](https://github.com/tolerance-go/weapp-cli/commit/af4bbd2))
+* 编译部分代码逻辑重构 ([c767834](https://github.com/tolerance-go/weapp-cli/commit/c767834))
+
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.0.0...weapp-start@1.0.1) (2018-05-11)
 
