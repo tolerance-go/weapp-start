@@ -20,5 +20,5 @@ export function saveWrite(resolvedPath, contents) {
     }
     return pt;
   });
-  writeFileSync(resolvedPath, contents, 'utf-8');
+  writeFileSync(resolvedPath, contents);
 }

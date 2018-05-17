@@ -21,9 +21,9 @@ const babeltrans = ({ config, file, status, extra, byDependPaths }, plgConfig) =
 
   if (!file.path.match(defaultConfig.match)) return;
 
-  file.contents = babel.transformFileSync(file.path, plgConfig).code;
+  const contents = babel.transformFileSync(file.path, plgConfig).code;
 
-  file.contents.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
+  contents.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     let byDependPath;
 
     if (lib.startsWith('.')) {
@@ -51,6 +51,8 @@ const babeltrans = ({ config, file, status, extra, byDependPaths }, plgConfig) =
       });
     }
   });
+
+  file.contents = Buffer.from(contents);
 };
 
 export default babeltrans;

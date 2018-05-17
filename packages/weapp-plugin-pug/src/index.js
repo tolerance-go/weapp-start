@@ -13,10 +13,8 @@ export default function({ config, file, status, extra }, plgConfig) {
 
   if (!file.path.match(defaultConfig.match)) return;
 
-  let contents = file.contents;
-  if (Buffer.isBuffer(file.contents)) {
-    contents = file.contents.toString();
-  }
-  file.contents = pug.render(contents, plgConfig);
+  const contents = file.contents.toString();
+
+  file.contents = Buffer.from(pug.render(contents, plgConfig));
   file.ext = defaultConfig.afterExt;
 }

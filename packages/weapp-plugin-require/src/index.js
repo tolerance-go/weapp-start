@@ -58,7 +58,7 @@ const pushExtra = (distResolvedPath, contents, extra) => {
 };
 
 const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, extra) => {
-  return dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
+  const distCode = dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
 
@@ -222,6 +222,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     }
     return `${match[0] === 'r' ? '' : match[0]}require('${relativeDistPath}')`;
   });
+  return Buffer.from(distCode);
 };
 
 const requiretrans = ({ config, file, status, extra }, plgConfig) => {
@@ -236,15 +237,11 @@ const requiretrans = ({ config, file, status, extra }, plgConfig) => {
 
   if (!file.path.match(defaultConfig.match)) return;
 
-  if (Buffer.isBuffer(file.contents)) {
-    file.contents = file.contents.toString();
-  }
-
   const { resolvedDist, resolvedSrc } = config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
   file.contents = checkDeps(
-    file.contents,
+    file.contents.toString(),
     dependResolvedPath,
     dependDistPath,
     false,

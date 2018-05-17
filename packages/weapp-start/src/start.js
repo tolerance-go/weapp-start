@@ -4,7 +4,7 @@ import { join, relative, parse } from 'path';
 import chokidar from 'chokidar';
 import assert from './utils/assert';
 import log from './utils/log';
-import { saveWrite, saveCopy } from './utils/save';
+import { saveWrite } from './utils/save';
 import resolveCwd from 'resolve-cwd';
 
 const cwd = process.cwd();
@@ -71,6 +71,8 @@ function transform(opts = {}) {
   const waitPlg = config.resolvedPlugins.reduce(async (options, next) => {
     return options
       .then(options => {
+        assert(Buffer.isBuffer(options.file.contents), 'file contents must be a Buffer');
+
         let result = next.plugin(options, next.config);
         if (result) {
           assert(
@@ -92,6 +94,7 @@ function transform(opts = {}) {
     .then(options => {
       options.extra._extra.forEach(({ path: resolvedPath, mode, contents }) => {
         setTimeout(() => {
+          assert(Buffer.isBuffer(contents), 'extra file contents must be a Buffer');
           if (mode === 'add') {
             log.success(`${resolvedPath.replace(`${cwd}/`, '')}`, 'EXTRA');
             saveWrite(resolvedPath, contents);
@@ -109,11 +112,7 @@ function transform(opts = {}) {
 async function handleFile(resolvedSrcPath, resolvedDistPath, config, status) {
   log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
 
-  if (resolvedSrcPath.match(/\.(png|jpg|jpeg|jpe|gif)$/gi)) {
-    return saveCopy(resolvedSrcPath, resolvedDistPath);
-  }
-
-  const contents = readFileSync(resolvedSrcPath, 'utf-8');
+  const contents = readFileSync(resolvedSrcPath);
   const pathObj = parse(resolvedSrcPath);
   const passFile = {
     ...pathObj,

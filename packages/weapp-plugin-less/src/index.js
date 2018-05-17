@@ -42,17 +42,14 @@ export default function({ config, file, status, extra }, plgConfig) {
   }
 
   if (!file.path.match(defaultConfig.match)) return;
-  let contents = file.contents;
-  if (Buffer.isBuffer(file.contents)) {
-    contents = file.contents.toString();
-  }
+  const contents = file.contents.toString();
 
   cache.dirname = file.dir;
   cache.src = config.src;
 
   return new Promise((resolve, reject) => {
     less.render(contents, passConfig).then((res, imports) => {
-      file.contents = res.css;
+      file.contents = Buffer.from(res.css);
       file.ext = defaultConfig.afterExt;
       resolve({ config, file, status, extra });
     });
