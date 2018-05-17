@@ -28,7 +28,7 @@ const resolver = {
 
 export default function({ config, file, status, extra }, plgConfig) {
   const defaultConfig = {
-    ext: '.wxss',
+    match: /\.wxss$/,
     afterExt: '.wxss',
     plugins: [resolver],
     ...plgConfig,
@@ -37,7 +37,11 @@ export default function({ config, file, status, extra }, plgConfig) {
   // eslint-disable-next-line
   const { ext, afterExt, ...passConfig } = defaultConfig;
 
-  if (!file.ext.match(defaultConfig.ext)) return;
+  if (defaultConfig.ignore) {
+    if (file.path.match(defaultConfig.ignore)) return;
+  }
+
+  if (!file.path.match(defaultConfig.match)) return;
   let contents = file.contents;
   if (Buffer.isBuffer(file.contents)) {
     contents = file.contents.toString();
