@@ -16,7 +16,8 @@ weapp.config.js
 module.exports = {
   plugins: [
     ['weapp-plugin-stylus', {
-        ext: '.wxss',
+        ignore: undefined,
+        match: /\.wxss$/,
         afterExt: '.wxss',
         ...config
     }]，
