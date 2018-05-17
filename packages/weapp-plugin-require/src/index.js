@@ -11,7 +11,8 @@ const npmHack = (libResolvedPath, contents) => {
 
   if (
     libResolvedPath.match('core-js/library/modules/_global.js') ||
-    libResolvedPath.match('lodash.js')
+    libResolvedPath.match('lodash.js') ||
+    libResolvedPath.match('_root.js') // lodash@4.17.10
   ) {
     contents = contents.replace("Function('return this')()", 'this');
   }
