@@ -11,6 +11,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
+    "dayjs": "^1.6.0",
     "download-git-repo": "^1.0.2",
     "inquirer": "^5.2.0",
     "resolve-cwd": "^2.0.0",

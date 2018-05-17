@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import dayjs from 'dayjs';
 
 const log = {
   error(msg, tip = 'ERROR') {
@@ -30,7 +31,7 @@ const log = {
       dTip += ' ';
     }
 
-    console.log(chalk[color](`[${dTip}] ${msg}`));
+    console.log(chalk.dim(`[${dayjs().format('HH:mm:ss')}]`), chalk[color](`[${dTip}] ${msg}`));
   },
 };
 
