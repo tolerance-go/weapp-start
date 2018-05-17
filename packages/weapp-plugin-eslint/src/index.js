@@ -7,9 +7,11 @@ export default function({ config, file, status, extra }, plgConfig) {
     ...plgConfig,
   };
 
-  if (defaultConfig.match) {
-    if (!file.path.match(defaultConfig.match)) return;
+  if (defaultConfig.ignore) {
+    if (file.path.match(defaultConfig.ignore)) return;
   }
+
+  if (!file.path.match(defaultConfig.match)) return;
 
   if (!defaultConfig.formatter) {
     defaultConfig.formatter = formatter;
