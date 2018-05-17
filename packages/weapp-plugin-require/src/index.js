@@ -223,8 +223,22 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
   });
 };
 
-const requiretrans = ({ config, file, status, extra }) => {
-  if (file.ext !== '.js') return;
+const requiretrans = ({ config, file, status, extra }, plgConfig) => {
+  const defaultConfig = {
+    match: /\.js$/,
+    ...plgConfig,
+  };
+
+  if (defaultConfig.ignore) {
+    if (file.path.match(defaultConfig.ignore)) return;
+  }
+
+  if (!file.path.match(defaultConfig.match)) return;
+
+  if (Buffer.isBuffer(file.contents)) {
+    file.contents = file.contents.toString();
+  }
+
   const { resolvedDist, resolvedSrc } = config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
