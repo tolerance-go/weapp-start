@@ -60,17 +60,18 @@ weapp-start dev
 
 # Plugins
 
-* weapp-plugin-babel
-* weapp-plugin-eslint
-* weapp-plugin-less
-* weapp-plugin-pug
-* weapp-plugin-require
-* weapp-plugin-stylus
+* [weapp-plugin-babel](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-babel))
+* [weapp-plugin-eslint](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-eslint))
+* [weapp-plugin-less](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-less))
+* [weapp-plugin-pug](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-pug))
+* [weapp-plugin-require](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-require))
+* [weapp-plugin-stylus](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-stylus))
+* [weapp-plugin-filter](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filter)
 * ...
 
 # Utils
 
-* weapp-util-requestfix-promisify
+* [weapp-util-requestfix-promisify](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-requestfix-promisify))
 * ...
 
 # Links

@@ -14,12 +14,13 @@ weapp.config.js
 ```js
 module.exports = {
   plugins: [
-    ['weapp-plugin-less', {
+    ['weapp-plugin-pug', {
+        ignore: undefined,
         match: /\.wxml$/,
         afterExt: '.wxml',
         ...config
     }]，
-    // 'weapp-plugin-less',
+    // 'weapp-plugin-pug',
   ],
 };
 ```

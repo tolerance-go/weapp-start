@@ -14,13 +14,12 @@ weapp.config.js
 ```js
 module.exports = {
   plugins: [
-    ['weapp-plugin-less', {
+    ['weapp-plugin-eslint', {
         ignore: undefined,
         match: /\.js$/,
-        ignore: 'we7',
         ...config
     }]，
-    // 'weapp-plugin-less',
+    // 'weapp-plugin-eslint',
   ],
 };
 ```
