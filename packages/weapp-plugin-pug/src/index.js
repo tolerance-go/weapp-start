@@ -7,4 +7,5 @@ export default function({ config, file, status, extra }, plgConfig) {
     contents = file.contents.toString();
   }
   file.contents = pug.render(contents, plgConfig);
+  file.ext = defaultConfig.afterExt;
 }
