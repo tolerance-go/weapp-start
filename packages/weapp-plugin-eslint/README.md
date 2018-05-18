@@ -17,6 +17,7 @@ module.exports = {
     ['weapp-plugin-eslint', {
         ignore: undefined,
         match: /\.js$/,
+        formatter,
         ...config
     }]，
     // 'weapp-plugin-eslint',
