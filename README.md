@@ -35,7 +35,20 @@ npm i weapp-start -g
 weapp-start -h
 ```
 
-生成开发模版
+```bash
+weapp-start <command> [options]
+
+命令：
+  weapp-start dev    watch build
+  weapp-start build  打包构建
+  weapp-start init   生成模版项目
+
+选项：
+  -h, --help     显示帮助信息                                             [布尔]
+  -v, --version  显示版本号                                               [布尔]
+```
+
+生成开发模版（项目模板都存放在[这里](https://github.com/tolerance-go/weapp-start-templates)，欢迎小伙伴 pr）
 
 ```bash
 weapp-start init
@@ -65,6 +78,8 @@ weapp-start dev
 
 # Plugins
 
+自定义插件文档 coming...
+
 * [weapp-plugin-babel](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-babel)
 * [weapp-plugin-eslint](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-eslint)
 * [weapp-plugin-less](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-less)
@@ -82,9 +97,6 @@ weapp-start dev
 * [weapp-util-create-plugin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-create-plugin)
 * [weapp-util-requestfix-promisify](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-requestfix-promisify)
 * ...
-
-# 自定义插件
-...
 
 # Links
 
