@@ -50,7 +50,7 @@ const getConfig = () => {
 // const demoPlugin = ({code, modify, path}) => {};
 
 function transform(opts = {}) {
-  const { status, config, file } = opts;
+  const { status, config, file, resolvedPlugins } = opts;
 
   const extra = {
     _extra: [],
@@ -68,40 +68,52 @@ function transform(opts = {}) {
 
   const options = Promise.resolve({ config, file, status, extra, byDependPaths });
 
-  const waitPlg = config.resolvedPlugins.reduce(async (options, next) => {
-    return options
-      .then(options => {
-        assert(Buffer.isBuffer(options.file.contents), 'file contents must be a Buffer');
+  return resolvedPlugins
+    .reduce(async (options, next) => {
+      return options
+        .then(options => {
+          assert(Buffer.isBuffer(options.file.contents), 'file contents must be a Buffer');
 
-        let result = next.plugin(options, next.config);
-        if (result) {
-          assert(
-            result instanceof Promise,
-            'plugin should return a promise or not return value just modify file'
-          );
-        }
-        if (!result) {
-          result = Promise.resolve(options);
-        }
-        return result;
-      })
-      .catch(err => {
-        log.error(`[${next.name} error]: ${err}`);
-      });
-  }, options);
-
-  return waitPlg
+          let result = next.plugin(options, next.config);
+          if (result) {
+            assert(
+              result instanceof Promise,
+              'plugin should return a promise or not return value just modify file'
+            );
+          }
+          if (!result) {
+            result = Promise.resolve(options);
+          }
+          return result;
+        })
+        .catch(err => {
+          log.error(`[${next.name} error]: ${err}`);
+        });
+    }, options)
     .then(options => {
-      options.extra._extra.forEach(({ path: resolvedPath, mode, contents }) => {
+      options.extra._extra.forEach(({ path: resolvedDistPath, mode, contents }) => {
+        // 等待所有 src transform 结束
         setTimeout(() => {
           assert(Buffer.isBuffer(contents), 'extra file contents must be a Buffer');
-          if (mode === 'add') {
-            log.success(`${resolvedPath.replace(`${cwd}/`, '')}`, 'EXTRA');
-            saveWrite(resolvedPath, contents);
-          }
-          if (mode === 'remove') {
-            rimraf.sync(resolvedPath);
-          }
+
+          log.success(`${resolvedDistPath.replace(`${cwd}/`, '')}`, 'EXTRA');
+          saveWrite(resolvedDistPath, contents);
+
+          setTimeout(async () => {
+            const extraPlugins = config.resolvedPlugins.filter(item => item.config.extra);
+
+            if (extraPlugins.length) {
+              // 处理 extra 的插件，需要判断 status，当 status 为 extra 时，不可以继续 push extra，否则会造成死循环
+              handleSrcFile(resolvedDistPath, resolvedDistPath, extraPlugins, config, 'extra');
+            }
+          });
+
+          // if (mode === 'add') {
+          //   saveWrite(resolvedDistPath, contents);
+          // }
+          // if (mode === 'remove') {
+          //   rimraf.sync(resolvedDistPath);
+          // }
         });
       });
       return options;
@@ -109,7 +121,9 @@ function transform(opts = {}) {
     .catch(e => log.error(e));
 }
 
-async function handleFile(resolvedSrcPath, resolvedDistPath, config, status) {
+async function handleSrcFile(resolvedSrcPath, resolvedDistPath, resolvedPlugins, config, status) {
+  if (resolvedSrcPath.match(/\.DS_Store$/gi)) return;
+
   log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
 
   const contents = readFileSync(resolvedSrcPath);
@@ -124,6 +138,7 @@ async function handleFile(resolvedSrcPath, resolvedDistPath, config, status) {
     file: passFile,
     config,
     status,
+    resolvedPlugins,
   });
 
   if (!file.throw) {
@@ -143,23 +158,31 @@ async function handleFile(resolvedSrcPath, resolvedDistPath, config, status) {
         config.resolvedDist,
         relative(config.resolvedSrc, dependResolvedSrcPath)
       );
-      handleFile(dependResolvedSrcPath, dependResolvedDistPath, config, status);
+      handleSrcFile(dependResolvedSrcPath, dependResolvedDistPath, resolvedPlugins, config, status);
     });
   }
 }
 
-async function copy(resolvedSrcPath, resolvedDistPath, handleFile, config) {
+async function copy(resolvedSrcPath, resolvedDistPath, resolvedPlugins, handleSrcFile, config) {
   if (!existsSync(resolvedSrcPath)) return;
   const status = statSync(resolvedSrcPath);
   if (status.isDirectory()) {
-    mkdirSync(resolvedDistPath);
+    if (!existsSync(resolvedDistPath)) {
+      mkdirSync(resolvedDistPath);
+    }
     const files = readdirSync(resolvedSrcPath);
     files.forEach(file => {
-      copy(join(resolvedSrcPath, file), join(resolvedDistPath, file), handleFile, config);
+      copy(
+        join(resolvedSrcPath, file),
+        join(resolvedDistPath, file),
+        resolvedPlugins,
+        handleSrcFile,
+        config
+      );
     });
   } else {
     try {
-      handleFile(resolvedSrcPath, resolvedDistPath, config);
+      handleSrcFile(resolvedSrcPath, resolvedDistPath, resolvedPlugins, config);
     } catch (err) {
       log.error(`copy compiled failed: ${err}`);
     }
@@ -167,44 +190,57 @@ async function copy(resolvedSrcPath, resolvedDistPath, handleFile, config) {
 }
 
 function build(config) {
-  const { resolvedDist, resolvedSrc } = config;
-  rimraf.sync(resolvedDist);
-  copy(resolvedSrc, resolvedDist, handleFile, config);
+  const { resolvedDist, resolvedSrc, resolvedPlugins, mode } = config;
+  if (mode === 'build') {
+    rimraf.sync(resolvedDist);
+  }
+  copy(resolvedSrc, resolvedDist, resolvedPlugins, handleSrcFile, config);
+}
+
+function resolvePkg(plg) {
+  let plgConfig = {};
+  if (Array.isArray(plg)) {
+    plgConfig = plg[1];
+    // order attention
+    plg = plg[0];
+  }
+  const resolvedPath = resolveCwd(plg);
+  if (!existsSync(resolvedPath)) log.error(`npm ${plg} not find, please install first`);
+  const npm = require(resolvedPath);
+  return {
+    name: plg,
+    config: plgConfig,
+    plugin: npm.default || npm,
+  };
 }
 
 const start = mode => {
   const config = {
+    mode,
     cwd,
     src: 'src',
     dist: 'dist',
     plugins: [],
+    env: {},
     ...getConfig(),
+    resolvedPlugins: [],
   };
 
   config.resolvedSrc = join(cwd, config.src);
   config.resolvedDist = join(cwd, config.dist);
 
   const { src, dist, plugins } = config;
-  const dev = mode === 'dev';
 
+  const dev = mode === 'dev';
   process.env.NODE_ENV = dev ? 'development' : 'production';
 
-  const resolvedPlugins = plugins.map(plg => {
-    let plgConfig = {};
-    if (Array.isArray(plg)) {
-      plgConfig = plg[1];
-      // order attention
-      plg = plg[0];
-    }
-    const resolvedPath = resolveCwd(plg);
-    if (!existsSync(resolvedPath)) log.error(`npm ${plg} not find, please install first`);
-    const npm = require(resolvedPath);
-    return {
-      name: plg,
-      config: plgConfig,
-      plugin: npm.default || npm,
-    };
-  });
+  let resolvedPlugins = plugins.map(resolvePkg);
+
+  const envConfig = config.env[process.env.NODE_ENV];
+  if (envConfig && envConfig.plugins) {
+    assert(Array.isArray(envConfig.plugins), 'plugins type must be Array');
+    resolvedPlugins = resolvedPlugins.concat(envConfig.plugins.map(resolvePkg));
+  }
 
   config.resolvedPlugins = resolvedPlugins;
 
@@ -235,7 +271,7 @@ const start = mode => {
             relative(config.resolvedSrc, resolvedSrcPath)
           );
 
-          handleFile(resolvedSrcPath, resolvedDistPath, config, event);
+          handleSrcFile(resolvedSrcPath, resolvedDistPath, config.resolvedPlugins, config, event);
         } catch (e) {
           log.error(`changed file compiled failed: ${e.message}`);
         }
