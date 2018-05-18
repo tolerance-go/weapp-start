@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.1.0...weapp-start@1.1.1) (2018-05-18)
+
+
+### Performance Improvements
+
+* refactor extra logic ([f50b91c](https://github.com/tolerance-go/weapp-cli/commit/f50b91c))
+* string stream to buffer stream ([e9aec75](https://github.com/tolerance-go/weapp-cli/commit/e9aec75))
+
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.0.1...weapp-start@1.1.0) (2018-05-17)
 

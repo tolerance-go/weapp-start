@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-less",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "less": "^3.0.2",
-    "weapp-util-create-plugin": "^0.0.0"
+    "weapp-util-create-plugin": "^0.1.0"
   }
 }
