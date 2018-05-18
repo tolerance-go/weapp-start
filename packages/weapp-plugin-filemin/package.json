@@ -1,0 +1,15 @@
+{
+  "name": "weapp-plugin-filemin",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "./lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "pretty-data": "^0.40.0",
+    "weapp-util-create-plugin": "^0.1.0"
+  }
+}
