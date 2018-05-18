@@ -24,10 +24,12 @@
     "weapp-plugin-require": "file:../packages/weapp-plugin-require",
     "weapp-plugin-stylus": "file:../packages/weapp-plugin-stylus",
     "weapp-plugin-jsmin": "file:../packages/weapp-plugin-jsmin",
+    "weapp-plugin-filemin": "file:../packages/weapp-plugin-filemin",
     "weapp-start": "file:../packages/weapp-start"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "weapp-plugin-imgmin": "file:../packages/weapp-plugin-imgmin"
   }
 }

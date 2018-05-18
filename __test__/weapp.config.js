@@ -12,5 +12,7 @@ module.exports = {
     // 'weapp-plugin-pug',
     // 'weapp-plugin-eslint',
     'weapp-plugin-jsmin',
+    'weapp-plugin-filemin',
+    'weapp-plugin-imgmin',
   ],
 };
