@@ -1,3 +1,8 @@
+
+<div align=center>
+<image src='./assets/1526620785154.jpg' width="550">
+</div>
+
 # weapp-start
 
 [![NPM version](https://img.shields.io/npm/v/weapp-start.svg?style=flat)](https://npmjs.org/package/weapp-start)
@@ -9,11 +14,6 @@
 改善小程序开发体验，高效，稳定的原生语法和组件，避免踩坑，同时提供更多的开发能力
 
 > 我想要原生组件开发，我想要及时的文档更新，我想踩更少的坑，所以有了这个项目；如果去掉全部插件，原来的项目一样可以跑；但是如果你喜欢 less，那就加上 less，pug 呢？一样；欢迎 fork，star
-
-<div align=center>
-<image src='./assets/1526620785154.jpg' width="550">
-</div>
-
 
 # Features
 
