@@ -9,6 +9,7 @@
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "less": "^3.0.2"
+    "less": "^3.0.2",
+    "weapp-util-create-plugin": "^0.0.0"
   }
 }

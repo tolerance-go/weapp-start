@@ -9,6 +9,7 @@
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "stylus": "^0.54.5"
+    "stylus": "^0.54.5",
+    "weapp-util-create-plugin": "^0.0.0"
   }
 }

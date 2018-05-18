@@ -1,30 +1,27 @@
 import stylus from 'stylus';
+import createPlugin from 'weapp-util-create-plugin';
 
-export default function({ config, file, status, extra }, plgConfig) {
-  const defaultConfig = {
-    match: /\.wxss$/,
-    afterExt: '.wxss',
-    filename: file.path,
-    ...plgConfig,
-  };
-
-  if (defaultConfig.ignore) {
-    if (file.path.match(defaultConfig.ignore)) return;
-  }
-
-  // eslint-disable-next-line
-  const { ext, afterExt, ...passConfig } = defaultConfig;
-
-  if (!file.path.match(defaultConfig.match)) return;
-
-  const contents = file.contents.toString();
+export default createPlugin({
+  match: /\.wxss$/,
+  afterExt: '.wxss',
+  encoding: 'utf8',
+})(({ config, file, status, extra, byDependPaths }, plgConfig) => {
+  stylus(file.contents)
+    .set('filename', file.path)
+    .deps()
+    .forEach(byDependPath => {
+      byDependPaths.push({
+        byDependPath,
+        dependPath: file.path,
+      });
+    });
 
   return new Promise((resolve, reject) => {
-    stylus.render(contents, passConfig, function(err, css) {
-      if (err) reject(err);
-      file.contents = Buffer.from(css);
-      file.ext = defaultConfig.afterExt;
+    plgConfig.filename = file.path;
+    stylus.render(file.contents, plgConfig, function(err, css) {
+      if (err) return reject(err);
+      file.contents = css;
       resolve({ config, file, status, extra });
     });
   });
-}
+});

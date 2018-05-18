@@ -1,6 +1,7 @@
 import less from 'less';
 import path from 'path';
 import fs from 'fs';
+import createPlugin from 'weapp-util-create-plugin';
 
 const cache = {};
 
@@ -14,6 +15,10 @@ const resolver = {
         } else {
           filename = path.join(dir || cache.dirname, filename);
         }
+        cache.byDependPaths.push({
+          byDependPath: filename,
+          dependPath: cache.path,
+        });
         const contents = fs.readFileSync(filename, 'utf8');
         // FIXME adding prefix while I shouldn't have to
         resolve({ contents, filename });
@@ -26,32 +31,21 @@ const resolver = {
   },
 };
 
-export default function({ config, file, status, extra }, plgConfig) {
-  const defaultConfig = {
-    match: /\.wxss$/,
-    afterExt: '.wxss',
-    plugins: [resolver],
-    ...plgConfig,
-  };
-
-  // eslint-disable-next-line
-  const { ext, afterExt, ...passConfig } = defaultConfig;
-
-  if (defaultConfig.ignore) {
-    if (file.path.match(defaultConfig.ignore)) return;
-  }
-
-  if (!file.path.match(defaultConfig.match)) return;
-  const contents = file.contents.toString();
-
+export default createPlugin({
+  match: /\.wxss$/,
+  afterExt: '.wxss',
+  encoding: 'utf8',
+})(({ config, file, status, extra, byDependPaths }, plgConfig) => {
   cache.dirname = file.dir;
   cache.src = config.src;
+  cache.path = file.path;
+  cache.byDependPaths = byDependPaths;
 
   return new Promise((resolve, reject) => {
-    less.render(contents, passConfig).then((res, imports) => {
-      file.contents = Buffer.from(res.css);
-      file.ext = defaultConfig.afterExt;
+    plgConfig.plugins = [resolver];
+    less.render(file.contents, plgConfig).then((res, imports) => {
+      file.contents = res.css;
       resolve({ config, file, status, extra });
     });
   });
-}
+});

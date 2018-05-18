@@ -9,6 +9,7 @@
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "resolve-cwd": "^2.0.0"
+    "resolve-cwd": "^2.0.0",
+    "weapp-util-create-plugin": "^0.0.0"
   }
 }

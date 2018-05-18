@@ -3,6 +3,7 @@ const { readFileSync, existsSync } = require('fs');
 const resolveCwd = require('resolve-cwd');
 const utils = require('./utils');
 const Module = require('module');
+import createPlugin from 'weapp-util-create-plugin';
 
 const npmHack = (libResolvedPath, contents) => {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
@@ -225,18 +226,9 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
   return Buffer.from(distCode);
 };
 
-const requiretrans = ({ config, file, status, extra }, plgConfig) => {
-  const defaultConfig = {
-    match: /\.js$/,
-    ...plgConfig,
-  };
-
-  if (defaultConfig.ignore) {
-    if (file.path.match(defaultConfig.ignore)) return;
-  }
-
-  if (!file.path.match(defaultConfig.match)) return;
-
+export default createPlugin({
+  match: /\.js$/,
+})(({ config, file, status, extra }, plgConfig) => {
   const { resolvedDist, resolvedSrc } = config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
@@ -248,6 +240,4 @@ const requiretrans = ({ config, file, status, extra }, plgConfig) => {
     config,
     extra
   );
-};
-
-export default requiretrans;
+});

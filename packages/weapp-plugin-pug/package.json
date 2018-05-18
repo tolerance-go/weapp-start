@@ -9,6 +9,7 @@
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "weapp-util-create-plugin": "^0.0.0"
   }
 }

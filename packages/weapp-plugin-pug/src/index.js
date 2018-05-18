@@ -1,20 +1,10 @@
 import pug from 'pug';
+import createPlugin from 'weapp-util-create-plugin';
 
-export default function({ config, file, status, extra }, plgConfig) {
-  const defaultConfig = {
-    match: /\.wxml$/,
-    afterExt: '.wxml',
-    ...plgConfig,
-  };
-
-  if (defaultConfig.ignore) {
-    if (file.path.match(defaultConfig.ignore)) return;
-  }
-
-  if (!file.path.match(defaultConfig.match)) return;
-
-  const contents = file.contents.toString();
-
-  file.contents = Buffer.from(pug.render(contents, plgConfig));
-  file.ext = defaultConfig.afterExt;
-}
+export default createPlugin({
+  match: /\.wxml$/,
+  afterExt: '.wxml',
+  encoding: 'utf8',
+})(({ config, file, status, extra }, plgConfig) => {
+  file.contents = pug.render(file.contents, plgConfig);
+});

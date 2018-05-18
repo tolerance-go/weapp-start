@@ -1,6 +1,7 @@
 const babel = require('babel-core');
 const resolveCwd = require('resolve-cwd');
 const { join, parse } = require('path');
+import createPlugin from 'weapp-util-create-plugin';
 
 const addExt = (lib, ext = '.js') => {
   if (lib.match(new RegExp(`${ext}$`))) {
@@ -9,18 +10,9 @@ const addExt = (lib, ext = '.js') => {
   return lib + ext;
 };
 
-const babeltrans = ({ config, file, status, extra, byDependPaths }, plgConfig) => {
-  const defaultConfig = {
-    match: /\.js$/,
-    ...plgConfig,
-  };
-
-  if (defaultConfig.ignore) {
-    if (file.path.match(defaultConfig.ignore)) return;
-  }
-
-  if (!file.path.match(defaultConfig.match)) return;
-
+export default createPlugin({
+  match: /\.js$/,
+})(({ config, file, status, extra, byDependPaths }, plgConfig) => {
   const contents = babel.transformFileSync(file.path, plgConfig).code;
 
   contents.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
@@ -53,6 +45,4 @@ const babeltrans = ({ config, file, status, extra, byDependPaths }, plgConfig) =
   });
 
   file.contents = Buffer.from(contents);
-};
-
-export default babeltrans;
+});
