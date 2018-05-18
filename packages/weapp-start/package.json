@@ -8,6 +8,9 @@
   "bin": "./bin/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=8"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "chokidar": "^2.0.3",
