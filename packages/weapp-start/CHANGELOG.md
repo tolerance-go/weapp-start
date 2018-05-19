@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.1...weapp-start@1.2.2) (2018-05-19)
+
+
+### Bug Fixes
+
+* extra spelling wrong ([cd373e3](https://github.com/tolerance-go/weapp-cli/commit/cd373e3))
+* 重复路径直接 return，导致依赖不全 ([b434330](https://github.com/tolerance-go/weapp-cli/commit/b434330))
+
+
+### Performance Improvements
+
+* 当有处理额外生成文件的插件时候，才去tranform（有中间件和写入的开销） ([11b8023](https://github.com/tolerance-go/weapp-cli/commit/11b8023))
+
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.0...weapp-start@1.2.1) (2018-05-19)
 
