@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-stylus",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,6 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "stylus": "^0.54.5",
-    "weapp-util-create-plugin": "^0.1.1"
+    "weapp-util-create-plugin": "^0.1.2"
   }
 }

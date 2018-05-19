@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-pug",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,6 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "pug": "^2.0.3",
-    "weapp-util-create-plugin": "^0.1.1"
+    "weapp-util-create-plugin": "^0.1.2"
   }
 }
