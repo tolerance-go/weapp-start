@@ -13,10 +13,7 @@
   "author": "bzone <yarnbCoder@gmail.com>",
   "license": "MIT",
   "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/examples/"
-    ]
+    "testPathIgnorePatterns": ["/node_modules/", "/examples/"]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -43,8 +40,5 @@
     "shelljs": "^0.8.1",
     "through2": "^2.0.3",
     "vinyl-fs": "^3.0.2"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.26.0"
   }
 }
