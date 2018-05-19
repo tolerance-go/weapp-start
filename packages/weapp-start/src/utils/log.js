@@ -11,7 +11,7 @@ const custom = new Signale({
     },
     add: {
       badge: '🌶️ ',
-      color: 'yellow',
+      color: 'yellowBright',
       label: 'ADD',
     },
     change: {
@@ -30,13 +30,13 @@ const custom = new Signale({
       label: 'TRANSFORM',
     },
     extra: {
-      badge: '💥 ',
-      color: 'yellow',
+      badge: '🥕 ',
+      color: 'cyan',
       label: 'EXTRA',
     },
     warn: {
       badge: '😑 ',
-      color: 'magenta',
+      color: 'magentaBright',
       label: 'warn',
     },
   },
