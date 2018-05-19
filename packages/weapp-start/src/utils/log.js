@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import chalk from 'chalk';
 import { Signale } from 'signale';
 
-const log = new Signale({
+const custom = new Signale({
   types: {
     remove: {
       badge: '💥 ',
@@ -22,7 +22,7 @@ const log = new Signale({
     error: {
       badge: '💊 ',
       color: 'red',
-      label: 'ERROR',
+      label: 'EXCEPTION',
     },
     transform: {
       badge: '⭐ ',
@@ -34,10 +34,15 @@ const log = new Signale({
       color: 'yellow',
       label: 'EXTRA',
     },
+    warn: {
+      badge: '😑 ',
+      color: 'magenta',
+      label: 'warn',
+    },
   },
 });
 
-export default {
+const log = {
   extra(message) {
     this.print('extra', message);
   },
@@ -46,6 +51,9 @@ export default {
   },
   error(message) {
     this.print('error', message);
+  },
+  warn(message) {
+    this.print('warn', message);
   },
   change(message) {
     this.print('change', message);
@@ -57,6 +65,8 @@ export default {
     this.print('remove', message);
   },
   print(type, message) {
-    log[type]({ prefix: chalk.dim(`[${dayjs().format('HH:mm:ss')}]`), message });
+    custom[type]({ prefix: chalk.dim(`[${dayjs().format('HH:mm:ss')}]`), message });
   },
 };
+
+export default log;

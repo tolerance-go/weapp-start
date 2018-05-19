@@ -5,6 +5,7 @@ export default createPlugin({
   match: /\.wxml$/,
   afterExt: '.wxml',
   encoding: 'utf8',
-})(({ config, file, status, extra }, plgConfig) => {
+})((file, next, plgConfig, utils) => {
   file.contents = pug.render(file.contents, plgConfig);
+  next(file);
 });

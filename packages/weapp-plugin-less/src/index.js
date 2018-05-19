@@ -35,17 +35,15 @@ export default createPlugin({
   match: /\.wxss$/,
   afterExt: '.wxss',
   encoding: 'utf8',
-})(({ config, file, status, extra, byDependPaths }, plgConfig) => {
+})((file, next, plgConfig, utils) => {
   cache.dirname = file.dir;
-  cache.src = config.src;
+  cache.src = utils.config.src;
   cache.path = file.path;
-  cache.byDependPaths = byDependPaths;
+  cache.byDependPaths = utils.byDependPaths;
 
-  return new Promise((resolve, reject) => {
-    plgConfig.plugins = [resolver];
-    less.render(file.contents, plgConfig).then((res, imports) => {
-      file.contents = res.css;
-      resolve({ config, file, status, extra });
-    });
+  plgConfig.plugins = [resolver];
+  less.render(file.contents, plgConfig).then((res, imports) => {
+    file.contents = res.css;
+    next(file);
   });
 });

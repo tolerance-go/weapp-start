@@ -1,3 +1,5 @@
+import utils from '../../utils';
+
 Component({
   properties: {
     last: {

@@ -4,7 +4,7 @@ import createPlugin from 'weapp-util-create-plugin';
 
 export default createPlugin({
   match: /\.js$/,
-})(({ config, file, status, extra }, plgConfig) => {
+})((file, next, plgConfig, utils) => {
   if (!plgConfig.formatter) {
     plgConfig.formatter = formatter;
   }
@@ -15,4 +15,5 @@ export default createPlugin({
   if (rst) {
     console.log(rst);
   }
+  next(file);
 });

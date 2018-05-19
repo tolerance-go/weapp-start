@@ -1,18 +1,11 @@
-const filtertrans = ({ config, file, status, extra }, plgConfig) => {
-  const defaultConfig = {
-    throw: undefined,
-    ...plgConfig,
-  };
+import createPlugin from 'weapp-util-create-plugin';
 
-  if (defaultConfig.throw) {
-    if (
-      file.path.match(
-        typeof defaultConfig.throw === 'function' ? defaultConfig.throw() : defaultConfig.throw
-      )
-    ) {
+export default createPlugin()((file, next, plgConfig, utils) => {
+  if (plgConfig.throw) {
+    const match = typeof plgConfig.throw === 'function' ? plgConfig.throw() : plgConfig.throw;
+    if (file.path.match(match)) {
       file.throw = true;
     }
   }
-};
-
-export default filtertrans;
+  next(file);
+});

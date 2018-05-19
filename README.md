@@ -79,6 +79,9 @@ weapp-start dev
 
 - 小程序里面对于 `require('common.js')` 是当做相对路径的，而在 node 中是作为模块查找的，因此应该避免这种隐式的相对路径写法，应该用 `require('./common.js')` 代替；`weapp-plugin-require` 对二者做了兼容，不过会发出提示信息要求修改路径
 
+- `weapp-plugin-jsmin` 只能对 es5 规范的代码进行压缩，将其顺序至于 `weapp-plugin-babel` 之后
+
+- 所有压缩功能的插件，如果想对生成的额外文件进行处理，需要指定参数 `extra` 为 `true`
 
 # Plugins
 

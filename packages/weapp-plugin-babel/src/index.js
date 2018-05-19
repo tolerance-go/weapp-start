@@ -12,7 +12,9 @@ const addExt = (lib, ext = '.js') => {
 
 export default createPlugin({
   match: /\.js$/,
-})(({ config, file, status, extra, byDependPaths }, plgConfig) => {
+})((file, next, plgConfig, utils) => {
+  const { byDependPaths } = utils;
+
   const contents = babel.transformFileSync(file.path, plgConfig).code;
 
   contents.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
@@ -45,4 +47,6 @@ export default createPlugin({
   });
 
   file.contents = Buffer.from(contents);
+
+  next(file);
 });

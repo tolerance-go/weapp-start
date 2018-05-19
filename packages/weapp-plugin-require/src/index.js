@@ -49,16 +49,7 @@ const npmHack = (libResolvedPath, contents) => {
 
 const npmFolder = 'npm';
 
-const pushExtra = (distResolvedPath, contents, extra) => {
-  if (existsSync(distResolvedPath)) return;
-  extra.push({
-    path: distResolvedPath,
-    mode: 'add',
-    contents,
-  });
-};
-
-const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, extra) => {
+const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, log, extra) => {
   const distCode = dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
@@ -93,7 +84,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
               throw error;
             }
 
-            console.log(
+            log.warn(
               '[weapp-plugin-require]: 建议小程序中 require module 的路径，使用显示的相对路径 "./module" 来代替 "module" :' +
                 match
             );
@@ -122,9 +113,17 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
         contents = npmHack(libResolvedPath, contents);
 
-        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
+        contents = checkDeps(
+          contents,
+          libResolvedPath,
+          libResolvedDistPath,
+          {},
+          config,
+          log,
+          extra
+        );
 
-        pushExtra(libResolvedDistPath, contents, extra);
+        extra[libResolvedDistPath] = { contents };
       }
     }
 
@@ -184,9 +183,9 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
       contents = npmHack(libResolvedPath, contents);
 
-      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
+      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, log, extra);
 
-      pushExtra(libResolvedDistPath, contents, extra);
+      extra[libResolvedDistPath] = { contents };
     }
 
     if (
@@ -209,9 +208,17 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
         contents = npmHack(libResolvedPath, contents);
 
-        contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, extra);
+        contents = checkDeps(
+          contents,
+          libResolvedPath,
+          libResolvedDistPath,
+          {},
+          config,
+          log,
+          extra
+        );
 
-        pushExtra(libResolvedDistPath, contents, extra);
+        extra[libResolvedDistPath] = { contents };
       }
       relativeDistPath = lib;
     }
@@ -228,16 +235,20 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
 export default createPlugin({
   match: /\.js$/,
-})(({ config, file, status, extra }, plgConfig) => {
-  const { resolvedDist, resolvedSrc } = config;
+})((file, next, plgConfig, utils) => {
+  const { resolvedDist, resolvedSrc } = utils.config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
+
   file.contents = checkDeps(
     file.contents.toString(),
     dependResolvedPath,
     dependDistPath,
     false,
-    config,
-    extra
+    utils.config,
+    utils.log,
+    file.extra
   );
+
+  next(file);
 });

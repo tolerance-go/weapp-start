@@ -6,9 +6,7 @@ import createPlugin from 'weapp-util-create-plugin';
 
 export default createPlugin({
   match: /\.(jpg|png|svg)$/,
-  extra: true,
-})((options, plgConfig) => {
-  const { file } = options;
+})((file, next, plgConfig, utils) => {
   const defaultConfig = {
     jpg: {
       quality: 80,
@@ -19,7 +17,7 @@ export default createPlugin({
     ...plgConfig,
   };
 
-  return imagemin
+  imagemin
     .buffer(file.contents, {
       plugins: [
         imageminMozjpeg(defaultConfig.jpg),
@@ -29,6 +27,6 @@ export default createPlugin({
     })
     .then(buffer => {
       file.contents = buffer;
-      return options;
+      next(file);
     });
 });
