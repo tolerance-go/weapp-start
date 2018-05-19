@@ -52,7 +52,7 @@ weapp-start <command> [options]
   -v, --version  显示版本号                                               [布尔]
 ```
 
-生成开发模版（项目模板都存放在[这里](https://github.com/tolerance-go/weapp-start-templates)，欢迎小伙伴 pr）
+生成开发模版（项目模板都存放在[这里](https://github.com/tolerance-go/weapp-start-templates)，欢迎小伙伴 pr）
 
 ```bash
 weapp-start init
@@ -82,7 +82,7 @@ weapp-start dev
 
 # Plugins
 
-自定义插件文档 coming...
+自定义插件文档 coming...
 
 * [weapp-plugin-babel](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-babel)
 * [weapp-plugin-eslint](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-eslint)
