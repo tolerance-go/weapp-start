@@ -9,8 +9,6 @@ import download from 'download-git-repo';
 import { saveCopy } from './utils/save';
 import start from './start';
 
-const prompt = inquirer.createPromptModule();
-
 const argv = yargs // eslint-disable-line
   .usage('$0 <command> [options]')
   .command('dev', 'watch build', argv => {
@@ -33,6 +31,7 @@ const argv = yargs // eslint-disable-line
           return true;
         }
       });
+      const prompt = inquirer.createPromptModule();
       prompt([
         {
           name: 'name',
@@ -65,6 +64,35 @@ const argv = yargs // eslint-disable-line
           console.log(chalk.red(err));
         });
     });
+  })
+  .command('new', '生成模板页面', () => {
+    const prompt = inquirer.createPromptModule();
+    prompt([
+      {
+        name: 'type',
+        type: 'list',
+        choices: ['page', 'component', 'app'],
+        message: '请选择生成类型',
+      },
+      {
+        name: 'name',
+        type: 'input',
+        message: '请输入组件名称',
+        validate(name) {
+          if (!name) {
+            console.log(chalk.red('必填项目'));
+          }
+          return !!name;
+        },
+      },
+    ])
+      .then(input => {
+        saveCopy(join(__dirname, '../tpls', input.type), input.name);
+        console.log(chalk.green('generate done!'));
+      })
+      .catch(err => {
+        console.log(chalk.red(err));
+      });
   })
   .help()
   .alias('h', 'help')
