@@ -33,7 +33,7 @@ function generateTransform(config, onlyHandleExtraPlugin) {
   // 生成transform plugin
 
   if (onlyHandleExtraPlugin) {
-    middlewares = middlewares.filter(plg => plg.extra.extra);
+    middlewares = middlewares.filter(plg => plg.config.extra);
   }
 
   const chain = middlewares.map(middleware => {
