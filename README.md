@@ -17,11 +17,14 @@
 
 # Features
 
-* 支持 npm 包引入
-* 支持 promise
-* 支持 async/await
+* 支持 [npm](https://www.npmjs.com/) 包引入
+* 支持 promise, async/await 等最新语法
 * 支持多种编译器，如 pug/less/stylus
 * 支持 ESlint
+* 支持一键生成项目，组件模版
+* 支持发布前资源压缩
+* 支持自定义插件
+* 多种工具，加速开发
 
 # Install
 
@@ -42,6 +45,7 @@ weapp-start <command> [options]
   weapp-start dev    watch build
   weapp-start build  打包构建
   weapp-start init   生成模版项目
+  weapp-start new    生成模板页面
 
 选项：
   -h, --help     显示帮助信息                                             [布尔]
@@ -70,7 +74,7 @@ weapp-start dev
 
 # Tips
 
-- `weapp-plugin-require` 是基于 `commonJS` 模块规范的静态处理，也就是说 `es6` 的话，需要配合 `weapp-plugin-babel` 插件使用，
+- `weapp-plugin-require` 是基于 `commonJS` 模块规范的静态处理，也就是说 `es6` 模块定义的话，需要配合 `weapp-plugin-babel` 插件使用，
 `weapp-plugin-babel` 的顺序要在它之前。
 
 - 小程序里面对于 `require('common.js')` 是当做相对路径的，而在 node 中是作为模块查找的，因此应该避免这种隐式的相对路径写法，应该用 `require('./common.js')` 代替；`weapp-plugin-require` 对二者做了兼容，不过会发出提示信息要求修改路径
