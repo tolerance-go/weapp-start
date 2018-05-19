@@ -19,6 +19,7 @@
     "inquirer": "^5.2.0",
     "resolve-cwd": "^2.0.0",
     "rimraf": "^2.6.2",
+    "signale": "^1.0.1",
     "yargs": "^11.0.0"
   }
 }

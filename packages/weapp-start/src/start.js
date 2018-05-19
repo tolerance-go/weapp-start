@@ -87,7 +87,7 @@ function transform(opts = {}) {
           return result;
         })
         .catch(err => {
-          log.error(`[${next.name} error]: ${err}`);
+          log.error(new Error(`[${next.name} err]：${err}`));
         });
     }, options)
     .then(options => {
@@ -96,7 +96,7 @@ function transform(opts = {}) {
         setTimeout(() => {
           assert(Buffer.isBuffer(contents), 'extra file contents must be a Buffer');
 
-          log.success(`${resolvedDistPath.replace(`${cwd}/`, '')}`, 'EXTRA');
+          log.extra(`${resolvedDistPath.replace(`${cwd}/`, '')}`);
           saveWrite(resolvedDistPath, contents);
 
           setTimeout(async () => {
@@ -107,24 +107,17 @@ function transform(opts = {}) {
               handleSrcFile(resolvedDistPath, resolvedDistPath, extraPlugins, config, 'extra');
             }
           });
-
-          // if (mode === 'add') {
-          //   saveWrite(resolvedDistPath, contents);
-          // }
-          // if (mode === 'remove') {
-          //   rimraf.sync(resolvedDistPath);
-          // }
         });
       });
       return options;
     })
-    .catch(e => log.error(e));
+    .catch(err => log.error(new Error(`transform: ${err}`)));
 }
 
 async function handleSrcFile(resolvedSrcPath, resolvedDistPath, resolvedPlugins, config, status) {
   if (resolvedSrcPath.match(/\.DS_Store$/gi)) return;
 
-  log.info(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'TRANSFORM');
+  log.transform(`${resolvedSrcPath.replace(`${cwd}/`, '')}`);
 
   const contents = readFileSync(resolvedSrcPath);
   const pathObj = parse(resolvedSrcPath);
@@ -181,11 +174,7 @@ async function copy(resolvedSrcPath, resolvedDistPath, resolvedPlugins, handleSr
       );
     });
   } else {
-    try {
-      handleSrcFile(resolvedSrcPath, resolvedDistPath, resolvedPlugins, config);
-    } catch (err) {
-      log.error(`copy compiled failed: ${err}`);
-    }
+    handleSrcFile(resolvedSrcPath, resolvedDistPath, resolvedPlugins, config);
   }
 }
 
@@ -251,30 +240,28 @@ const start = mode => {
       ignoreInitial: true,
     });
     watcher.on('all', async (event, resolvedSrcPath) => {
+      const printPath = resolvedSrcPath.replace(`${cwd}/`, '');
+
       if (event === 'unlink' || event === 'unlinkDir') {
-        log.print(resolvedSrcPath.replace(`${cwd}/`, ''), 'REMOVED', 'magenta');
+        log.remove(printPath);
         return rimraf.sync(join(join(cwd, dist), relative(join(cwd, src), resolvedSrcPath)));
       }
 
       if (event === 'add' || event === 'addDir') {
-        log.print(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'ADD', 'yellow');
+        log.add(printPath);
       }
 
       if (event === 'change') {
-        log.print(`${resolvedSrcPath.replace(`${cwd}/`, '')}`, 'CHANGED', 'greenBright');
+        log.change(printPath);
       }
 
       if (event !== 'addDir') {
-        try {
-          const resolvedDistPath = join(
-            config.resolvedDist,
-            relative(config.resolvedSrc, resolvedSrcPath)
-          );
+        const resolvedDistPath = join(
+          config.resolvedDist,
+          relative(config.resolvedSrc, resolvedSrcPath)
+        );
 
-          handleSrcFile(resolvedSrcPath, resolvedDistPath, config.resolvedPlugins, config, event);
-        } catch (e) {
-          log.error(`changed file compiled failed: ${e.message}`);
-        }
+        handleSrcFile(resolvedSrcPath, resolvedDistPath, config.resolvedPlugins, config, event);
       }
     });
   }
