@@ -18,8 +18,11 @@ function extra(extraPaths, config) {
     log.extra(`${resolvedDistPath.replace(`${cwd}/`, '')}`);
     saveWrite(resolvedDistPath, contents);
 
-    // 处理 extra 的插件，需要判断 status，当 status 为 extra 时，不可以继续 push extra，否则会造成死循环
-    config.extraTransform(getFileObj(resolvedDistPath, resolvedDistPath));
+    const middlewares = config.resolvedPlugins.filter(plg => plg.config.extra);
+
+    if (middlewares.length) {
+      config.extraTransform(getFileObj(resolvedDistPath, resolvedDistPath));
+    }
   }
 }
 
