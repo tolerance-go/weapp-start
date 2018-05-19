@@ -97,6 +97,7 @@ weapp-start dev
 * [weapp-plugin-jsmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-jsmin)
 * [weapp-plugin-filemin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filemin)
 * [weapp-plugin-imgmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-imgmin)
+* [weapp-plugin-postcss](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-postcss)
 * ...
 
 # Utils
