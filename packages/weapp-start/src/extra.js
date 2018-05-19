@@ -9,7 +9,7 @@ function extra(extraPaths, config) {
   for (let resolvedDistPath in extraPaths) {
     if (!extraPaths.hasOwnProperty(resolvedDistPath)) break;
 
-    if (existsSync(resolvedDistPath)) return;
+    if (existsSync(resolvedDistPath)) continue;
 
     const { contents } = extraPaths[resolvedDistPath];
 
