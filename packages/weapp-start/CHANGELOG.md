@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.0...weapp-start@1.2.1) (2018-05-19)
+
+
+### Performance Improvements
+
+* promise => chains ([98d5958](https://github.com/tolerance-go/weapp-cli/commit/98d5958))
+
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.1.1...weapp-start@1.2.0) (2018-05-19)
 
