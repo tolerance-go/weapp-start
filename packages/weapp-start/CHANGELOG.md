@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.3...weapp-start@1.2.4) (2018-05-20)
+
+
+### Performance Improvements
+
+* 修改提示颜色，区分度更高 ([b9876e3](https://github.com/tolerance-go/weapp-cli/commit/b9876e3))
+
+
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.2...weapp-start@1.2.3) (2018-05-19)
 
