@@ -114,3 +114,7 @@ weapp-start dev
 # License
 
 [MIT](https://tldrlegal.com/license/mit-license)
+
+<div align=center>
+<image src='./assets/star.jpeg' width="550">
+</div>
