@@ -10,11 +10,7 @@ const npmHack = (libResolvedPath, contents) => {
   // 这里在编译这一步直接做替换 否则报错
   contents = contents.replace(/process\.env\.NODE_ENV/g, JSON.stringify(process.env.NODE_ENV));
 
-  if (
-    libResolvedPath.match('core-js/library/modules/_global.js') ||
-    libResolvedPath.match('lodash.js') ||
-    libResolvedPath.match('_root.js') // lodash@4.17.10
-  ) {
+  if (libResolvedPath.match('core-js/library/modules/_global.js')) {
     contents = contents.replace("Function('return this')()", 'this');
   }
 
@@ -35,7 +31,10 @@ const npmHack = (libResolvedPath, contents) => {
     );
   }
 
-  if (libResolvedPath.match('core-js/library/modules/_freeGlobal.js')) {
+  if (
+    libResolvedPath.match('core-js/library/modules/_freeGlobal.js') ||
+    libResolvedPath.match('lodash/_freeGlobal.js')
+  ) {
     contents = contents.replace(
       'module.exports = freeGlobal;',
       'module.exports = freeGlobal || this;'
@@ -50,7 +49,7 @@ const npmHack = (libResolvedPath, contents) => {
 const npmFolder = 'npm';
 
 const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, log, extra) => {
-  const distCode = dependCode.replace(/[^.]?require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
+  const distCode = dependCode.replace(/require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
 
@@ -64,6 +63,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     if (
       lib.indexOf('/') === -1 // require('asset');
     ) {
+      debugger;
       try {
         libResolvedPath = resolveCwd(lib);
         const libBaseName = basename(libResolvedPath);
@@ -228,7 +228,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     ) {
       relativeDistPath = lib;
     }
-    return `${match[0] === 'r' ? '' : match[0]}require('${relativeDistPath}')`;
+    return `require('${relativeDistPath}')`;
   });
   return Buffer.from(distCode);
 };
