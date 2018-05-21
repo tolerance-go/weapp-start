@@ -20,17 +20,17 @@ Component({
     },
   },
   // String Array	否	类似于mixins和traits的组件间代码复用机制，参见 [behaviors](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/behaviors.html)
-  behaviors: {},
+  behaviors() {},
   // Function	否	组件生命周期函数，在组件实例进入页面节点树时执行，注意此时不能调用 setData
-  created: {},
+  created() {},
   // Function	否	组件生命周期函数，在组件实例进入页面节点树时执行
-  attached: {},
+  attached() {},
   // Function	否	组件生命周期函数，在组件布局完成后执行，此时可以获取节点信息（使用 [SelectorQuery](https://developers.weixin.qq.com/miniprogram/dev/api/wxml-nodes-info.html) ）
-  ready: {},
+  ready() {},
   // Function	否	组件生命周期函数，在组件实例被移动到节点树另一个位置时执行
-  moved: {},
+  moved() {},
   // Function	否	组件生命周期函数，在组件实例被从页面节点树移除时执行
-  detached: {},
+  detached() {},
   // Object	否	组件间关系定义，参见 [组件间关系](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/relations.html)
   relations: {},
   // Object Map	否	一些组件选项，请参见文档其他部分的说明
