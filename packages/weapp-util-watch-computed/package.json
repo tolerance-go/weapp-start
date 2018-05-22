@@ -1,0 +1,14 @@
+{
+  "name": "weapp-util-watch-computed",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "./lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  }
+}

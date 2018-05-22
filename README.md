@@ -106,6 +106,8 @@ weapp-start dev
 
 * [weapp-util-create-plugin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-create-plugin)
 * [weapp-util-requestfix-promisify](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-requestfix-promisify)
+* [weapp-util-watch-computed](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-watch-computed) - 使原生小程序支持 watch，computed 属性
+
 * ...
 
 # Links
