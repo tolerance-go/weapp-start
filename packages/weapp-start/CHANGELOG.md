@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.4...weapp-start@1.2.5) (2018-05-22)
+
+
+### Bug Fixes
+
+* 修复模版组件代码，字段类型错误 ([e649457](https://github.com/tolerance-go/weapp-cli/commit/e649457))
+
+
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.3...weapp-start@1.2.4) (2018-05-20)
 
