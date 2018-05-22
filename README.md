@@ -11,9 +11,11 @@
 [![Dependencies Status](https://david-dm.org/tolerance-go/weapp-start/status.svg)](https://david-dm.org/tolerance-go/weapp-start)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-改善小程序开发体验，高效，稳定的原生语法和组件，避免踩坑，同时提供更多的开发能力
+小程序早已原生支持组件化开发，体验下来老牌组件化框架在升级过程中非常不顺利，所以选择使用原生语法进行开发，但是同时有很多非常棒的特性，我希望能保留下来，因此有了这个项目
 
-> 我想要原生组件开发，我想要及时的文档更新，我想踩更少的坑，所以有了这个项目；如果去掉全部插件，原来的项目一样可以跑；但是如果你喜欢 less，那就加上 less，pug 呢？一样；欢迎 fork，star
+选择 weapp-start 进行开发的主要理由之一就是**一切扩展功能全部组件化，可以随意组合，打造合适自己的开发环境**
+
+配合状态管理工具 [weappx](https://github.com/tolerance-go/weappx)，再复杂的小程序也可以轻松应对！
 
 # Features
 
@@ -89,31 +91,38 @@ weapp-start dev
 
 自定义插件文档 coming...
 
-* [weapp-plugin-babel](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-babel)
-* [weapp-plugin-eslint](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-eslint)
-* [weapp-plugin-less](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-less)
-* [weapp-plugin-pug](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-pug)
-* [weapp-plugin-require](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-require)
-* [weapp-plugin-stylus](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-stylus)
-* [weapp-plugin-filter](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filter)
-* [weapp-plugin-jsmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-jsmin)
-* [weapp-plugin-filemin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filemin)
-* [weapp-plugin-imgmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-imgmin)
-* [weapp-plugin-postcss](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-postcss)
+* [weapp-plugin-babel](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-babel) - 集成 [babel](https://github.com/babel/babel)，可以使用最新的 js 语法，而不必担心兼容
+* [weapp-plugin-eslint](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-eslint) - 集成 [eslint](https://github.com/eslint/eslint)，自动检测代码规范
+* [weapp-plugin-less](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-less) - 集成 [less](https://github.com/less/less.js)，使用 less 语法编写 wxss
+* [weapp-plugin-pug](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-pug) - 集成 [pug](https://github.com/pugjs/pug)，使用 pug 语法编写 wxml
+* [weapp-plugin-require](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-require) - 分析依赖，导入第三方 npm
+* [weapp-plugin-stylus](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-stylus) - 集成 [stylus](https://github.com/stylus/stylus)，使用 stylus 语法编写 wxss
+* [weapp-plugin-filter](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filter) - 过滤文件
+* [weapp-plugin-jsmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-jsmin) - 压缩 js
+* [weapp-plugin-filemin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filemin) - 压缩 xml，json，css
+* [weapp-plugin-imgmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-imgmin) - 压缩图片
+* [weapp-plugin-postcss](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-postcss) - 集成 [postcss](https://github.com/postcss/postcss)，可以使用最新的 css 语法和特效，而不必担心兼容
 * ...
 
 # Utils
 
-* [weapp-util-create-plugin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-create-plugin)
-* [weapp-util-requestfix-promisify](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-requestfix-promisify)
+* [weapp-util-create-plugin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-create-plugin) - 创建插件的工具方法
+* [weapp-util-requestfix-promisify](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-requestfix-promisify) - 原生小程序所有api进行promise化；优化并发请求数量
 * [weapp-util-watch-computed](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-watch-computed) - 使原生小程序支持 watch，computed 属性
-
 * ...
+
+# Todo
+
+- [ ] vscode 小程序原生语法提示
+- [ ] 支持 vue 代码组织风格，json, wxss, wxml, js 允许写在一起
+- [ ] 支持 sass 语法
+- [ ] 优化缓存
+- [ ] 自定义插件文档
 
 # Links
 
 * [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
-* Updatelog - 参考 `packages` 下各个包的 `CHANGELOG`
+* Updatelog - 请前往 `packages/xxx` 下查看 `CHANGELOG.md`
 
 # License
 
