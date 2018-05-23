@@ -1,23 +1,30 @@
-export default opts => {
-  opts.$setData = function(newData) {
+const whc = ({ initHook }) => opts => {
+  const oldReady = opts[initHook];
+
+  opts[initHook] = function() {
+    opts.$setData.call(this, this.data, 'force');
+    oldReady && oldReady.apply(this, arguments);
+  };
+
+  opts.$setData = function(newData, force) {
     const oldData = this.data;
 
-    if (this.watch) {
-      for (let prop in this.watch) {
-        if (!this.watch.hasOwnProperty(prop)) break;
+    if (opts.watch) {
+      for (let prop in opts.watch) {
+        if (!opts.watch.hasOwnProperty(prop)) break;
 
         const newVal = newData[prop];
         const oldVal = oldData[prop];
 
-        if (newData.hasOwnProperty(prop) && newVal !== oldVal) {
-          this.watch[prop].call(this, newVal, oldVal);
+        if (force || (newData.hasOwnProperty(prop) && newVal !== oldVal)) {
+          opts.watch[prop].call(this, newVal, oldVal);
         }
       }
     }
 
-    if (this.computed) {
-      for (let prop in this.computed) {
-        const item = this.computed[prop];
+    if (opts.computed) {
+      for (let prop in opts.computed) {
+        const item = opts.computed[prop];
         const denpendsField = item.slice(0, item.length - 1);
         const compute = item[item.length - 1];
         const denpendsVal = [];
@@ -27,15 +34,13 @@ export default opts => {
           denpendsField.forEach(field => {
             const newVal = newData[field];
             const oldVal = oldData[field];
-            if (newData.hasOwnProperty(field)) {
-              if (newVal !== oldVal) {
-                hasChanged = true;
-              }
+            if (newVal !== oldVal) {
+              hasChanged = true;
             }
             denpendsVal.push(hasChanged ? newVal : oldVal);
           });
 
-          if (hasChanged) {
+          if (force || hasChanged) {
             const updatedVal = compute.apply(this, denpendsVal);
             newData[prop] = updatedVal;
           }
@@ -48,3 +53,8 @@ export default opts => {
 
   return opts;
 };
+
+const whcComponent = whc({ initHook: 'attached' });
+const whcPage = whc({ initHook: 'onReady' });
+
+export { whc, whcComponent, whcPage };

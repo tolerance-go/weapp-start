@@ -33,11 +33,13 @@ npm i weapp-util-watch-computed
 
 ## 使用
 
+watch 和 computed 初始化时候（page：onReady，compon：attached）就会执行一次
+
 ```js
-import watchComputed from 'weapp-util-watch-computed';
+import {whcComponent, whcPage} from 'weapp-util-watch-computed';
 
 Page(
-  watchComputed({
+  whcPage({
     data: {
       fieldA: 1,
       fieldB: 2,
