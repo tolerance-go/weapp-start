@@ -46,7 +46,7 @@ function watch(config) {
   const watcher = chokidar.watch(resolvedSrc, {
     ignoreInitial: true,
   });
-  watcher.on('all', async (event, resolvedSrcPath) => {
+  watcher.on('all', (event, resolvedSrcPath) => {
     const printPath = resolvedSrcPath.replace(`${cwd}/`, '');
 
     if (event === 'unlink' || event === 'unlinkDir') {
