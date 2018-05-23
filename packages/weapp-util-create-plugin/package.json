@@ -2,11 +2,18 @@
   "name": "weapp-util-create-plugin",
   "version": "0.1.3",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "main": "./lib/index.js",
   "author": "bzone <yarnbCoder@gmail.com>",
+  "homepage": "https://github.com/tolerance-go/weapp-start",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tolerance-go/weapp-start"
+  },
+  "bugs": {
+    "url": "https://github.com/tolerance-go/weapp-start/issues"
+  },
+  "keywords": ["weapp", "weapp-plugin", "scaffold", "weapp-start"],
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0"
