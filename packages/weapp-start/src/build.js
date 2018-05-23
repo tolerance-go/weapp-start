@@ -28,9 +28,9 @@ function collect(resolvedSrcPath, resolvedDistPath, filsObjs) {
   }
 }
 
-function build(config) {
+function build(config, noCache) {
   const { resolvedDist, resolvedSrc, mode } = config;
-  if (mode === 'build') {
+  if (noCache || mode === 'build') {
     rimraf.sync(resolvedDist);
   }
   const filsObjs = [];

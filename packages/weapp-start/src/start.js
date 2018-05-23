@@ -3,7 +3,7 @@ import getConfig from './getConfig';
 import generateTransform from './transform';
 import log from './utils/log';
 
-const start = mode => {
+const start = (mode, noCache) => {
   try {
     const config = getConfig(mode);
     const transform = generateTransform(config, 'all', 'effect');
@@ -12,7 +12,7 @@ const start = mode => {
     config.transform = transform;
     config.rawExtraTransform = rawExtraTransform;
 
-    build(config);
+    build(config, noCache);
     if (config.mode === 'dev') {
       watch(config);
     }

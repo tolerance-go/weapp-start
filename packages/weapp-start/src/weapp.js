@@ -11,9 +11,21 @@ import start from './start';
 
 const argv = yargs // eslint-disable-line
   .usage('$0 <command> [options]')
-  .command('dev', 'watch build', argv => {
-    start('dev');
-  })
+  .command(
+    'dev',
+    'watch build',
+    yargs => {
+      yargs.option('no-cache', {
+        default: false,
+        alias: 'n',
+        describe: '禁用缓存',
+        type: 'boolean',
+      });
+    },
+    argv => {
+      start('dev', argv.noCache);
+    }
+  )
   .command('build', '打包构建', argv => {
     start('build');
   })
