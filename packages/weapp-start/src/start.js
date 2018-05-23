@@ -6,11 +6,11 @@ import log from './utils/log';
 const start = mode => {
   try {
     const config = getConfig(mode);
-    const transform = generateTransform(config);
-    const extraTransform = generateTransform(config, 'extra');
+    const transform = generateTransform(config, 'all', 'effect');
+    const rawExtraTransform = generateTransform(config, 'extra', 'raw');
 
     config.transform = transform;
-    config.extraTransform = extraTransform;
+    config.rawExtraTransform = rawExtraTransform;
 
     build(config);
     if (config.mode === 'dev') {

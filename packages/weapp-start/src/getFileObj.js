@@ -1,11 +1,10 @@
 import { parse } from 'path';
 import { readFileSync } from 'fs';
 
-export default function(resolvedSrcPath, resolvedDistPath) {
-  const contents = readFileSync(resolvedSrcPath);
-  const pathObj = parse(resolvedSrcPath);
+export default function(resolvedSrcPath, resolvedDistPath, contents) {
+  contents = contents || readFileSync(resolvedSrcPath);
   const file = {
-    ...pathObj,
+    ...parse(resolvedSrcPath),
     contents,
     path: resolvedSrcPath,
     dist: resolvedDistPath,

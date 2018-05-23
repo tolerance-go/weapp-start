@@ -19,7 +19,7 @@ function compose(...funcs) {
   return funcs.reduce((a, b) => (...args) => a(b(...args)));
 }
 
-function generateTransform(config, onlyHandleExtraPlugin) {
+function generateTransform(config, pluginMode, postHandleMode) {
   // 准备 API
   const middlewareAPI = {
     config,
@@ -31,8 +31,7 @@ function generateTransform(config, onlyHandleExtraPlugin) {
   let middlewares = config.resolvedPlugins;
 
   // 生成transform plugin
-
-  if (onlyHandleExtraPlugin) {
+  if (pluginMode === 'extra') {
     middlewares = middlewares.filter(plg => plg.config.extra);
   }
 
@@ -41,7 +40,7 @@ function generateTransform(config, onlyHandleExtraPlugin) {
   });
 
   // post file handle
-  const base = file => {
+  const effectPostHandle = file => {
     const { resolvedDist, resolvedSrc } = config;
 
     const { path } = file;
@@ -73,7 +72,12 @@ function generateTransform(config, onlyHandleExtraPlugin) {
     }
   };
 
-  const transform = compose(...chain)(base);
+  const rawPostHandle = file => {};
+
+  const transform = compose(...chain)(
+    postHandleMode === 'effect' ? effectPostHandle : rawPostHandle // noop
+  );
+
   return transform;
 }
 
