@@ -72,7 +72,7 @@ function generateTransform(config, pluginMode, postHandleMode) {
     }
   };
 
-  const rawPostHandle = file => {};
+  const rawPostHandle = file => log.transform(`${file.path.replace(`${cwd}/`, '')}`);
 
   const transform = compose(...chain)(
     postHandleMode === 'effect' ? effectPostHandle : rawPostHandle // noop
