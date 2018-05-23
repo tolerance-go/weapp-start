@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-util-watch-computed@1.0.0...weapp-util-watch-computed@1.0.1) (2018-05-23)
+
+
+### Bug Fixes
+
+* 修复构建依赖版本 node8->es5 ([6e94983](https://github.com/tolerance-go/weapp-cli/commit/6e94983))
+
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/tolerance-go/weapp-cli/compare/weapp-util-watch-computed@0.1.0...weapp-util-watch-computed@1.0.0) (2018-05-23)
 

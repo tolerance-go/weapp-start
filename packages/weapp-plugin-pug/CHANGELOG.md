@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.4"></a>
+## [0.2.4](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.2.3...weapp-plugin-pug@0.2.4) (2018-05-23)
+
+
+### Bug Fixes
+
+* 修复构建依赖版本 node8->es5 ([6e94983](https://github.com/tolerance-go/weapp-cli/commit/6e94983))
+
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-pug@0.2.2...weapp-plugin-pug@0.2.3) (2018-05-19)
 

@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-eslint",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,6 +12,6 @@
     "babel-runtime": "^6.26.0",
     "eslint": "^4.19.1",
     "eslint-friendly-formatter": "^4.0.1",
-    "weapp-util-create-plugin": "^0.1.2"
+    "weapp-util-create-plugin": "^0.1.3"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-filter",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "weapp-util-create-plugin": "^0.1.2"
+    "weapp-util-create-plugin": "^0.1.3"
   }
 }

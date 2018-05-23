@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.5"></a>
+## [0.1.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-util-requestfix-promisify@0.1.4...weapp-util-requestfix-promisify@0.1.5) (2018-05-23)
+
+
+### Bug Fixes
+
+* 修复构建依赖版本 node8->es5 ([6e94983](https://github.com/tolerance-go/weapp-cli/commit/6e94983))
+
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/tolerance-go/weapp-cli/compare/weapp-util-requestfix-promisify@0.1.3...weapp-util-requestfix-promisify@0.1.4) (2018-05-19)
 
