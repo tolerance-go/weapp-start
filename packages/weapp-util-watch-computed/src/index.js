@@ -38,8 +38,9 @@ const whc = ({ initHook, path }) => opts => {
   set(opts, fullPath, $setData);
 
   opts[initHook] = function() {
+    const result = oldReady && oldReady.apply(this, arguments);
     get(opts, fullPath).call(this, this.data, 'force');
-    oldReady && oldReady.apply(this, arguments);
+    return result;
   };
 
   function $setData(newData, force) {
