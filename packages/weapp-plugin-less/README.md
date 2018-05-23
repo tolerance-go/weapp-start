@@ -4,7 +4,7 @@
 
 `@import url(...)` 绝对路径是从 src 目录开始查找的
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-less -D

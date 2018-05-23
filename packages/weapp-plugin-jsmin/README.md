@@ -2,7 +2,7 @@
 
 压缩 `.js` 文件
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-jsmin -D

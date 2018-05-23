@@ -1,13 +1,4 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "node": "8"
-        }
-      }
-    ]
-  ],
+  "presets": ["env"],
   "plugins": ["add-module-exports", "transform-object-rest-spread", "transform-runtime"]
 }

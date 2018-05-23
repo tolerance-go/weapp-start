@@ -2,7 +2,7 @@
 
 创建 weapp 插件
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-util-create-plugin

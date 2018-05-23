@@ -2,7 +2,7 @@
 
 压缩图像文件
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-imgmin -D

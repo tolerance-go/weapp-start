@@ -2,7 +2,7 @@
 
 默认编译后缀名为 .wxss 的 stylus 语法文件
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-stylus -D

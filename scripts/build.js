@@ -15,16 +15,7 @@ function transform(opts = {}) {
   const { content, path } = opts;
   console.log(chalk['blue'](`[TRANSFORM] ${path.replace(`${cwd}/`, '')}`));
   return babel.transform(content, {
-    presets: [
-      [
-        require('babel-preset-env'),
-        {
-          targets: {
-            node: '8',
-          },
-        },
-      ],
-    ],
+    presets: [[require('babel-preset-env')]],
     plugins: ['add-module-exports', 'transform-object-rest-spread', 'transform-runtime'],
   }).code;
 }

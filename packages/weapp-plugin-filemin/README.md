@@ -2,7 +2,7 @@
 
 [pretty-data](https://github.com/vkiryukhin/pretty-data)
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-filemin -D

@@ -2,7 +2,7 @@
 
 使原生小程序支持 watch，computed 属性
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-util-watch-computed

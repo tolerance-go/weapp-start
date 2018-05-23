@@ -2,7 +2,7 @@
 
 过滤文件
 
-## 安装
+## 安装 
 
 ```bash
 npm i weapp-plugin-filter -D
