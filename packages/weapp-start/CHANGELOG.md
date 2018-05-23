@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.2.6"></a>
+## [1.2.6](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.5...weapp-start@1.2.6) (2018-05-23)
+
+
+### Performance Improvements
+
+* extra生成的文件，直接进行transform而无需先写入文件 ([81a4204](https://github.com/tolerance-go/weapp-cli/commit/81a4204))
+
+
+
+
 <a name="1.2.5"></a>
 ## [1.2.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.4...weapp-start@1.2.5) (2018-05-22)
 
