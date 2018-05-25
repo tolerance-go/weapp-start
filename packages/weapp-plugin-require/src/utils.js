@@ -16,6 +16,13 @@ export default {
     if (!existsSync(path)) {
       return false;
     }
+    // 同名的文件夹和文件，文件的查找优先级更高
+    const jsSuffix = this.addExt(path);
+    if (existsSync(jsSuffix)) {
+      if (!statSync(jsSuffix).isDirectory()) {
+        return false;
+      }
+    }
     return statSync(path).isDirectory();
   },
   isExist(path, ext = '.js') {

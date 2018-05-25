@@ -63,7 +63,6 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     if (
       lib.indexOf('/') === -1 // require('asset');
     ) {
-      debugger;
       try {
         libResolvedPath = resolveCwd(lib);
         const libBaseName = basename(libResolvedPath);
