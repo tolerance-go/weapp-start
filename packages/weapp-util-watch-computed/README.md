@@ -53,10 +53,16 @@ Page(
       fieldC: [
         fieldA,
         fieldB,
-        (a, b) => {
+        function(a, b) {
           return a + b;
         },
       ],
+      fieldF: [
+        fieldC,
+        function (c) {
+          return c++;
+        }
+      ]
     },
     onLoad() {
       this.$setData({
@@ -66,6 +72,7 @@ Page(
       // fieldA === 10
       // fieldB === 2
       // fieldC === 12
+      // fieldF === 13
     },
   })
 );

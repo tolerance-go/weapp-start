@@ -67,17 +67,21 @@ const whc = ({ initHook, path }) => opts => {
         const denpendsVal = [];
 
         if (denpendsField.some(field => newData.hasOwnProperty(field))) {
-          let hasChanged = false;
+          const hasChangeds = [];
           denpendsField.forEach(field => {
+            let changed = false;
             const newVal = newData[field];
             const oldVal = oldData[field];
-            if (newVal !== oldVal) {
-              hasChanged = true;
+            if (newData.hasOwnProperty(field)) {
+              if (newVal !== oldVal) {
+                changed = true;
+              }
             }
-            denpendsVal.push(hasChanged ? newVal : oldVal);
+            hasChangeds.push(changed);
+            denpendsVal.push(changed ? newVal : oldVal);
           });
 
-          if (force || hasChanged) {
+          if (force || hasChangeds.some(changed => changed)) {
             const updatedVal = compute.apply(this, denpendsVal);
             newData[prop] = updatedVal;
           }
