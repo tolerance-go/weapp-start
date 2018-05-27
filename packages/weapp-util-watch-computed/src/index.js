@@ -11,6 +11,7 @@ const set = (obj, path, val) => {
   }, obj);
 };
 
+// eslint-disable-next-line
 const get = (obj, path) => {
   const paths = path.split('.');
   return paths.reduce((obj, name, index) => {
@@ -24,22 +25,67 @@ const get = (obj, path) => {
   }, obj);
 };
 
-const whc = ({ initHook, path }) => opts => {
+const normalizalProperties = properties => {
+  for (let prop in properties) {
+    if (!properties.hasOwnProperty(prop)) continue;
+    const meta = properties[prop];
+    if (typeof meta !== 'object') {
+      properties[prop] = {
+        type: meta,
+      };
+    }
+  }
+};
+
+const whc = ({ name }) => opts => {
   const methodName = '$setData';
+  const isCom = name === 'component';
+  const path = isCom ? 'methods' : '';
+  const initHook = isCom ? 'attached' : 'onReady';
+
   let fullPath = path;
-  if (!path) {
-    fullPath = methodName;
-  } else {
-    fullPath += `.${methodName}`;
+  if (!path) fullPath = methodName;
+  else fullPath += `.${methodName}`;
+  set(opts, fullPath, $setData);
+
+  if (isCom && opts.properties) {
+    const properties = opts.properties;
+    normalizalProperties(properties);
+    for (let prop in properties) {
+      if (!properties.hasOwnProperty(prop)) continue;
+      const meta = properties[prop];
+      if (meta.observer) {
+        const oldOb = meta.observer;
+        meta.observer = function(newVal, oldVal) {
+          const result = oldOb.apply(this, arguments);
+          if (newVal !== oldVal) {
+            $setData.call(this, { [prop]: newVal }, 'force');
+          }
+          return result;
+        };
+      } else {
+        meta.observer = function(newVal, oldVal) {
+          // 接口 data 发生变化的时候，此时 this.data 已经改变了
+          if (newVal !== oldVal) {
+            $setData.call(this, { [prop]: newVal }, 'force');
+          }
+        };
+      }
+    }
   }
 
   const oldReady = opts[initHook];
-
-  set(opts, fullPath, $setData);
-
   opts[initHook] = function() {
     const result = oldReady && oldReady.apply(this, arguments);
-    get(opts, fullPath).call(this, this.data, 'force');
+    for (let k in opts.data) {
+      if (opts.data[k] === undefined) {
+        delete opts.data[k];
+      }
+    }
+    // this.data => opts.data
+    // 对于组件，properties 的数据会融入this.data
+    // 而这部分数据的初始化交由自身的 observer 来完成
+    $setData.call(this, opts.data, 'force');
     return result;
   };
 
@@ -95,7 +141,7 @@ const whc = ({ initHook, path }) => opts => {
   return opts;
 };
 
-const whcComponent = whc({ initHook: 'attached', path: 'methods' });
-const whcPage = whc({ initHook: 'onReady' });
+const whcComponent = whc({ name: 'component' });
+const whcPage = whc({ name: 'page' });
 
 export { whc, whcComponent, whcPage };
