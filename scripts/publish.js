@@ -71,17 +71,17 @@ prompt([
       }
       publishToNpm();
     });
+
+    function publishToNpm() {
+      console.log(`repos to publish: ${input.package.join(', ')}`);
+      input.package.forEach(repo => {
+        shell.cd(join(cwd, 'packages', repo));
+        console.log(`[${repo}] npm publish`);
+        shell.exec(`npm publish`);
+      });
+    }
   })
   .catch(err => {
     console.log(err);
     process.exit(1);
   });
-
-function publishToNpm() {
-  console.log(`repos to publish: ${updatedRepos.join(', ')}`);
-  updatedRepos.forEach(repo => {
-    shell.cd(join(cwd, 'packages', repo));
-    console.log(`[${repo}] npm publish`);
-    shell.exec(`npm publish`);
-  });
-}
