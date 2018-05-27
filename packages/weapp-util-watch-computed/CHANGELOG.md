@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/tolerance-go/weapp-start/compare/weapp-util-watch-computed@1.0.1...weapp-util-watch-computed@1.0.2) (2018-05-27)
+
+
+### Bug Fixes
+
+*  修复$setData undefined ([9d6e673](https://github.com/tolerance-go/weapp-start/commit/9d6e673))
+* **util-watch-computed:**  修复hook调用顺序 ([94eb891](https://github.com/tolerance-go/weapp-start/commit/94eb891))
+* **util-watch-computed:** 修复依赖顺序间的错误影响；没有setData的依赖取值错误 ([9ec6e52](https://github.com/tolerance-go/weapp-start/commit/9ec6e52))
+* **util-watch-computed:** 计算属性兼容在小程序原生组件的 properties中符合预期行为 ([349b975](https://github.com/tolerance-go/weapp-start/commit/349b975))
+
+
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/tolerance-go/weapp-cli/compare/weapp-util-watch-computed@1.0.0...weapp-util-watch-computed@1.0.1) (2018-05-23)
 

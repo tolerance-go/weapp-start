@@ -1,6 +1,6 @@
 {
   "name": "weapp-util-watch-computed",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "scripts": {},
   "main": "./lib/index.js",
@@ -14,7 +14,12 @@
   "bugs": {
     "url": "https://github.com/tolerance-go/weapp-start/issues"
   },
-  "keywords": ["weapp", "weapp-plugin", "scaffold", "weapp-start"],
+  "keywords": [
+    "weapp",
+    "weapp-plugin",
+    "scaffold",
+    "weapp-start"
+  ],
   "dependencies": {
     "babel-runtime": "^6.26.0"
   }

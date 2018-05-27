@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/tolerance-go/weapp-start/compare/weapp-start@1.2.7...weapp-start@1.3.0) (2018-05-27)
+
+
+### Features
+
+* dev 命令增加 --no-cache 清除缓存选项 ([562797c](https://github.com/tolerance-go/weapp-start/commit/562797c))
+
+
+
+
 <a name="1.2.7"></a>
 ## [1.2.7](https://github.com/tolerance-go/weapp-cli/compare/weapp-start@1.2.6...weapp-start@1.2.7) (2018-05-23)
 

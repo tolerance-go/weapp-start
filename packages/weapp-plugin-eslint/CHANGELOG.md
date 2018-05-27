@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.2.5"></a>
+## [0.2.5](https://github.com/tolerance-go/weapp-start/compare/weapp-plugin-eslint@0.2.4...weapp-plugin-eslint@0.2.5) (2018-05-27)
+
+
+
+
+**Note:** Version bump only for package weapp-plugin-eslint
+
 <a name="0.2.4"></a>
 ## [0.2.4](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-eslint@0.2.3...weapp-plugin-eslint@0.2.4) (2018-05-23)
 

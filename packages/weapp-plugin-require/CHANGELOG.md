@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.3.6"></a>
+## [0.3.6](https://github.com/tolerance-go/weapp-start/compare/weapp-plugin-require@0.3.5...weapp-plugin-require@0.3.6) (2018-05-27)
+
+
+### Bug Fixes
+
+* **weapp-start:** 同名的文件夹和文件，文件的查找优先级更高 ([57c1af5](https://github.com/tolerance-go/weapp-start/commit/57c1af5))
+
+
+
+
 <a name="0.3.5"></a>
 ## [0.3.5](https://github.com/tolerance-go/weapp-cli/compare/weapp-plugin-require@0.3.4...weapp-plugin-require@0.3.5) (2018-05-23)
 
