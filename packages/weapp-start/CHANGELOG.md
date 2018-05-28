@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/tolerance-go/weapp-start/compare/weapp-start@1.3.0...weapp-start@1.4.0) (2018-05-28)
+
+
+### Features
+
+* build 支持 tag 选项，构建结束自动打标签 ([0a6ff73](https://github.com/tolerance-go/weapp-start/commit/0a6ff73))
+* 支持本地 mock 数据 ([ffecabd](https://github.com/tolerance-go/weapp-start/commit/ffecabd))
+
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/tolerance-go/weapp-start/compare/weapp-start@1.2.7...weapp-start@1.3.0) (2018-05-27)
 
