@@ -8,6 +8,7 @@ import rimraf from 'rimraf';
 import download from 'download-git-repo';
 import { saveCopy } from './utils/save';
 import start from './start';
+const shell = require('shelljs');
 
 const argv = yargs // eslint-disable-line
   .usage('$0 <command> [options]')
@@ -26,9 +27,26 @@ const argv = yargs // eslint-disable-line
       start('dev', argv.noCache);
     }
   )
-  .command('build', '打包构建', argv => {
+  .command(
+    'build',
+    '打包构建',
+    yargs => {
+      yargs.option('tag', {
+        default: false,
+        alias: 't',
+        describe: '自动打tag',
+        type: 'string',
+      });
+    },
+    argv => {
     start('build');
-  })
+      if (argv.tag) {
+        shell.exec('git add .');
+        shell.exec('git commit -m Publish');
+        shell.exec('git tag ' + argv.tag);
+      }
+    }
+  )
   .command('init', '生成模版项目', () => {
     console.log(chalk.green('下载模板组中，请稍后...'));
     const temp = '__temp';
