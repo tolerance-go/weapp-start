@@ -23,6 +23,7 @@
 * 支持 promise, async/await 等最新语法
 * 支持多种编译器，如 pug/less/stylus
 * 支持 ESlint
+* 支持本地 [mock](https://github.com/tolerance-go/weapp-start/blob/master/docs/mock.md) 数据
 * 支持一键生成项目，组件模版
 * 支持发布前资源压缩
 * 支持自定义插件
@@ -48,6 +49,7 @@ weapp-start <command> [options]
   weapp-start build  打包构建
   weapp-start init   生成模版项目
   weapp-start new    生成模板页面
+  weapp-start mock   启动本地mock服务
 
 选项：
   -h, --help     显示帮助信息                                             [布尔]
@@ -113,6 +115,7 @@ weapp-start dev
 
 # Todo
 
+- [x] 支持本地mock
 - [ ] vscode 小程序原生语法提示
 - [ ] 支持 vue 代码组织风格，json, wxss, wxml, js 允许写在一起
 - [ ] 支持 sass 语法
