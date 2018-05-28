@@ -8,6 +8,7 @@ import rimraf from 'rimraf';
 import download from 'download-git-repo';
 import { saveCopy } from './utils/save';
 import start from './start';
+import launchMock from './mock';
 const shell = require('shelljs');
 
 const argv = yargs // eslint-disable-line
@@ -39,7 +40,7 @@ const argv = yargs // eslint-disable-line
       });
     },
     argv => {
-    start('build');
+      start('build');
       if (argv.tag) {
         shell.exec('git add .');
         shell.exec('git commit -m Publish');
@@ -124,6 +125,21 @@ const argv = yargs // eslint-disable-line
         console.log(chalk.red(err));
       });
   })
+  .command(
+    'mock',
+    '启动本地mock服务',
+    yargs => {
+      yargs.option('port', {
+        default: 3000,
+        alias: 'p',
+        describe: '指定端口号',
+        type: 'number',
+      });
+    },
+    argv => {
+      launchMock({ port: argv.prot });
+    }
+  )
   .help()
   .alias('h', 'help')
   .alias('v', 'version').argv;
