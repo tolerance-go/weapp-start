@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.5"></a>
+## [0.1.5](https://github.com/tolerance-go/weapp-start/compare/weapp-util-create-plugin@0.1.4...weapp-util-create-plugin@0.1.5) (2018-05-31)
+
+
+### Bug Fixes
+
+* plgConfig 循环属性过滤错误 ([ec67600](https://github.com/tolerance-go/weapp-start/commit/ec67600))
+
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/tolerance-go/weapp-start/compare/weapp-util-create-plugin@0.1.3...weapp-util-create-plugin@0.1.4) (2018-05-27)
 
