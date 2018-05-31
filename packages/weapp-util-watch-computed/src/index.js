@@ -37,11 +37,21 @@ const normalizalProperties = properties => {
   }
 };
 
+const getNormalizalPropertiesValue = properties => {
+  const data = {};
+  for (let prop in properties) {
+    if (!properties.hasOwnProperty(prop)) continue;
+    data[prop] = properties[prop].value;
+  }
+  return data;
+};
+
 const whc = ({ name }) => opts => {
   const methodName = '$setData';
   const isCom = name === 'component';
   const path = isCom ? 'methods' : '';
   const initHook = isCom ? 'attached' : 'onReady';
+  let hookCalled = false;
 
   let fullPath = path;
   if (!path) fullPath = methodName;
@@ -58,17 +68,13 @@ const whc = ({ name }) => opts => {
         const oldOb = meta.observer;
         meta.observer = function(newVal, oldVal) {
           const result = oldOb.apply(this, arguments);
-          if (newVal !== oldVal) {
-            $setData.call(this, { [prop]: newVal }, 'force');
-          }
+          observerRender.call(this, newVal, oldVal, prop);
           return result;
         };
       } else {
         meta.observer = function(newVal, oldVal) {
           // 接口 data 发生变化的时候，此时 this.data 已经改变了
-          if (newVal !== oldVal) {
-            $setData.call(this, { [prop]: newVal }, 'force');
-          }
+          observerRender.call(this, newVal, oldVal, prop);
         };
       }
     }
@@ -76,18 +82,31 @@ const whc = ({ name }) => opts => {
 
   const oldReady = opts[initHook];
   opts[initHook] = function() {
+    hookCalled = true;
+    // this.data 的顺序置于最后，因为 observer 的执行早于 hook，observer 执行之后，内部 this.data 已经修改
+    const data = Object.assign({}, getNormalizalPropertiesValue(opts.properties), this.data);
+
     const result = oldReady && oldReady.apply(this, arguments);
-    for (let k in opts.data) {
-      if (opts.data[k] === undefined) {
-        delete opts.data[k];
+    for (let k in data) {
+      if (data[k] === undefined) {
+        delete data[k];
       }
     }
-    // this.data => opts.data
-    // 对于组件，properties 的数据会融入this.data
-    // 而这部分数据的初始化交由自身的 observer 来完成
-    $setData.call(this, opts.data, 'force');
+    // ~~计算属性依赖 properties 的数据的初始化交由自身的 observer 来完成~~
+    // 当外部一开始没有传值的时候，observer 是不会调用，因此这边主动将 properties 融入 data
+    $setData.call(this, data, 'force');
     return result;
   };
+
+  function observerRender(newVal, oldVal, prop) {
+    // observer 执行之后，this.data 里面的值已经变了
+    if (!hookCalled) {
+      return;
+    }
+    if (newVal !== oldVal) {
+      $setData.call(this, { [prop]: newVal }, 'force');
+    }
+  }
 
   function $setData(newData, force) {
     const oldData = this.data;
