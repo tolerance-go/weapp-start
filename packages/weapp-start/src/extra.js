@@ -9,7 +9,7 @@ function extra(extraPaths, config) {
   const middlewares = config.resolvedPlugins.filter(plg => plg.config.extra);
 
   for (let resolvedDistPath in extraPaths) {
-    if (!extraPaths.hasOwnProperty(resolvedDistPath)) break;
+    if (!extraPaths.hasOwnProperty(resolvedDistPath)) continue;
 
     if (existsSync(resolvedDistPath)) continue;
 
