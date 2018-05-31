@@ -1,0 +1,27 @@
+{
+  "name": "weapp-plugin-replace",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {},
+  "main": "./lib/index.js",
+  "author": "bzone <yarnbCoder@gmail.com>",
+  "homepage": "https://github.com/tolerance-go/weapp-start",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tolerance-go/weapp-start"
+  },
+  "bugs": {
+    "url": "https://github.com/tolerance-go/weapp-start/issues"
+  },
+  "keywords": [
+    "weapp",
+    "weapp-plugin",
+    "scaffold",
+    "weapp-start"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "weapp-util-create-plugin": "^0.1.5"
+  }
+}
