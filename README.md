@@ -104,6 +104,7 @@ weapp-start dev
 * [weapp-plugin-filemin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-filemin) - 压缩 xml，json，css
 * [weapp-plugin-imgmin](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-imgmin) - 压缩图片
 * [weapp-plugin-postcss](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-postcss) - 集成 [postcss](https://github.com/postcss/postcss)，可以使用最新的 css 语法和特效，而不必担心兼容
+* [weapp-plugin-replace](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-plugin-replace) - 文本替换
 * ...
 
 # Utils
