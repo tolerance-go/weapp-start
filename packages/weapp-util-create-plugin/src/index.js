@@ -23,8 +23,8 @@ const createPlugin = (meta = {}) => {
 
       const specConfig = {};
       for (let key in plgConfig) {
-        if (!plgConfig.hasOwnProperty(key)) break;
-        if (commonCfgFields.indexOf(key) !== -1) break;
+        if (!plgConfig.hasOwnProperty(key)) continue;
+        if (commonCfgFields.indexOf(key) !== -1) continue;
         specConfig[key] = plgConfig[key];
       }
 
