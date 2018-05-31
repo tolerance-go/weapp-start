@@ -27,6 +27,7 @@
     "weapp-plugin-pug": "file:../packages/weapp-plugin-pug",
     "weapp-plugin-require": "file:../packages/weapp-plugin-require",
     "weapp-plugin-stylus": "file:../packages/weapp-plugin-stylus",
+    "weapp-plugin-replace": "file:../packages/weapp-plugin-replace",
     "weapp-start": "file:../packages/weapp-start"
   },
   "dependencies": {
