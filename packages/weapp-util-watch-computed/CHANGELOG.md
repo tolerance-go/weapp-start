@@ -9,7 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* recommit: 修复whcComponent对于父组件缺省properties情况下初始化computed属性错误 ([1fcb7ab](https://github.com/tolerance-go/weapp-start/commit/1fcb7ab))
 * 修复whcCompoennt对于父组件缺省properties情况下初始化computed属性错误 ([a3c4b15](https://github.com/tolerance-go/weapp-start/commit/a3c4b15))
 
 
