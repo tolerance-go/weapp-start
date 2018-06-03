@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/tolerance-go/weapp-start/compare/weapp-util-watch-computed@1.0.2...weapp-util-watch-computed@1.0.3) (2018-06-03)
+
+
+### Bug Fixes
+
+* recommit: 修复whcComponent对于父组件缺省properties情况下初始化computed属性错误 ([1fcb7ab](https://github.com/tolerance-go/weapp-start/commit/1fcb7ab))
+* 修复whcCompoennt对于父组件缺省properties情况下初始化computed属性错误 ([a3c4b15](https://github.com/tolerance-go/weapp-start/commit/a3c4b15))
+
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/tolerance-go/weapp-start/compare/weapp-util-watch-computed@1.0.1...weapp-util-watch-computed@1.0.2) (2018-05-27)
 

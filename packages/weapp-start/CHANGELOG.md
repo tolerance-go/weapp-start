@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.4.1"></a>
+## [1.4.1](https://github.com/tolerance-go/weapp-start/compare/weapp-start@1.4.0...weapp-start@1.4.1) (2018-06-03)
+
+
+### Bug Fixes
+
+* extra break ([db31081](https://github.com/tolerance-go/weapp-start/commit/db31081))
+
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/tolerance-go/weapp-start/compare/weapp-start@1.3.0...weapp-start@1.4.0) (2018-05-28)
 
