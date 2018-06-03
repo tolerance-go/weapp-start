@@ -81,6 +81,7 @@ const whc = ({ name }) => opts => {
   }
 
   const oldReady = opts[initHook];
+
   opts[initHook] = function() {
     hookCalled = true;
     // this.data 的顺序置于最后，因为 observer 的执行早于 hook，observer 执行之后，内部 this.data 已经修改
