@@ -69,7 +69,20 @@ prompt([
         console.error('Failed: lerna publish');
         process.exit(1);
       }
-      publishToNpm();
+
+      require('inquirer')
+        .createPromptModule()([
+          {
+            name: 'npm',
+            type: 'confirm',
+            message: '是否发布npm',
+          },
+        ])
+        .then(input => {
+          if (input.npm) {
+            publishToNpm();
+          }
+        });
     });
 
     function publishToNpm() {
