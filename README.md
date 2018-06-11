@@ -11,11 +11,19 @@
 [![Dependencies Status](https://david-dm.org/tolerance-go/weapp-start/status.svg)](https://david-dm.org/tolerance-go/weapp-start)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-小程序早已原生支持组件化开发，体验下来老牌组件化框架在升级过程中非常不顺利，所以选择使用原生语法进行开发，但是同时有很多非常棒的特性，我希望能保留下来，因此有了这个项目
-
 选择 weapp-start 进行开发的主要理由之一就是**一切扩展功能全部组件化，可以随意组合，打造合适自己的开发环境**
 
-配合状态管理工具 [weappx](https://github.com/tolerance-go/weappx)，再复杂的小程序也可以轻松应对！
+配合状态管理工具 [weappx](https://github.com/tolerance-go/weappx)，再复杂的小程序也可以轻松应
+
+> 小程序早已原生支持组件化开发，体验下来老牌组件化框架在升级过程中非常不顺利，所以选择使用原生语法进行开发，但是同时有很多非常棒的特性，我希望能保留下来，因此有了这个项目
+
+# Why
+
+- 如果你只是开发一款好用的 小程序，单纯使用 小程序官方文档和规范，我建议你可以尝试本项目，它对于原生小程序开发体验有非常棒的提升
+
+- 如果你熟悉 vue，并且打算使用它们来兼容小程序的开发，那么我推荐你可以尝试 wepy 或者 mpvue，它们也都超赞
+
+- 如果你熟悉 react，并且准备一处编写，多端适配，那么我推荐你使用 taro，虽然 wepy，mpvue 也都支持一键转换 H5，但是体验过不够好，而且和 taro 比较，属于 “生而不同”； 写这段话的时候，taro 刚刚开源没多久，但是我相信 taro 绝对够引人瞩目（其实本项目计划之初，也是准备分阶段完成平台转换功能，至少适配 H5，但是 taro 的出现，让我意识到，如果选择一种底层不变的开发语言，显然 react 要比 小程序语法 优秀的多【感觉上是=。=】）
 
 # Features
 
