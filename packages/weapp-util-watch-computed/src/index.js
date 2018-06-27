@@ -51,11 +51,16 @@ const whc = ({ name }) => opts => {
   const isCom = name === 'component';
   const path = isCom ? 'methods' : '';
   const initHook = isCom ? 'attached' : 'onReady';
-  let hookCalled = false;
 
+  let hookCalled = false;
   let fullPath = path;
-  if (!path) fullPath = methodName;
-  else fullPath += `.${methodName}`;
+
+  if (!path) {
+    fullPath = methodName;
+  } else {
+    fullPath += `.${methodName}`;
+  }
+
   set(opts, fullPath, $setData);
 
   if (isCom && opts.properties) {
@@ -81,23 +86,30 @@ const whc = ({ name }) => opts => {
   }
 
   const oldReady = opts[initHook];
+  if (isCom) {
+    opts[initHook] = function() {
+      hookCalled = true;
+      // this.data 的顺序置于最后，因为 observer 的执行早于 hook，observer 执行之后，内部 this.data 已经修改
+      const data = Object.assign({}, getNormalizalPropertiesValue(opts.properties), this.data);
 
-  opts[initHook] = function() {
-    hookCalled = true;
-    // this.data 的顺序置于最后，因为 observer 的执行早于 hook，observer 执行之后，内部 this.data 已经修改
-    const data = Object.assign({}, getNormalizalPropertiesValue(opts.properties), this.data);
-
-    const result = oldReady && oldReady.apply(this, arguments);
-    for (let k in data) {
-      if (data[k] === undefined) {
-        delete data[k];
+      const result = oldReady && oldReady.apply(this, arguments);
+      for (let k in data) {
+        if (data[k] === undefined) {
+          delete data[k];
+        }
       }
-    }
-    // ~~计算属性依赖 properties 的数据的初始化交由自身的 observer 来完成~~
-    // 当外部一开始没有传值的时候，observer 是不会调用，因此这边主动将 properties 融入 data
-    $setData.call(this, data, 'force');
-    return result;
-  };
+      // ~~计算属性依赖 properties 的数据的初始化交由自身的 observer 来完成~~
+      // 当外部一开始没有传值的时候，observer 是不会调用，因此这边主动将 properties 融入 data
+      $setData.call(this, data, 'force');
+      return result;
+    };
+  } else {
+    opts[initHook] = function() {
+      const result = oldReady && oldReady.apply(this, arguments);
+      $setData.call(this, this.data, 'force');
+      return result;
+    };
+  }
 
   function observerRender(newVal, oldVal, prop) {
     // observer 执行之后，this.data 里面的值已经变了
@@ -114,12 +126,13 @@ const whc = ({ name }) => opts => {
 
     if (opts.watch) {
       for (let prop in opts.watch) {
-        if (!opts.watch.hasOwnProperty(prop)) break;
+        if (!opts.watch.hasOwnProperty(prop)) continue;
 
         const newVal = newData[prop];
         const oldVal = oldData[prop];
 
-        if (force || (newData.hasOwnProperty(prop) && newVal !== oldVal)) {
+        const changed = newData.hasOwnProperty(prop) && newVal !== oldVal;
+        if (force || changed) {
           opts.watch[prop].call(this, newVal, oldVal);
         }
       }
