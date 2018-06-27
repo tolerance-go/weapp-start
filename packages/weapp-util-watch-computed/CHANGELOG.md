@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="1.0.4"></a>
+## [1.0.4](https://github.com/tolerance-go/weapp-start/compare/weapp-util-watch-computed@1.0.3...weapp-util-watch-computed@1.0.4) (2018-06-27)
+
+
+### Bug Fixes
+
+* watch break -> continue ([25eb650](https://github.com/tolerance-go/weapp-start/commit/25eb650))
+
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/tolerance-go/weapp-start/compare/weapp-util-watch-computed@1.0.2...weapp-util-watch-computed@1.0.3) (2018-06-03)
 
