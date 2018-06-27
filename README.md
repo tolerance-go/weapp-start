@@ -122,24 +122,11 @@ weapp-start dev
 * [weapp-util-watch-computed](https://github.com/tolerance-go/weapp-start/tree/master/packages/weapp-util-watch-computed) - 使原生小程序支持 watch，computed 属性
 * ...
 
-# Todo
-
-- [x] 支持本地mock
-- [ ] vscode 小程序原生语法提示
-- [ ] 支持 vue 代码组织风格，json, wxss, wxml, js 允许写在一起
-- [ ] 支持 sass 语法
-- [ ] 优化缓存
-- [ ] 自定义插件文档
-
 # Links
 
 * [Contribution](https://github.com/tolerance-go/blog/issues/1#issue-313932480)
-* Updatelog - 请前往 `packages/xxx` 下查看 `CHANGELOG.md`
+* Updatelog - 查看`packages/xxx/CHANGELOG.md`
 
 # License
 
 [MIT](https://tldrlegal.com/license/mit-license)
-
-<div align=center>
-<image src='./assets/star.jpeg' width="550">
-</div>
