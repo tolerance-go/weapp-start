@@ -104,7 +104,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
       if (!relativeDistPath) {
         relativeDistPath = relative(dependDistPath, libResolvedDistPath);
-
+        relativeDistPath = relativeDistPath.replace(/\\/g, '/');
         // ../lodash.js -> ./lodash
         relativeDistPath = relativeDistPath.slice(1);
 
@@ -175,6 +175,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
       }
 
       relativeDistPath = relative(dependDistPath, libResolvedDistPath);
+      relativeDistPath = relativeDistPath.replace(/\\/g, '/');
       // ../lodash.js -> ./lodash
       relativeDistPath = relativeDistPath.slice(1);
 
