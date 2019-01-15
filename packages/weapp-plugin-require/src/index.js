@@ -48,7 +48,7 @@ const npmHack = (libResolvedPath, contents) => {
 
 const npmFolder = 'npm';
 
-const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, log, extra) => {
+const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, log, extra,plgConfig) => {
   const distCode = dependCode.replace(/require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
@@ -226,6 +226,18 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     if (
       isAbsolute(lib) // require('/com/button');
     ) {
+      // 对配置的路径绝对路径进行处理
+      const dependResolvedPathArr = dependResolvedPath.replace(/\\/g, '/').split('/');
+      const pathTemp = '../';
+      Object.keys(plgConfig.alias).forEach(v => {
+        if (lib.split('/')[1] === v) {
+          const configPath = plgConfig.alias[v].replace(/\\/g, '/').split('/');
+          for (let i = 0; i < dependResolvedPathArr.length - configPath.length; i++) {
+            lib = pathTemp + (i === 0 ? lib.slice(1) : lib);
+          }
+        }
+      });
+
       relativeDistPath = lib;
     }
     return `require('${relativeDistPath}')`;
@@ -247,7 +259,8 @@ export default createPlugin({
     false,
     utils.config,
     utils.log,
-    file.extra
+    file.extra,
+    plgConfig
   );
 
   next(file);
