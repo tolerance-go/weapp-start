@@ -1,14 +1,51 @@
-const { join, relative, isAbsolute, basename, parse } = require('path');
-const { readFileSync, existsSync } = require('fs');
-const resolveCwd = require('resolve-cwd');
-const utils = require('./utils');
-const Module = require('module');
-import createPlugin from 'weapp-util-create-plugin';
+'use strict';
 
-const npmHack = (libResolvedPath, contents) => {
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
+var _stringify = require('babel-runtime/core-js/json/stringify');
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+var _weappUtilCreatePlugin = require('weapp-util-create-plugin');
+
+var _weappUtilCreatePlugin2 = _interopRequireDefault(_weappUtilCreatePlugin);
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
+
+var _require = require('path'),
+  join = _require.join,
+  relative = _require.relative,
+  isAbsolute = _require.isAbsolute,
+  basename = _require.basename,
+  parse = _require.parse;
+
+var _require2 = require('fs'),
+  readFileSync = _require2.readFileSync,
+  existsSync = _require2.existsSync;
+
+var resolveCwd = require('resolve-cwd');
+var utils = require('./utils');
+var Module = require('module');
+
+var npmHack = function npmHack(libResolvedPath, contents) {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
   // 这里在编译这一步直接做替换 否则报错
-  contents = contents.replace(/process\.env\.NODE_ENV/g, JSON.stringify(process.env.NODE_ENV));
+  contents = contents.replace(
+    /process\.env\.NODE_ENV/g,
+    (0, _stringify2.default)(process.env.NODE_ENV)
+  );
 
   if (libResolvedPath.match('core-js/library/modules/_global.js')) {
     contents = contents.replace("Function('return this')()", 'this');
@@ -46,9 +83,9 @@ const npmHack = (libResolvedPath, contents) => {
 
 // 假设 前提小程序里的绝对路径引用必须以 / 打头
 
-const npmFolder = 'npm';
+var npmFolder = 'npm';
 
-const checkDeps = (
+var checkDeps = function checkDeps(
   dependCode,
   dependResolvedPath,
   dependDistPath,
@@ -57,24 +94,24 @@ const checkDeps = (
   log,
   extra,
   plgConfig
-) => {
-  const distCode = dependCode.replace(/require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
+) {
+  var distCode = dependCode.replace(/require\(['"]([\w\d_\-./@]+)['"]\)/gi, function(match, lib) {
     // 依赖查找
-    let isNpm = !!npmInfo;
+    var isNpm = !!npmInfo;
 
     // 被依赖者
-    let libResolvedPath;
-    let libResolvedDistPath;
+    var libResolvedPath = void 0;
+    var libResolvedDistPath = void 0;
 
     // 路径替换
-    let relativeDistPath;
+    var relativeDistPath = void 0;
 
     if (
       lib.indexOf('/') === -1 // require('asset');
     ) {
       try {
         libResolvedPath = resolveCwd(lib);
-        const libBaseName = basename(libResolvedPath);
+        var libBaseName = basename(libResolvedPath);
         libResolvedDistPath = join(
           config.resolvedDist,
           npmFolder,
@@ -85,8 +122,8 @@ const checkDeps = (
         // 小程序里面 相对路径可以省略 ./ 直接引用和第三方模块引入方式冲突
         if (error.code === 'MODULE_NOT_FOUND') {
           if (!isNpm) {
-            const drpOpts = parse(dependResolvedPath);
-            let exist = utils.isExist(join(drpOpts.dir, lib));
+            var drpOpts = parse(dependResolvedPath);
+            var exist = utils.isExist(join(drpOpts.dir, lib));
 
             if (!exist) {
               throw error;
@@ -117,7 +154,7 @@ const checkDeps = (
         // ../lodash.js -> ./lodash
         relativeDistPath = relativeDistPath.slice(1);
 
-        let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
+        var contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
         contents = npmHack(libResolvedPath, contents);
 
@@ -131,7 +168,7 @@ const checkDeps = (
           extra
         );
 
-        extra[libResolvedDistPath] = { contents };
+        extra[libResolvedDistPath] = { contents: contents };
       }
     }
 
@@ -140,35 +177,63 @@ const checkDeps = (
       !lib.startsWith('/') &&
       !lib.startsWith('.')
     ) {
-      const firstStep = [].findIndex.call(lib, it => it === '/');
-      const mainNpm = lib.slice(0, firstStep);
-      const inner = lib.slice(firstStep + 1);
+      var firstStep = [].findIndex.call(lib, function(it) {
+        return it === '/';
+      });
+      var mainNpm = lib.slice(0, firstStep);
+      var inner = lib.slice(firstStep + 1);
 
       try {
         libResolvedPath = resolveCwd(mainNpm);
       } catch (error) {
         // 类似 babel-runtime 这种没有 main 和 index 的包
         if (error.code === 'MODULE_NOT_FOUND') {
-          let exist = false;
-          const resolveModules = Module._nodeModulePaths(process.cwd(), 'noop.js');
-          for (let modulePath of resolveModules) {
-            libResolvedPath = join(modulePath, mainNpm);
-            if (existsSync(libResolvedPath)) {
-              const pkgPath = join(libResolvedPath, 'package.json');
-              const mainField = require(pkgPath).main;
-              libResolvedPath = join(libResolvedPath, mainField || '', 'noop.js');
-              exist = true;
-              break;
+          var _exist = false;
+          var resolveModules = Module._nodeModulePaths(process.cwd(), 'noop.js');
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (
+              var _iterator = (0, _getIterator3.default)(resolveModules), _step;
+              !(_iteratorNormalCompletion = (_step = _iterator.next()).done);
+              _iteratorNormalCompletion = true
+            ) {
+              var modulePath = _step.value;
+
+              libResolvedPath = join(modulePath, mainNpm);
+              if (existsSync(libResolvedPath)) {
+                var pkgPath = join(libResolvedPath, 'package.json');
+                var mainField = require(pkgPath).main;
+                libResolvedPath = join(libResolvedPath, mainField || '', 'noop.js');
+                _exist = true;
+                break;
+              }
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
             }
           }
-          if (!exist) {
+
+          if (!_exist) {
             throw error;
           }
         }
       }
 
       // libResolvedPath 一定是带 base 的路径
-      const libResolvedPathOpts = parse(libResolvedPath);
+      var libResolvedPathOpts = parse(libResolvedPath);
 
       if (utils.isDir(join(libResolvedPathOpts.dir, inner))) {
         libResolvedPath = join(libResolvedPathOpts.dir, inner, 'index.js');
@@ -188,22 +253,30 @@ const checkDeps = (
       // ../lodash.js -> ./lodash
       relativeDistPath = relativeDistPath.slice(1);
 
-      let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
+      var _contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-      contents = npmHack(libResolvedPath, contents);
+      _contents = npmHack(libResolvedPath, _contents);
 
-      contents = checkDeps(contents, libResolvedPath, libResolvedDistPath, {}, config, log, extra);
+      _contents = checkDeps(
+        _contents,
+        libResolvedPath,
+        libResolvedDistPath,
+        {},
+        config,
+        log,
+        extra
+      );
 
-      extra[libResolvedDistPath] = { contents };
+      extra[libResolvedDistPath] = { contents: _contents };
     }
 
     if (
       lib.startsWith('.') // require('./ohter');
     ) {
       if (isNpm) {
-        const dependResolvedPathOpts = parse(dependResolvedPath);
-        const dependDistPathOpts = parse(dependDistPath);
-        const isDirectory = utils.isDir(join(dependResolvedPathOpts.dir, lib));
+        var dependResolvedPathOpts = parse(dependResolvedPath);
+        var dependDistPathOpts = parse(dependDistPath);
+        var isDirectory = utils.isDir(join(dependResolvedPathOpts.dir, lib));
 
         if (isDirectory) {
           libResolvedPath = join(dependResolvedPathOpts.dir, lib, 'index.js');
@@ -213,12 +286,12 @@ const checkDeps = (
           libResolvedDistPath = join(dependDistPathOpts.dir, utils.addExt(lib, '.js'));
         }
 
-        let contents = readFileSync(libResolvedPath, { encoding: 'utf-8' });
+        var _contents2 = readFileSync(libResolvedPath, { encoding: 'utf-8' });
 
-        contents = npmHack(libResolvedPath, contents);
+        _contents2 = npmHack(libResolvedPath, _contents2);
 
-        contents = checkDeps(
-          contents,
+        _contents2 = checkDeps(
+          _contents2,
           libResolvedPath,
           libResolvedDistPath,
           {},
@@ -227,7 +300,7 @@ const checkDeps = (
           extra
         );
 
-        extra[libResolvedDistPath] = { contents };
+        extra[libResolvedDistPath] = { contents: _contents2 };
       }
       relativeDistPath = lib;
     }
@@ -236,12 +309,12 @@ const checkDeps = (
       isAbsolute(lib) // require('/com/button');
     ) {
       // 对配置的路径绝对路径进行处理
-      const dependResolvedPathArr = dependResolvedPath.replace(/\\/g, '/').split('/');
-      const pathTemp = '../';
-      Object.keys(plgConfig.alias).forEach(v => {
+      var dependResolvedPathArr = dependResolvedPath.replace(/\\/g, '/').split('/');
+      var pathTemp = '../';
+      (0, _keys2.default)(plgConfig.alias).forEach(function(v) {
         if (lib.split('/')[1] === v) {
-          const configPath = plgConfig.alias[v].replace(/\\/g, '/').split('/');
-          for (let i = 0; i < dependResolvedPathArr.length - configPath.length; i++) {
+          var configPath = plgConfig.alias[v].replace(/\\/g, '/').split('/');
+          for (var i = 0; i < dependResolvedPathArr.length - configPath.length; i++) {
             lib = pathTemp + (i === 0 ? lib.slice(1) : lib);
           }
         }
@@ -249,17 +322,20 @@ const checkDeps = (
 
       relativeDistPath = lib;
     }
-    return `require('${relativeDistPath}')`;
+    return "require('" + relativeDistPath + "')";
   });
   return Buffer.from(distCode);
 };
 
-export default createPlugin({
+exports.default = (0, _weappUtilCreatePlugin2.default)({
   match: /\.js$/,
-})((file, next, plgConfig, utils) => {
-  const { resolvedDist, resolvedSrc } = utils.config;
-  const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
-  const dependResolvedPath = file.path;
+})(function(file, next, plgConfig, utils) {
+  var _utils$config = utils.config,
+    resolvedDist = _utils$config.resolvedDist,
+    resolvedSrc = _utils$config.resolvedSrc;
+
+  var dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
+  var dependResolvedPath = file.path;
 
   file.contents = checkDeps(
     file.contents.toString(),
@@ -274,3 +350,4 @@ export default createPlugin({
 
   next(file);
 });
+module.exports = exports['default'];

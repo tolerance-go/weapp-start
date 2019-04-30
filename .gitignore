@@ -6,7 +6,7 @@ node_modules
 
 # production
 dist
-lib
+
 
 # misc
 .idea
