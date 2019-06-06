@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
 var _assert = require('./utils/assert');
@@ -20,14 +20,12 @@ var _getFileObj2 = _interopRequireDefault(_getFileObj);
 
 var _fs = require('fs');
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cwd = process.cwd();
 
 function extra(extraPaths, config) {
-  var middlewares = config.resolvedPlugins.filter(function(plg) {
+  var middlewares = config.resolvedPlugins.filter(function (plg) {
     return plg.config.extra;
   });
 
@@ -37,8 +35,9 @@ function extra(extraPaths, config) {
     if ((0, _fs.existsSync)(resolvedDistPath)) continue;
 
     var _extraPaths$resolvedD = extraPaths[resolvedDistPath],
-      contents = _extraPaths$resolvedD.contents,
-      noProcess = _extraPaths$resolvedD.noProcess;
+        contents = _extraPaths$resolvedD.contents,
+        noProcess = _extraPaths$resolvedD.noProcess;
+
 
     (0, _assert2.default)(Buffer.isBuffer(contents), 'extra file contents must be a Buffer');
 

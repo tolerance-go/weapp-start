@@ -5,6 +5,11 @@ const utils = require('./utils');
 const Module = require('module');
 import createPlugin from 'weapp-util-create-plugin';
 
+var replaceNodeEnv = contents => {
+  contents = contents.replace(/process\.env\.NODE_ENV/g, JSON.stringify(process.env.NODE_ENV));
+  return contents;
+};
+
 const npmHack = (libResolvedPath, contents) => {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
   // 这里在编译这一步直接做替换 否则报错
@@ -260,9 +265,9 @@ export default createPlugin({
   const { resolvedDist, resolvedSrc } = utils.config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
-
+  const contents = replaceNodeEnv(file.contents.toString());
   file.contents = checkDeps(
-    file.contents.toString(),
+    contents,
     dependResolvedPath,
     dependDistPath,
     false,

@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
 var _dayjs = require('dayjs');
@@ -14,48 +14,46 @@ var _chalk2 = _interopRequireDefault(_chalk);
 
 var _signale = require('signale');
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var custom = new _signale.Signale({
   types: {
     remove: {
       badge: '💥 ',
       color: 'magenta',
-      label: 'REMOVE',
+      label: 'REMOVE'
     },
     add: {
       badge: '🌶️ ',
       color: 'yellowBright',
-      label: 'ADD',
+      label: 'ADD'
     },
     change: {
       badge: '🌱 ',
       color: 'greenBright',
-      label: 'CHANGE',
+      label: 'CHANGE'
     },
     error: {
       badge: '💊 ',
       color: 'red',
-      label: 'EXCEPTION',
+      label: 'EXCEPTION'
     },
     transform: {
       badge: '⭐ ',
       color: 'blue',
-      label: 'TRANSFORM',
+      label: 'TRANSFORM'
     },
     extra: {
       badge: '🥕 ',
       color: 'cyan',
-      label: 'EXTRA',
+      label: 'EXTRA'
     },
     warn: {
       badge: '😑 ',
       color: 'magentaBright',
-      label: 'warn',
-    },
-  },
+      label: 'warn'
+    }
+  }
 });
 
 var log = {
@@ -81,11 +79,8 @@ var log = {
     this.print('remove', message);
   },
   print: function print(type, message) {
-    custom[type]({
-      prefix: _chalk2.default.dim('[' + (0, _dayjs2.default)().format('HH:mm:ss') + ']'),
-      message: message,
-    });
-  },
+    custom[type]({ prefix: _chalk2.default.dim('[' + (0, _dayjs2.default)().format('HH:mm:ss') + ']'), message: message });
+  }
 };
 
 exports.default = log;
