@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
 var _build = require('./build');
@@ -18,7 +18,9 @@ var _log = require('./utils/log');
 
 var _log2 = _interopRequireDefault(_log);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var start = function start(mode, noCache) {
   try {

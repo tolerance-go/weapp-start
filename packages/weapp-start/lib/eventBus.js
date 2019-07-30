@@ -1,14 +1,16 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
 var _promise = require('babel-runtime/core-js/promise');
 
 var _promise2 = _interopRequireDefault(_promise);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var eventBus = {
   _listeners: {},
@@ -22,9 +24,9 @@ var eventBus = {
   take: function take(type) {
     var _this = this;
 
-    return new _promise2.default(function (resolve, reject) {
+    return new _promise2.default(function(resolve, reject) {
       try {
-        var un = _this.listen(type, function (payload) {
+        var un = _this.listen(type, function(payload) {
           resolve(payload);
           un();
         });
@@ -53,7 +55,7 @@ var eventBus = {
     this._eventCache[type] = payload;
     var listeners = this._match(type);
     if (typeof listeners === 'undefined') return;
-    listeners.forEach(function (listen) {
+    listeners.forEach(function(listen) {
       listen.cb.call(listen.scope, payload);
     });
   },
@@ -63,7 +65,7 @@ var eventBus = {
         return this._listeners[key];
       }
     }
-  }
+  },
 };
 
 exports.default = eventBus;

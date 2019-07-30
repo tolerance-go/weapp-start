@@ -1,18 +1,20 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
 var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // import { join, parse } from 'path';
 var statSync = _fs2.default.statSync,
-    existsSync = _fs2.default.existsSync;
+  existsSync = _fs2.default.existsSync;
 exports.default = {
   addExt: function addExt(lib) {
     var ext = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.js';
@@ -43,6 +45,6 @@ exports.default = {
     var ext = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.js';
 
     return existsSync(path) || existsSync(this.addExt(path, ext));
-  }
+  },
 };
 module.exports = exports['default'];

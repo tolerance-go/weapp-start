@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.build = exports.watch = undefined;
 
@@ -25,7 +25,9 @@ var _getFileObj = require('./getFileObj');
 
 var _getFileObj2 = _interopRequireDefault(_getFileObj);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var cwd = process.cwd();
 
@@ -43,8 +45,12 @@ function collect(resolvedSrcPath, resolvedDistPath, filsObjs) {
       (0, _fs.mkdirSync)(resolvedDistPath);
     }
     var files = (0, _fs.readdirSync)(resolvedSrcPath);
-    files.forEach(function (file) {
-      collect((0, _path.join)(resolvedSrcPath, file), (0, _path.join)(resolvedDistPath, file), filsObjs);
+    files.forEach(function(file) {
+      collect(
+        (0, _path.join)(resolvedSrcPath, file),
+        (0, _path.join)(resolvedDistPath, file),
+        filsObjs
+      );
     });
   } else {
     filsObjs.push((0, _getFileObj2.default)(resolvedSrcPath, resolvedDistPath));
@@ -53,15 +59,15 @@ function collect(resolvedSrcPath, resolvedDistPath, filsObjs) {
 
 function build(config, noCache) {
   var resolvedDist = config.resolvedDist,
-      resolvedSrc = config.resolvedSrc,
-      mode = config.mode;
+    resolvedSrc = config.resolvedSrc,
+    mode = config.mode;
 
   if (noCache || mode === 'build') {
     _rimraf2.default.sync(resolvedDist);
   }
   var filsObjs = [];
   collect(resolvedSrc, resolvedDist, filsObjs);
-  filsObjs.forEach(function (file) {
+  filsObjs.forEach(function(file) {
     if (isIgnoreFile(config, file.path)) return;
     config.transform(file);
   });
@@ -69,17 +75,19 @@ function build(config, noCache) {
 
 function watch(config) {
   var resolvedSrc = config.resolvedSrc,
-      resolvedDist = config.resolvedDist;
+    resolvedDist = config.resolvedDist;
 
   var watcher = _chokidar2.default.watch(resolvedSrc, {
-    ignoreInitial: true
+    ignoreInitial: true,
   });
-  watcher.on('all', function (event, resolvedSrcPath) {
+  watcher.on('all', function(event, resolvedSrcPath) {
     var printPath = resolvedSrcPath.replace(cwd + '/', '');
 
     if (event === 'unlink' || event === 'unlinkDir') {
       _log2.default.remove(printPath);
-      return _rimraf2.default.sync((0, _path.join)(resolvedDist, (0, _path.relative)(resolvedSrc, resolvedSrcPath)));
+      return _rimraf2.default.sync(
+        (0, _path.join)(resolvedDist, (0, _path.relative)(resolvedSrc, resolvedSrcPath))
+      );
     }
 
     if (event === 'add' || event === 'addDir') {
@@ -91,7 +99,10 @@ function watch(config) {
     }
 
     if (event !== 'addDir') {
-      var resolvedDistPath = (0, _path.join)(config.resolvedDist, (0, _path.relative)(config.resolvedSrc, resolvedSrcPath));
+      var resolvedDistPath = (0, _path.join)(
+        config.resolvedDist,
+        (0, _path.relative)(config.resolvedSrc, resolvedSrcPath)
+      );
 
       var file = (0, _getFileObj2.default)(resolvedSrcPath, resolvedDistPath);
       if (isIgnoreFile(config, file.path)) return;
