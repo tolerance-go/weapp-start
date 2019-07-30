@@ -1,0 +1,29 @@
+{
+  "name": "weapp-plugin-require-enhance",
+  "version": "0.0.3",
+  "description": "fix weapp-plugin-require bugs",
+  "scripts": {},
+  "main": "./lib/index.js",
+  "author": "ranshaw",
+  "homepage": "https://github.com/ranshaw/weapp-start.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ranshaw/weapp-start.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ranshaw/weapp-start.git/issues"
+  },
+  "keywords": [
+    "weapp",
+    "weapp-plugin",
+    "alias",
+    "weapp-start",
+    "weapp-plugin-require"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "resolve-cwd": "^2.0.0",
+    "weapp-util-create-plugin": "^0.1.4"
+  }
+}

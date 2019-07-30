@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -24,17 +24,15 @@ var _weappUtilCreatePlugin = require('weapp-util-create-plugin');
 
 var _weappUtilCreatePlugin2 = _interopRequireDefault(_weappUtilCreatePlugin);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cache = {};
 
 var resolver = {
   install: function install(_less, pluginManager) {
     var fm = new _less3.default.FileManager();
-    fm.loadFile = function(filename, dir, options, env, cb) {
-      return new _promise2.default(function(resolve, reject) {
+    fm.loadFile = function (filename, dir, options, env, cb) {
+      return new _promise2.default(function (resolve, reject) {
         if (_path2.default.isAbsolute(filename)) {
           filename = _path2.default.join(process.cwd(), cache.src, filename);
         } else {
@@ -42,7 +40,7 @@ var resolver = {
         }
         cache.byDependPaths.push({
           byDependPath: filename,
-          dependPath: cache.path,
+          dependPath: cache.path
         });
         var contents = _fs2.default.readFileSync(filename, 'utf8');
         // FIXME adding prefix while I shouldn't have to
@@ -53,21 +51,21 @@ var resolver = {
     };
     fm.supportsSync = false;
     pluginManager.addFileManager(fm);
-  },
+  }
 };
 
 exports.default = (0, _weappUtilCreatePlugin2.default)({
   match: /\.wxss$/,
   afterExt: '.wxss',
-  encoding: 'utf8',
-})(function(file, next, plgConfig, utils) {
+  encoding: 'utf8'
+})(function (file, next, plgConfig, utils) {
   cache.dirname = file.dir;
   cache.src = utils.config.src;
   cache.path = file.path;
   cache.byDependPaths = utils.byDependPaths;
 
   plgConfig.plugins = [resolver];
-  _less3.default.render(file.contents, plgConfig).then(function(res, imports) {
+  _less3.default.render(file.contents, plgConfig).then(function (res, imports) {
     file.contents = res.css;
     next(file);
   });
