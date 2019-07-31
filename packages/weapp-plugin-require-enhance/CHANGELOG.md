@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/ranshaw/weapp-start/compare/weapp-plugin-require-enhance@0.1.0...weapp-plugin-require-enhance@0.1.1) (2019-07-31)
+
+
+
+
+**Note:** Version bump only for package weapp-plugin-require-enhance
+
 <a name="0.1.0"></a>
 # 0.1.0 (2019-07-31)
 
