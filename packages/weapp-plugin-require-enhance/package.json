@@ -1,6 +1,6 @@
 {
   "name": "weapp-plugin-require-enhance",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "fix weapp-plugin-require bugs",
   "scripts": {},
   "main": "./lib/index.js",

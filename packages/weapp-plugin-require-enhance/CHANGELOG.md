@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<a name="0.1.0"></a>
+# 0.1.0 (2019-07-31)
+
+
+### Features
+
+* 将修改过的包发布到应用市场 ([dd92ab2](https://github.com/ranshaw/weapp-start/commit/dd92ab2))
+
+
+
+
 <a name="0.3.6"></a>
 ## [0.3.6](https://github.com/tolerance-go/weapp-start/compare/weapp-plugin-require@0.3.5...weapp-plugin-require@0.3.6) (2018-05-27)
 
