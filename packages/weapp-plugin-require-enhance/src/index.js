@@ -265,6 +265,7 @@ export default createPlugin({
   const { resolvedDist, resolvedSrc } = utils.config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
+  // 支持代码中环境变量
   const contents = replaceNodeEnv(file.contents.toString());
   file.contents = checkDeps(
     contents,

@@ -39,6 +39,14 @@ var resolveCwd = require('resolve-cwd');
 var utils = require('./utils');
 var Module = require('module');
 
+var replaceNodeEnv = function replaceNodeEnv(contents) {
+  contents = contents.replace(
+    /process\.env\.NODE_ENV/g,
+    (0, _stringify2.default)(process.env.NODE_ENV)
+  );
+  return contents;
+};
+
 var npmHack = function npmHack(libResolvedPath, contents) {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
   // 这里在编译这一步直接做替换 否则报错
@@ -336,9 +344,10 @@ exports.default = (0, _weappUtilCreatePlugin2.default)({
 
   var dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   var dependResolvedPath = file.path;
-
+  // 支持代码中环境变量
+  var contents = replaceNodeEnv(file.contents.toString());
   file.contents = checkDeps(
-    file.contents.toString(),
+    contents,
     dependResolvedPath,
     dependDistPath,
     false,

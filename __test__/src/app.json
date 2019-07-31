@@ -1,5 +1,8 @@
 {
-  "pages": ["page/index", "page/styl/index"],
+  "pages": [
+    "page/index",
+    "page/styl/index"
+  ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "演示",
@@ -24,5 +27,6 @@
     "uploadFile": 10000,
     "downloadFile": 10000
   },
-  "debug": false
+  "debug": false,
+  "sitemapLocation": "sitemap.json"
 }
