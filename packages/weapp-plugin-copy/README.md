@@ -25,11 +25,11 @@ copy.json 示例
   "pkgData": [
     {
       "source": "node_modules/vant-weapp/lib/",
-      "targetFileName": "vant"
+      "targetFileName": "dist/npm/vant"
     },
     {
       "source": "node_modules/acorn/dist/",
-      "targetFileName": "acorn"
+      "targetFileName": "dist/npm/acorn"
     }
   ]
 }
