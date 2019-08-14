@@ -1,0 +1,12 @@
+{
+  "pkgData": [
+    {
+      "source": "node_modules/vant-weapp/lib/",
+      "targetFileName": "dist/npm/vant"
+    },
+    {
+      "source": "node_modules/acorn/dist/",
+      "targetFileName": "dist/npm/acorn"
+    }
+  ]
+}

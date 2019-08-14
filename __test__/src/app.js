@@ -1,8 +1,5 @@
-import debounce from 'lodash/debounce';
-import common from 'common';
-import common2 from 'common2';
-
 // debounce(() => {});
+// import _ from 'lodash';
 
 App({
   onLaunch: function() {

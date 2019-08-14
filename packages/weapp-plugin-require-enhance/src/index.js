@@ -5,6 +5,11 @@ const utils = require('./utils');
 const Module = require('module');
 import createPlugin from 'weapp-util-create-plugin';
 
+var replaceNodeEnv = contents => {
+  contents = contents.replace(/process\.env\.NODE_ENV/g, JSON.stringify(process.env.NODE_ENV));
+  return contents;
+};
+
 const npmHack = (libResolvedPath, contents) => {
   // 一些库（redux等） 可能会依赖 process.env.NODE_ENV 进行逻辑判断
   // 这里在编译这一步直接做替换 否则报错
@@ -48,7 +53,16 @@ const npmHack = (libResolvedPath, contents) => {
 
 const npmFolder = 'npm';
 
-const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, config, log, extra) => {
+const checkDeps = (
+  dependCode,
+  dependResolvedPath,
+  dependDistPath,
+  npmInfo,
+  config,
+  log,
+  extra,
+  plgConfig
+) => {
   const distCode = dependCode.replace(/require\(['"]([\w\d_\-./@]+)['"]\)/gi, (match, lib) => {
     // 依赖查找
     let isNpm = !!npmInfo;
@@ -104,7 +118,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
 
       if (!relativeDistPath) {
         relativeDistPath = relative(dependDistPath, libResolvedDistPath);
-
+        relativeDistPath = relativeDistPath.replace(/\\/g, '/');
         // ../lodash.js -> ./lodash
         relativeDistPath = relativeDistPath.slice(1);
 
@@ -175,6 +189,7 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
       }
 
       relativeDistPath = relative(dependDistPath, libResolvedDistPath);
+      relativeDistPath = relativeDistPath.replace(/\\/g, '/');
       // ../lodash.js -> ./lodash
       relativeDistPath = relativeDistPath.slice(1);
 
@@ -225,6 +240,18 @@ const checkDeps = (dependCode, dependResolvedPath, dependDistPath, npmInfo, conf
     if (
       isAbsolute(lib) // require('/com/button');
     ) {
+      // 对配置的路径绝对路径进行处理
+      const dependResolvedPathArr = dependResolvedPath.replace(/\\/g, '/').split('/');
+      const pathTemp = '../';
+      Object.keys(plgConfig.alias).forEach(v => {
+        if (lib.split('/')[1] === v) {
+          const configPath = plgConfig.alias[v].replace(/\\/g, '/').split('/');
+          for (let i = 0; i < dependResolvedPathArr.length - configPath.length; i++) {
+            lib = pathTemp + (i === 0 ? lib.slice(1) : lib);
+          }
+        }
+      });
+
       relativeDistPath = lib;
     }
     return `require('${relativeDistPath}')`;
@@ -238,15 +265,17 @@ export default createPlugin({
   const { resolvedDist, resolvedSrc } = utils.config;
   const dependDistPath = join(resolvedDist, relative(resolvedSrc, file.path));
   const dependResolvedPath = file.path;
-
+  // 支持代码中环境变量
+  const contents = replaceNodeEnv(file.contents.toString());
   file.contents = checkDeps(
-    file.contents.toString(),
+    contents,
     dependResolvedPath,
     dependDistPath,
     false,
     utils.config,
     utils.log,
-    file.extra
+    file.extra,
+    plgConfig
   );
 
   next(file);

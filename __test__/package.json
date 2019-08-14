@@ -25,15 +25,17 @@
     "weapp-plugin-less": "file:../packages/weapp-plugin-less",
     "weapp-plugin-postcss": "file:../packages/weapp-plugin-postcss",
     "weapp-plugin-pug": "file:../packages/weapp-plugin-pug",
-    "weapp-plugin-require": "file:../packages/weapp-plugin-require",
+    "weapp-plugin-require-enhance": "file:../packages/weapp-plugin-require-enhance",
     "weapp-plugin-stylus": "file:../packages/weapp-plugin-stylus",
     "weapp-plugin-replace": "file:../packages/weapp-plugin-replace",
+    "weapp-plugin-copy": "file:../packages/weapp-plugin-copy",
     "weapp-start": "file:../packages/weapp-start"
   },
   "dependencies": {
     "autoprefixer": "^8.5.0",
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.10",
+    "vant-weapp": "^0.5.17",
     "weapp-plugin-imgmin": "file:../packages/weapp-plugin-imgmin"
   }
 }

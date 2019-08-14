@@ -13,9 +13,17 @@ module.exports = {
         },
       },
     ],
+    [
+      'weapp-plugin-copy',
+      {
+        config: {
+          copy: {},
+        },
+      },
+    ],
     // 'weapp-plugin-babel',
-    // 'weapp-plugin-require',
-    // 'weapp-plugin-less',
+    // 'weapp-plugin-require-enhance',
+    'weapp-plugin-less',
     // // [
     // //   'weapp-plugin-filter',
     // //   {
@@ -28,7 +36,7 @@ module.exports = {
     //     match: /\.styl$/,
     //   },
     // ],
-    // 'weapp-plugin-pug',
+    'weapp-plugin-pug',
     // 'weapp-plugin-eslint',
     // [
     //   'weapp-plugin-jsmin',
