@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.whcPage = exports.whcComponent = exports.whc = undefined;
 
@@ -17,13 +17,15 @@ var _typeof2 = require('babel-runtime/helpers/typeof');
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var set = function set(obj, path, val) {
   var paths = path.split('.');
-  return paths.reduce(function (obj, name, index) {
+  return paths.reduce(function(obj, name, index) {
     if (paths.length - 1 === index) {
-      return obj[name] = val;
+      return (obj[name] = val);
     }
     if (!obj[name]) {
       obj[name] = {};
@@ -35,7 +37,7 @@ var set = function set(obj, path, val) {
 // eslint-disable-next-line
 var get = function get(obj, path) {
   var paths = path.split('.');
-  return paths.reduce(function (obj, name, index) {
+  return paths.reduce(function(obj, name, index) {
     if (paths.length - 1 === index) {
       return obj[name];
     }
@@ -52,7 +54,7 @@ var normalizalProperties = function normalizalProperties(properties) {
     var meta = properties[prop];
     if ((typeof meta === 'undefined' ? 'undefined' : (0, _typeof3.default)(meta)) !== 'object') {
       properties[prop] = {
-        type: meta
+        type: meta,
       };
     }
   }
@@ -69,7 +71,7 @@ var getNormalizalPropertiesValue = function getNormalizalPropertiesValue(propert
 
 var whc = function whc(_ref) {
   var name = _ref.name;
-  return function (opts) {
+  return function(opts) {
     var methodName = '$setData';
     var isCom = name === 'component';
     var path = isCom ? 'methods' : '';
@@ -95,13 +97,13 @@ var whc = function whc(_ref) {
         var meta = properties[prop];
         if (meta.observer) {
           var oldOb = meta.observer;
-          meta.observer = function (newVal, oldVal) {
+          meta.observer = function(newVal, oldVal) {
             var result = oldOb.apply(this, arguments);
             observerRender.call(this, newVal, oldVal, prop);
             return result;
           };
         } else {
-          meta.observer = function (newVal, oldVal) {
+          meta.observer = function(newVal, oldVal) {
             // 接口 data 发生变化的时候，此时 this.data 已经改变了
             observerRender.call(this, newVal, oldVal, prop);
           };
@@ -117,10 +119,14 @@ var whc = function whc(_ref) {
 
     var oldReady = opts[initHook];
     if (isCom) {
-      opts[initHook] = function () {
+      opts[initHook] = function() {
         hookCalled = true;
         // this.data 的顺序置于最后，因为 observer 的执行早于 hook，observer 执行之后，内部 this.data 已经修改
-        var data = (0, _assign2.default)({}, getNormalizalPropertiesValue(opts.properties), this.data);
+        var data = (0, _assign2.default)(
+          {},
+          getNormalizalPropertiesValue(opts.properties),
+          this.data
+        );
 
         var result = oldReady && oldReady.apply(this, arguments);
         for (var k in data) {
@@ -134,7 +140,7 @@ var whc = function whc(_ref) {
         return result;
       };
     } else {
-      opts[initHook] = function () {
+      opts[initHook] = function() {
         var result = oldReady && oldReady.apply(this, arguments);
         $setData.call(this, this.data, 'force');
         return result;
@@ -177,11 +183,13 @@ var whc = function whc(_ref) {
           var compute = item[item.length - 1];
           var denpendsVal = [];
 
-          if (denpendsField.some(function (field) {
-            return newData.hasOwnProperty(field);
-          })) {
+          if (
+            denpendsField.some(function(field) {
+              return newData.hasOwnProperty(field);
+            })
+          ) {
             var hasChangeds = [];
-            denpendsField.forEach(function (field) {
+            denpendsField.forEach(function(field) {
               var changed = false;
               var newVal = newData[field];
               var oldVal = oldData[field];
@@ -194,9 +202,12 @@ var whc = function whc(_ref) {
               denpendsVal.push(changed ? newVal : oldVal);
             });
 
-            if (force || hasChangeds.some(function (changed) {
-              return changed;
-            })) {
+            if (
+              force ||
+              hasChangeds.some(function(changed) {
+                return changed;
+              })
+            ) {
               var updatedVal = compute.apply(_this, denpendsVal);
               newData[_prop] = updatedVal;
             }

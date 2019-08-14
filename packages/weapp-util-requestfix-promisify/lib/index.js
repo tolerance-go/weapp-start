@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 
 var _promise = require('babel-runtime/core-js/promise');
@@ -16,7 +16,9 @@ var _keys = require('babel-runtime/core-js/object/keys');
 
 var _keys2 = _interopRequireDefault(_keys);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 /* global wx */
 wx.$ = {};
@@ -30,7 +32,7 @@ var RequestMQ = {
   push: function push(param) {
     param.t = +new Date();
     while (this.mq.indexOf(param.t) > -1 || this.running.indexOf(param.t) > -1) {
-      param.t += Math.random() * 10 >> 0;
+      param.t += (Math.random() * 10) >> 0;
     }
     this.mq.push(param.t);
     this.map[param.t] = param;
@@ -44,7 +46,7 @@ var RequestMQ = {
       var newone = this.mq.shift();
       var obj = this.map[newone];
       var oldComplete = obj.complete;
-      obj.complete = function () {
+      obj.complete = function() {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
           args[_key] = arguments[_key];
         }
@@ -65,7 +67,7 @@ var RequestMQ = {
     this.push(obj);
 
     return this.next();
-  }
+  },
 };
 
 var center = {
@@ -118,20 +120,20 @@ var center = {
 
       // 拓展接口
       arrayBufferToBase64: true,
-      base64ToArrayBuffer: true
+      base64ToArrayBuffer: true,
     };
 
     if (noPromiseAPI) {
-      noPromiseAPI.forEach(function (v) {
-        return noPromiseMethods[v] = true;
+      noPromiseAPI.forEach(function(v) {
+        return (noPromiseMethods[v] = true);
       });
     }
 
-    (0, _keys2.default)(wx).forEach(function (key) {
+    (0, _keys2.default)(wx).forEach(function(key) {
       if (!noPromiseMethods[key] && key.substr(0, 2) !== 'on' && !/\w+Sync$/.test(key)) {
         (0, _defineProperty2.default)(wx.$, key, {
           get: function get() {
-            return function (obj) {
+            return function(obj) {
               obj = obj || {};
               if (self._interceptors[key] && self._interceptors[key].config) {
                 var rst = self._interceptors[key].config.call(self, obj);
@@ -153,15 +155,16 @@ var center = {
               }
               if (self._addons.promisify) {
                 var task = void 0;
-                var p = new _promise2.default(function (resolve, reject) {
+                var p = new _promise2.default(function(resolve, reject) {
                   var bak = {};
-                  ['fail', 'success', 'complete'].forEach(function (k) {
+                  ['fail', 'success', 'complete'].forEach(function(k) {
                     bak[k] = obj[k];
-                    obj[k] = function (res) {
+                    obj[k] = function(res) {
                       if (self._interceptors[key] && self._interceptors[key][k]) {
                         res = self._interceptors[key][k].call(self, res);
                       }
-                      if (k === 'success') resolve(res);else if (k === 'fail') reject(res);
+                      if (k === 'success') resolve(res);
+                      else if (k === 'fail') reject(res);
                     };
                   });
                   if (self._addons.requestfix && key === 'request') {
@@ -171,11 +174,11 @@ var center = {
                   }
                 });
                 if (key === 'uploadFile' || key === 'downloadFile') {
-                  p.progress = function (cb) {
+                  p.progress = function(cb) {
                     task.onProgressUpdate(cb);
                     return p;
                   };
-                  p.abort = function (cb) {
+                  p.abort = function(cb) {
                     cb && cb();
                     task.abort();
                     return p;
@@ -184,9 +187,9 @@ var center = {
                 return p;
               } else {
                 var bak = {};
-                ['fail', 'success', 'complete'].forEach(function (k) {
+                ['fail', 'success', 'complete'].forEach(function(k) {
                   bak[k] = obj[k];
-                  obj[k] = function (res) {
+                  obj[k] = function(res) {
                     if (self._interceptors[key] && self._interceptors[key][k]) {
                       res = self._interceptors[key][k].call(self, res);
                     }
@@ -200,19 +203,23 @@ var center = {
                 }
               }
             };
-          }
+          },
         });
       } else {
         (0, _defineProperty2.default)(wx.$, key, {
           get: function get() {
-            return function () {
-              for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            return function() {
+              for (
+                var _len2 = arguments.length, args = Array(_len2), _key2 = 0;
+                _key2 < _len2;
+                _key2++
+              ) {
                 args[_key2] = arguments[_key2];
               }
 
               return wx[key].apply(wx, args);
             };
-          }
+          },
         });
       }
     });
@@ -228,9 +235,9 @@ var center = {
   init: function init() {
     var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var noPromiseAPI = config.noPromiseAPI,
-        requestfix = config.requestfix,
-        promisify = config.promisify,
-        intercepts = config.intercepts;
+      requestfix = config.requestfix,
+      promisify = config.promisify,
+      intercepts = config.intercepts;
 
     if (requestfix) {
       this._use('requestfix');
@@ -242,7 +249,7 @@ var center = {
     for (var k in intercepts) {
       this._intercept(k, intercepts[k]);
     }
-  }
+  },
 };
 
 exports.default = center;
