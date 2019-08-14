@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
 var _typeof2 = require('babel-runtime/helpers/typeof');
@@ -48,9 +48,7 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var error = null;
 var cwd = process.cwd();
@@ -64,7 +62,7 @@ function getConfig() {
 
   if (existDir || existFile) {
     // disable require cache
-    (0, _keys2.default)(require.cache).forEach(function(file) {
+    (0, _keys2.default)(require.cache).forEach(function (file) {
       if (file.indexOf(mockDir) > -1) {
         delete require.cache[file];
       }
@@ -72,12 +70,10 @@ function getConfig() {
 
     if (existDir) {
       var files = (0, _fs.readdirSync)(mockDir);
-      files.forEach(function(file) {
+      files.forEach(function (file) {
         var fullPath = (0, _path.join)(mockDir, file);
         if ((0, _fs.lstatSync)(fullPath).isDirectory()) {
-          return console.log(
-            _chalk2.default.red('mock folders support only one level of directories')
-          );
+          return console.log(_chalk2.default.red('mock folders support only one level of directories'));
         }
         if ((0, _path.parse)(fullPath).ext === '.js') {
           (0, _assign2.default)(config, require(fullPath));
@@ -115,7 +111,7 @@ function createProxy(method, path, target) {
         matchPath = matches[1];
       }
       return (0, _path.join)(_url2.default.parse(target).path, matchPath);
-    },
+    }
   });
 }
 
@@ -130,9 +126,9 @@ function applyMock(app) {
 
     var watcher = _chokidar2.default.watch([mockDir, mockFile], {
       ignored: /node_modules/,
-      ignoreInitial: true,
+      ignoreInitial: true
     });
-    watcher.on('change', function(path) {
+    watcher.on('change', function (path) {
       console.log(_chalk2.default.green('CHANGED'), path.replace(cwd + '/', ''));
       watcher.close();
       applyMock(app);
@@ -144,18 +140,15 @@ function realApplyMock(app) {
   var config = getConfig();
 
   app.use(_bodyParser2.default.json({ limit: '5mb', strict: false }));
-  app.use(
-    _bodyParser2.default.urlencoded({
-      extended: true,
-      limit: '5mb',
-    })
-  );
+  app.use(_bodyParser2.default.urlencoded({
+    extended: true,
+    limit: '5mb'
+  }));
 
-  (0, _keys2.default)(config).forEach(function(key) {
+  (0, _keys2.default)(config).forEach(function (key) {
     var keyParsed = parseKey(key);
     (0, _assert2.default)(!!app[keyParsed.method], 'method of ' + key + ' is not valid');
-    (0,
-    _assert2.default)(typeof config[key] === 'function' || (0, _typeof3.default)(config[key]) === 'object' || typeof config[key] === 'string', 'mock value of ' + key + ' should be function or object or string, but got ' + (0, _typeof3.default)(config[key]));
+    (0, _assert2.default)(typeof config[key] === 'function' || (0, _typeof3.default)(config[key]) === 'object' || typeof config[key] === 'string', 'mock value of ' + key + ' should be function or object or string, but got ' + (0, _typeof3.default)(config[key]));
     if (typeof config[key] === 'string') {
       var path = keyParsed.path;
 
@@ -164,23 +157,20 @@ function realApplyMock(app) {
       }
       app.use(path, createProxy(keyParsed.method, path, config[key]));
     } else {
-      app[keyParsed.method](
-        keyParsed.path,
-        createMockHandler(keyParsed.method, keyParsed.path, config[key])
-      );
+      app[keyParsed.method](keyParsed.path, createMockHandler(keyParsed.method, keyParsed.path, config[key]));
     }
   });
 
   var watcher = _chokidar2.default.watch([mockDir, mockFile], {
     ignored: /node_modules/,
-    persistent: true,
+    persistent: true
   });
-  watcher.on('change', function(path) {
+  watcher.on('change', function (path) {
     console.log(_chalk2.default.green('CHANGED'), path.replace(cwd + '/', ''));
     watcher.close();
 
     // 删除旧的 mock api
-    app._router.stack = app._router.stack.filter(function(item) {
+    app._router.stack = app._router.stack.filter(function (item) {
       return item.name !== 'bound dispatch';
     });
 
@@ -206,14 +196,11 @@ function outputError() {
 
   var filePath = error.message.split(': ')[0];
   var relativeFilePath = filePath.replace(cwd + '/', '');
-  var errors = error.stack
-    .split('\n')
-    .filter(function(line) {
-      return line.trim().indexOf('at ') !== 0;
-    })
-    .map(function(line) {
-      return line.replace(filePath + ': ', '');
-    });
+  var errors = error.stack.split('\n').filter(function (line) {
+    return line.trim().indexOf('at ') !== 0;
+  }).map(function (line) {
+    return line.replace(filePath + ': ', '');
+  });
   errors.splice(1, 0, ['']);
 
   console.log(_chalk2.default.red('Failed to parse mock config.'));
@@ -226,7 +213,7 @@ function outputError() {
 function launchMock() {
   var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var _opts$port = opts.port,
-    port = _opts$port === undefined ? 3000 : _opts$port;
+      port = _opts$port === undefined ? 3000 : _opts$port;
 
   var app = (0, _express2.default)();
   applyMock(app);

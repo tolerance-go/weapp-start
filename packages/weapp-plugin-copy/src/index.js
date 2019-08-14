@@ -10,25 +10,25 @@ export default createPlugin({
   const i = file.dist.lastIndexOf('copy.json');
   const distPath = file.dist.slice(0, i);
   const sourcePath = distPath.slice(0, distPath.lastIndexOf('dist'));
-  const targetPath = `${sourcePath}dist/npm`;
 
-  if (Array.isArray(jsonConfig.pkgPath)) {
-    fs.mkdir(targetPath, err => {
-      if (err) {
-        utils.log.extra('创建npm文件夹成功');
-      }
-    });
-    jsonConfig.pkgPath.forEach(v => {
-      v = `${sourcePath}${v}`;
-      fs.stat(v, (err, stats) => {
+  if (Array.isArray(jsonConfig.pkgData)) {
+    jsonConfig.pkgData.forEach(v => {
+      v.source = `${sourcePath}${v.source}`;
+      fs.stat(v.source, (err, stats) => {
         if (err) {
           utils.log.error(err);
           return;
         }
         if (stats.isDirectory()) {
+          const targetPath = `${sourcePath}${v.targetFileName}`;
+          fs.mkdir(targetPath, { recursive: true }, err => {
+            if (err) {
+              utils.log.extra('创建npm文件夹成功');
+            }
+          });
           util.cpFolder({
-            srcDir: v,
-            tarDir: `${sourcePath}dist/npm`,
+            srcDir: v.source,
+            tarDir: targetPath,
             utils,
           });
         }

@@ -36,7 +36,7 @@ module.exports = {
     //     match: /\.styl$/,
     //   },
     // ],
-    // 'weapp-plugin-pug',
+    'weapp-plugin-pug',
     // 'weapp-plugin-eslint',
     // [
     //   'weapp-plugin-jsmin',

@@ -1,7 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 
 var _extends2 = require('babel-runtime/helpers/extends');
@@ -28,9 +28,7 @@ var _assert = require('./utils/assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cwd = process.cwd();
 
@@ -43,11 +41,7 @@ var getRootCfg = function getRootCfg() {
   var _iteratorError = undefined;
 
   try {
-    for (
-      var _iterator = (0, _getIterator3.default)(pts), _step;
-      !(_iteratorNormalCompletion = (_step = _iterator.next()).done);
-      _iteratorNormalCompletion = true
-    ) {
+    for (var _iterator = (0, _getIterator3.default)(pts), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var pt = _step.value;
 
       if ((0, _fs.existsSync)(pt)) {
@@ -84,33 +78,28 @@ var resolvePkg = function resolvePkg(plg) {
     plg = plg[0];
   }
   var resolvedPath = (0, _resolveCwd2.default)(plg);
-  if (!(0, _fs.existsSync)(resolvedPath))
-    _log2.default.error('npm ' + plg + ' not find, please install first');
+  if (!(0, _fs.existsSync)(resolvedPath)) _log2.default.error('npm ' + plg + ' not find, please install first');
   var npm = require(resolvedPath);
   return {
     name: plg,
     config: plgConfig,
-    plugin: npm.default || npm,
+    plugin: npm.default || npm
   };
 };
 
 var config = void 0;
 function getConfig(mode) {
   if (config) return config;
-  config = (0, _extends3.default)(
-    {
-      mode: mode,
-      cwd: cwd,
-      src: 'src',
-      dist: 'dist',
-      plugins: [],
-      env: {},
-    },
-    getRootCfg(),
-    {
-      resolvedPlugins: [],
-    }
-  );
+  config = (0, _extends3.default)({
+    mode: mode,
+    cwd: cwd,
+    src: 'src',
+    dist: 'dist',
+    plugins: [],
+    env: {}
+  }, getRootCfg(), {
+    resolvedPlugins: []
+  });
 
   config.resolvedSrc = (0, _path.join)(cwd, config.src);
   config.resolvedDist = (0, _path.join)(cwd, config.dist);

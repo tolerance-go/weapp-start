@@ -19,10 +19,7 @@ export default {
       }
       cb && cb(err);
     });
-    ws.on('close', ex => {
-      utils.log.add('复制成功--', ex);
-      cb && cb(ex);
-    });
+    rs.pipe(ws);
   },
   cpFolder(params) {
     const { srcDir, tarDir, utils } = params;

@@ -18,11 +18,20 @@ module.exports = {
 };
 ```
 
-copy.json
+copy.json 示例
 
 ```js
 {
-  "pkgPath": ["node_modules/vant-weapp/lib/"]
+  "pkgData": [
+    {
+      "source": "node_modules/vant-weapp/lib/",
+      "targetFileName": "vant"
+    },
+    {
+      "source": "node_modules/acorn/dist/",
+      "targetFileName": "acorn"
+    }
+  ]
 }
 ```
 
